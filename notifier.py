@@ -167,19 +167,47 @@ def generate_documents(markdown_text, target_date=None, chart_images=None):
     <title>Mobile Analytics Intelligence Report - {target_date}</title>
     <style>
         {css}
+        .console-links-box {{
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-left: 4px solid #4f46e5;
+            padding: 8px 12px;
+            margin-bottom: 14px;
+            font-size: 8pt;
+        }}
+        .console-links-box a {{
+            color: #4f46e5;
+            text-decoration: underline;
+            font-weight: bold;
+        }}
     </style>
 </head>
 <body>
     <div class="header-box">
         <strong>Mobile Product Analytics Portfolio</strong> &bull; Automated Daily Briefing &bull; <em>{target_date}</em>
     </div>
+
+    <!-- Prominent Direct Cloud Console Links in PDF -->
+    <div class="console-links-box">
+        <strong>🔗 Direct Cloud Console Quick Access:</strong><br>
+        &bull; <strong>GA4 Property (533563138):</strong> 
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome">GA4 Main Reports</a> | 
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/dashboard?r=realtime-overview">Realtime Users</a> | 
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/explorer?params=_u..nav%3Ddefault&r=events-overview">Events Explorer</a><br>
+        &bull; <strong>Firebase (neural-sound-ios):</strong> 
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics">Firebase Analytics</a> | 
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics">Crashlytics Stability</a> | 
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/settings/general">Project Settings</a>
+    </div>
+
     {html_content}
     {charts_html}
+
     <div class="footer-note">
         <strong>Direct Console Links:</strong><br>
-        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome" style="color:#4f46e5; text-decoration:none;">🔗 Open Google Analytics 4 Dashboard</a> &bull;
-        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics" style="color:#4f46e5; text-decoration:none;">🔥 Open Firebase Analytics Console</a> &bull;
-        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics" style="color:#4f46e5; text-decoration:none;">💥 Open Firebase Crashlytics</a>
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome">🔗 Open Google Analytics 4 Dashboard</a> &bull;
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics">🔥 Open Firebase Analytics Console</a> &bull;
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics">💥 Open Firebase Crashlytics</a>
         <br><br>
         Generated automatically by Neural Sound Analytics Pipeline &bull; Gemini AI &bull; {target_date}
     </div>
