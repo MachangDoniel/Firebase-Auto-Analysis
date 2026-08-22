@@ -1,22 +1,28 @@
 [
   {
-    "app_id": "neural-sound-ios",
-    "app_name": "Neural Sound iOS",
+    "app_id": "music-separation-ios",
+    "app_name": "Music Separation iOS",
+    "bundle_id": "com.neuralsound.mss",
     "ga4_property_id": "533563138",
+    "stream_id": "14402502632",
     "platform": "iOS",
     "service_account_key": "serviceAccountKey.json"
   },
   {
-    "app_id": "app-two",
-    "app_name": "Second App (Optional)",
-    "ga4_property_id": "",
+    "app_id": "vocal-cleaner-ios",
+    "app_name": "Vocal Cleaner",
+    "bundle_id": "com.neuralSound.audiocleaner",
+    "ga4_property_id": "533563138",
+    "stream_id": "15407667671",
     "platform": "iOS",
     "service_account_key": "serviceAccountKey.json"
   },
   {
-    "app_id": "app-three",
+    "app_id": "future-app-three",
     "app_name": "Third App (Optional)",
+    "bundle_id": "",
     "ga4_property_id": "",
+    "stream_id": "",
     "platform": "iOS / Android",
     "service_account_key": "serviceAccountKey.json"
   }

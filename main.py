@@ -1,7 +1,7 @@
 """
 Multi-App Firebase Analytics & Crash Intelligence Pipeline
-Supports multiple apps, visual charts generation (matplotlib),
-crash analytics, new build comparisons, and multi-channel PDF delivery.
+Supports multiple apps across separate GA4 properties or stream IDs in the same project.
+Generates visual charts, crash analytics, new build comparisons, and PDF reports.
 """
 
 import os
@@ -22,6 +22,8 @@ from google.analytics.data_v1beta.types import (
     Metric,
     OrderBy,
     RunReportRequest,
+    FilterExpression,
+    Filter,
 )
 from google.oauth2 import service_account
 from google import genai
@@ -39,7 +41,7 @@ CHARTS_DIR = BASE_DIR / "reports" / "charts"
 
 
 def load_apps_configuration():
-    """Loads configured apps from apps_config.json or falls back to .env single-app."""
+    """Loads configured apps from apps_config.json or falls back to .env."""
     apps = []
     if os.path.exists(APPS_CONFIG_FILE):
         try:
@@ -52,19 +54,17 @@ def load_apps_configuration():
             print(f"Warning: Failed to load apps_config.json: {e}", file=sys.stderr)
 
     if not apps:
-        # Fallback to single app in .env
         ga4_id = os.getenv("GA4_PROPERTY_ID")
         if ga4_id and ga4_id.strip():
             apps.append({
-                "app_id": "primary-app",
-                "app_name": "Neural Sound iOS",
+                "app_id": "music-separation-ios",
+                "app_name": "Music Separation iOS",
+                "bundle_id": "com.neuralsound.mss",
                 "ga4_property_id": ga4_id.strip(),
+                "stream_id": "14402502632",
                 "platform": "iOS",
                 "service_account_key": DEFAULT_SERVICE_KEY,
             })
-
-    if not apps:
-        raise ValueError("No apps configured. Please set GA4_PROPERTY_ID in .env or add apps to apps_config.json.")
 
     return apps
 
@@ -79,13 +79,26 @@ def get_analytics_client(key_path):
     return BetaAnalyticsDataClient(credentials=credentials)
 
 
-def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name):
+def build_stream_filter(stream_id):
+    """Returns a GA4 FilterExpression for a specific stream ID if provided."""
+    if stream_id and str(stream_id).strip():
+        return FilterExpression(
+            filter=Filter(
+                field_name="streamId",
+                string_filter=Filter.StringFilter(value=str(stream_id).strip())
+            )
+        )
+    return None
+
+
+def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id=None, bundle_id=""):
     """
     Queries GA4 for complete analytics, crash metrics, new vs returning cohorts,
-    7-day velocity, top events, and app version stability.
+    7-day velocity, top events, and app version stability for a specific app/stream.
     """
     property_path = f"properties/{ga4_property_id.strip()}"
-    print(f"[{datetime.now().isoformat()}] Querying [{app_name}] Property: {property_path}...")
+    dim_filter = build_stream_filter(stream_id)
+    print(f"[{datetime.now().isoformat()}] Querying [{app_name}] (Stream: {stream_id or 'All'} | Bundle: {bundle_id})...")
 
     yesterday_range = [DateRange(start_date="yesterday", end_date="yesterday")]
     seven_day_range = [DateRange(start_date="7daysAgo", end_date="yesterday")]
@@ -94,6 +107,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name):
     overview_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
+        dimension_filter=dim_filter,
         metrics=[
             Metric(name="activeUsers"),
             Metric(name="newUsers"),
@@ -118,6 +132,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name):
     cohort_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
+        dimension_filter=dim_filter,
         dimensions=[Dimension(name="newVsReturning")],
         metrics=[
             Metric(name="activeUsers"),
@@ -143,6 +158,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name):
     trend_req = RunReportRequest(
         property=property_path,
         date_ranges=seven_day_range,
+        dimension_filter=dim_filter,
         dimensions=[Dimension(name="date")],
         metrics=[
             Metric(name="activeUsers"),
@@ -169,6 +185,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name):
     events_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
+        dimension_filter=dim_filter,
         dimensions=[Dimension(name="eventName")],
         metrics=[
             Metric(name="eventCount"),
@@ -192,6 +209,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name):
     versions_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
+        dimension_filter=dim_filter,
         dimensions=[Dimension(name="appVersion")],
         metrics=[
             Metric(name="activeUsers"),
@@ -217,6 +235,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name):
     geo_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
+        dimension_filter=dim_filter,
         dimensions=[Dimension(name="country")],
         metrics=[Metric(name="activeUsers"), Metric(name="sessions")],
         order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="activeUsers"), desc=True)],
@@ -233,7 +252,9 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name):
 
     app_payload = {
         "app_name": app_name,
+        "bundle_id": bundle_id,
         "ga4_property_id": ga4_property_id,
+        "stream_id": stream_id,
         "yesterday_overview": overview_data,
         "new_vs_returning_cohorts": cohort_data,
         "past_7_days_trend": trend_data,
@@ -264,15 +285,15 @@ def analyze_all_apps_with_gemini(all_apps_data):
 You are a Principal Mobile Analytics & Growth Architect.
 Analyze the following multi-app daily Firebase / GA4 analytics dataset covering all active mobile applications.
 
-### Guidelines for Multi-App Report:
-1. Provide an overarching **Portfolio Executive Summary & Health Dashboard** comparing total users, revenue/conversion trends, and overall stability.
-2. For **EACH INDIVIDUAL APPLICATION**, provide a dedicated deep-dive section containing:
-   - **App Health Score** (X/10)
+### Mandatory Structure for Multi-App Report:
+1. Provide an overarching **Portfolio Executive Summary & Health Dashboard** comparing all apps side-by-side (Total Users, Sessions, Engagement, Crash-Free Rates, and Cross-App Trends).
+2. For **EACH APPLICATION (e.g. Music Separation iOS and Vocal Cleaner)**, provide a dedicated deep-dive section containing:
+   - **App Header & Health Score** (X / 10 with rationale)
    - **Old vs. New User Cohort Deep-Dive** (Table comparing New Users vs Returning Users with duration and engagement).
    - **7-Day Velocity & Trajectory** (Table & commentary).
    - **User Funnel Diagrams** (ASCII/Unicode diagrams for onboarding and core feature execution).
    - **Crash & Stability Health** (Crash-free user rates and exceptions).
-   - **🚨 New Build / Staged Rollout Alert Section**: Explicitly detect and compare new builds (e.g., 1.3.08) against the production baseline (1.3.07), highlighting any engagement or crash regressions.
+   - **🚨 New Build / Staged Rollout Alert Section**: Explicitly detect and compare new builds against the production baseline.
    - **Top In-App Events & Feature Lookups** (Including slider debouncing or telemetry bugs).
    - **Geographic Distribution**.
    - **Prioritized Strategic Action Matrix** (P0, P1, P2 with Engineering/Product/Growth fixes).
@@ -301,7 +322,7 @@ def log_results(analysis_result, all_apps_data):
         f.write(log_entry)
     print(f"Report saved to: {LOG_FILE}")
 
-    # Gather all generated chart images
+    # Gather all generated chart images across all apps
     all_charts = []
     for app in all_apps_data:
         for chart_path in app.get("chart_paths", {}).values():
@@ -316,7 +337,7 @@ def main():
     print(f"=== Starting Multi-App Firebase Analytics AI Pipeline: {datetime.now()} ===")
     try:
         apps = load_apps_configuration()
-        print(f"Loaded {len(apps)} configured application(s).")
+        print(f"Loaded {len(apps)} configured application(s): {[a['app_name'] for a in apps]}")
 
         all_apps_data = []
         for app in apps:
@@ -325,6 +346,8 @@ def main():
                 client=client,
                 ga4_property_id=app["ga4_property_id"],
                 app_name=app["app_name"],
+                stream_id=app.get("stream_id"),
+                bundle_id=app.get("bundle_id", ""),
             )
             all_apps_data.append(app_data)
 
