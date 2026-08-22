@@ -4,14 +4,15 @@ Converts AI analysis and visual charts into styled HTML & PDF documents and deli
 1. Telegram Bot (Executive text summary + PDF Document + Visual Charts)
 2. Discord Webhook (Executive text summary + PDF File + Visual Charts)
 3. Email / Gmail (Rich HTML summary + Embedded Charts + PDF Attachment)
-4. macOS Desktop Notification Banner (Finder-routed)
-5. Saved Local Documents (reports/analysis_YYYY-MM-DD.pdf & .html)
+4. macOS Desktop Notification Banner (terminal-notifier with direct open)
+5. Saved Local Documents (reports/analysis_YYYY-MM-DD.pdf, .html, & .md)
 """
 
 import os
 import sys
 import smtplib
 import subprocess
+import base64
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
@@ -29,39 +30,48 @@ REPORTS_DIR = BASE_DIR / "reports"
 
 
 def get_css_styling():
-    """Clean, robust CSS styling compatible with xhtml2pdf."""
+    """Clean, presentation-grade CSS styling for PDF and HTML."""
     return """
     @page {
         size: a4 portrait;
-        margin: 1.4cm 1.2cm 1.4cm 1.2cm;
+        margin: 1.2cm 1.2cm 1.2cm 1.2cm;
     }
     body {
-        font-family: Helvetica, Arial, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         color: #1e293b;
-        line-height: 1.4;
+        line-height: 1.45;
         font-size: 9pt;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 10px;
     }
     h1 {
-        font-size: 15pt;
+        font-size: 16pt;
         color: #0f172a;
         border-bottom: 2px solid #4f46e5;
-        padding-bottom: 4px;
+        padding-bottom: 5px;
         margin-top: 0;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
     h2 {
-        font-size: 11.5pt;
+        font-size: 12pt;
         color: #1e293b;
         background-color: #f1f5f9;
-        padding: 5px 8px;
+        padding: 6px 10px;
         border-left: 4px solid #4f46e5;
-        margin-top: 12px;
-        margin-bottom: 6px;
+        margin-top: 14px;
+        margin-bottom: 8px;
+        border-radius: 2px;
     }
     h3 {
-        font-size: 10pt;
+        font-size: 10.5pt;
         color: #334155;
-        margin-top: 8px;
+        margin-top: 10px;
         margin-bottom: 4px;
     }
     p, li {
@@ -71,7 +81,7 @@ def get_css_styling():
     ul, ol {
         margin-top: 2px;
         margin-bottom: 6px;
-        padding-left: 16px;
+        padding-left: 18px;
     }
     li {
         margin-bottom: 2px;
@@ -80,30 +90,30 @@ def get_css_styling():
         width: 100%;
         border-collapse: collapse;
         margin-top: 6px;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
         font-size: 8pt;
     }
     th {
         background-color: #4f46e5;
         color: #ffffff;
         text-align: left;
-        padding: 4px 6px;
+        padding: 5px 8px;
         font-weight: bold;
     }
     td {
         border-bottom: 1px solid #e2e8f0;
-        padding: 4px 6px;
+        padding: 5px 8px;
     }
     tr:nth-child(even) td {
         background-color: #f8fafc;
     }
     pre, code {
-        font-family: Courier, monospace;
+        font-family: "SF Mono", Monaco, Menlo, Consolas, Courier, monospace;
         font-size: 7.5pt;
         background-color: #f8fafc;
     }
     pre {
-        padding: 6px;
+        padding: 8px;
         border: 1px solid #e2e8f0;
         border-radius: 4px;
         white-space: pre-wrap;
@@ -112,25 +122,43 @@ def get_css_styling():
         background: #f8fafc;
         border: 1px solid #e2e8f0;
         padding: 8px 12px;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
         font-size: 8.5pt;
     }
-    .chart-box {
+    .console-links-box {
+        background-color: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-left: 4px solid #4f46e5;
+        padding: 8px 12px;
+        margin-bottom: 14px;
+        font-size: 8pt;
+    }
+    .console-links-box a {
+        color: #4f46e5;
+        text-decoration: underline;
+        font-weight: bold;
+    }
+    .charts-grid {
         text-align: center;
         margin-top: 10px;
         margin-bottom: 14px;
     }
+    .chart-card {
+        margin-bottom: 12px;
+        text-align: center;
+    }
     .chart-img {
         max-width: 100%;
         height: auto;
-        border: 1px solid #e2e8f0;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
     }
     .footer-note {
-        margin-top: 16px;
+        margin-top: 18px;
         border-top: 1px solid #e2e8f0;
-        padding-top: 6px;
+        padding-top: 8px;
         font-size: 7.5pt;
-        color: #94a3b8;
+        color: #64748b;
         text-align: center;
     }
     """
@@ -139,47 +167,123 @@ def get_css_styling():
 def generate_documents(markdown_text, target_date=None, chart_images=None):
     """
     Converts markdown analysis and embeds visual charts into styled HTML and PDF files.
-    Returns (html_path, pdf_path).
+    Also produces a rich, standalone Markdown file with embedded charts & links.
     """
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     if not target_date:
         target_date = datetime.now().strftime("%Y-%m-%d")
-    
-    html_content = markdown.markdown(
+
+    # 1. Build enriched Markdown file with relative chart links & console links
+    md_header = f"""# 📊 Daily Mobile Analytics & Growth Intelligence Report ({target_date})
+
+> **Automated Intelligence Briefing** &bull; Generated for Neural Sound Portfolio &bull; *{target_date}*
+
+---
+
+### 🔗 Direct Cloud Console Quick Links:
+* 📊 **Google Analytics 4 (GA4):** [GA4 Intelligent Home](https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome) | [Realtime Live Users](https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/dashboard?r=realtime-overview) | [In-App Events](https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/explorer?params=_u..nav%3Ddefault&r=events-overview)
+* 🔥 **Firebase Console:** [Firebase Analytics Dashboard](https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics) | [Crashlytics Stability](https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics) | [Project Settings](https://console.firebase.google.com/u/0/project/neural-sound-ios/settings/general)
+
+---
+
+"""
+
+    md_charts_block = "\n\n## 📊 Visual Graphs & Performance Charts\n\n"
+    if chart_images:
+        for c_path in chart_images:
+            if os.path.exists(c_path):
+                rel_chart_path = os.path.relpath(c_path, REPORTS_DIR)
+                chart_name = Path(c_path).stem.replace("_", " ").title()
+                md_charts_block += f"### {chart_name}\n![{chart_name}]({rel_chart_path})\n\n"
+
+    full_md_content = md_header + markdown_text + md_charts_block
+
+    md_path = REPORTS_DIR / f"analysis_{target_date}.md"
+    with open(md_path, "w", encoding="utf-8") as f:
+        f.write(full_md_content)
+    print(f"✅ Generated Markdown Document: {md_path}")
+
+    # 2. Build HTML Content
+    html_body = markdown.markdown(
         markdown_text,
         extensions=["tables", "fenced_code", "nl2br"]
     )
-    
-    # Build chart image HTML blocks
-    charts_html = ""
+
+    # Convert chart images for HTML (both relative path and absolute path for PDF)
+    html_charts_block = ""
+    pdf_charts_block = ""
     if chart_images:
-        charts_html = "<h2>📊 Visual Graphs & Performance Charts</h2><div class='chart-box'>"
+        html_charts_block = "<h2>📊 Visual Graphs & Performance Charts</h2><div class='charts-grid'>"
+        pdf_charts_block = "<h2>📊 Visual Graphs & Performance Charts</h2><div class='charts-grid'>"
         for c_path in chart_images:
             if os.path.exists(c_path):
-                charts_html += f"<p><img class='chart-img' src='{c_path}' /></p>"
-        charts_html += "</div>"
+                rel_chart_path = os.path.relpath(c_path, REPORTS_DIR)
+                chart_name = Path(c_path).stem.replace("_", " ").title()
+                html_charts_block += f"<div class='chart-card'><h3>{chart_name}</h3><img class='chart-img' src='{rel_chart_path}' alt='{chart_name}' /></div>"
+                pdf_charts_block += f"<div class='chart-card'><h3>{chart_name}</h3><img class='chart-img' src='{c_path}' alt='{chart_name}' /></div>"
+        html_charts_block += "</div>"
+        pdf_charts_block += "</div>"
 
     css = get_css_styling()
+
+    # Full HTML (standalone for browsers)
     full_html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Analytics Intelligence Report - {target_date}</title>
+    <style>
+        {css}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-box">
+        <strong>Mobile Product Analytics Portfolio</strong> &bull; Automated Daily Briefing &bull; <em>{target_date}</em>
+    </div>
+
+    <!-- Direct Cloud Console Quick Access -->
+    <div class="console-links-box">
+        <strong>🔗 Direct Cloud Console Quick Access:</strong><br>
+        &bull; <strong>GA4 Property (533563138):</strong> 
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome" target="_blank">GA4 Main Reports</a> | 
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/dashboard?r=realtime-overview" target="_blank">Realtime Users</a> | 
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/explorer?params=_u..nav%3Ddefault&r=events-overview" target="_blank">Events Explorer</a><br>
+        &bull; <strong>Firebase (neural-sound-ios):</strong> 
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics" target="_blank">Firebase Analytics</a> | 
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics" target="_blank">Crashlytics Stability</a> | 
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/settings/general" target="_blank">Project Settings</a>
+    </div>
+
+    {html_body}
+    {html_charts_block}
+
+    <div class="footer-note">
+        <strong>Direct Console Links:</strong><br>
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome" target="_blank">🔗 Open Google Analytics 4 Dashboard</a> &bull;
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics" target="_blank">🔥 Open Firebase Analytics Console</a> &bull;
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics" target="_blank">💥 Open Firebase Crashlytics</a>
+        <br><br>
+        Generated automatically by Neural Sound Analytics Pipeline &bull; Gemini AI &bull; {target_date}
+    </div>
+</div>
+</body>
+</html>"""
+
+    html_path = REPORTS_DIR / f"analysis_{target_date}.html"
+    with open(html_path, "w", encoding="utf-8") as f:
+        f.write(full_html)
+    print(f"✅ Generated HTML Dashboard: {html_path}")
+
+    # 3. Build PDF HTML (with absolute paths for pisa engine)
+    pdf_html = f"""<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>Mobile Analytics Intelligence Report - {target_date}</title>
     <style>
         {css}
-        .console-links-box {{
-            background-color: #f8fafc;
-            border: 1px solid #cbd5e1;
-            border-left: 4px solid #4f46e5;
-            padding: 8px 12px;
-            margin-bottom: 14px;
-            font-size: 8pt;
-        }}
-        .console-links-box a {{
-            color: #4f46e5;
-            text-decoration: underline;
-            font-weight: bold;
-        }}
     </style>
 </head>
 <body>
@@ -187,7 +291,6 @@ def generate_documents(markdown_text, target_date=None, chart_images=None):
         <strong>Mobile Product Analytics Portfolio</strong> &bull; Automated Daily Briefing &bull; <em>{target_date}</em>
     </div>
 
-    <!-- Prominent Direct Cloud Console Links in PDF -->
     <div class="console-links-box">
         <strong>🔗 Direct Cloud Console Quick Access:</strong><br>
         &bull; <strong>GA4 Property (533563138):</strong> 
@@ -200,8 +303,8 @@ def generate_documents(markdown_text, target_date=None, chart_images=None):
         <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/settings/general">Project Settings</a>
     </div>
 
-    {html_content}
-    {charts_html}
+    {html_body}
+    {pdf_charts_block}
 
     <div class="footer-note">
         <strong>Direct Console Links:</strong><br>
@@ -214,26 +317,15 @@ def generate_documents(markdown_text, target_date=None, chart_images=None):
 </body>
 </html>"""
 
-    # 1. Save HTML
-    html_path = REPORTS_DIR / f"analysis_{target_date}.html"
-    with open(html_path, "w", encoding="utf-8") as f:
-        f.write(full_html)
-
-    # 2. Save PDF
     pdf_path = REPORTS_DIR / f"analysis_{target_date}.pdf"
     with open(pdf_path, "wb") as pdf_file:
-        pisa_status = pisa.CreatePDF(full_html, dest=pdf_file)
+        pisa_status = pisa.CreatePDF(pdf_html, dest=pdf_file)
     
     if pisa_status.err:
         print(f"⚠️ PDF creation error: {pisa_status.err}", file=sys.stderr)
         pdf_path = None
     else:
         print(f"✅ Generated PDF Document: {pdf_path}")
-
-    # Also save Markdown copy
-    md_path = REPORTS_DIR / f"analysis_{target_date}.md"
-    with open(md_path, "w", encoding="utf-8") as f:
-        f.write(markdown_text)
 
     return html_path, pdf_path
 
@@ -266,7 +358,6 @@ def send_macos_notification(title, message, pdf_path=None):
         clean_msg = message.replace('"', '\\"').replace("'", "\\'")[:160]
         pdf_file = str(pdf_path) if pdf_path and os.path.exists(pdf_path) else None
         
-        # 1. Use terminal-notifier if available (provides direct click-to-open-PDF)
         terminal_notifier_bin = "/opt/homebrew/bin/terminal-notifier"
         if not os.path.exists(terminal_notifier_bin):
             terminal_notifier_bin = "terminal-notifier"
@@ -286,7 +377,7 @@ def send_macos_notification(title, message, pdf_path=None):
             print("✅ macOS notification banner sent (Clicking opens PDF).")
             return
 
-        # 2. Fallback: Native AppleScript via System Events
+        # Fallback: Native AppleScript via System Events
         script = f'tell application "System Events" to display notification "{clean_msg}" with title "{title}" subtitle "Neural Sound Analytics"'
         subprocess.run(["osascript", "-e", script], check=False)
         print("✅ macOS notification banner sent.")
@@ -315,7 +406,7 @@ def send_telegram_document(report_text, pdf_path=None, chart_images=None):
                 resp = requests.post(doc_url, data=data, files=files, timeout=30)
                 resp.raise_for_status()
 
-        # 2. Send Chart Photos (if any)
+        # 2. Send Chart Photos
         if chart_images:
             photo_url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
             for c_path in chart_images[:3]:
@@ -387,7 +478,6 @@ def send_gmail_document(report_text, html_path=None, pdf_path=None, chart_images
         msg["From"] = f"Neural Sound Analytics <{sender_email}>"
         msg["To"] = recipient_email
         
-        # Email body (HTML)
         alt_part = MIMEMultipart("alternative")
         if html_path and os.path.exists(html_path):
             with open(html_path, "r", encoding="utf-8") as f:
@@ -397,7 +487,6 @@ def send_gmail_document(report_text, html_path=None, pdf_path=None, chart_images
             alt_part.attach(MIMEText(report_text, "plain", "utf-8"))
         msg.attach(alt_part)
         
-        # Attach PDF
         if pdf_path and os.path.exists(pdf_path):
             with open(pdf_path, "rb") as f:
                 pdf_attachment = MIMEApplication(f.read(), _subtype="pdf")
@@ -417,21 +506,14 @@ def send_gmail_document(report_text, html_path=None, pdf_path=None, chart_images
 
 def dispatch_all_notifications(report_text, date_str=None, chart_images=None):
     """Generates documents with embedded charts and dispatches across all channels."""
-    # 1. Generate HTML & PDF Documents with visual charts embedded
     html_path, pdf_path = generate_documents(report_text, date_str, chart_images)
     
-    # 2. Native macOS banner (routed via Finder)
     send_macos_notification(
         title="Mobile Analytics PDF Ready",
         message="Daily PDF report with visual charts has been generated.",
         pdf_path=pdf_path
     )
     
-    # 3. Telegram (Executive summary + PDF document + Charts)
     send_telegram_document(report_text, pdf_path, chart_images)
-    
-    # 4. Discord (Executive summary + PDF file + Charts)
     send_discord_document(report_text, pdf_path, chart_images)
-    
-    # 5. Email (Formatted HTML + Embedded Charts + PDF attachment)
     send_gmail_document(report_text, html_path, pdf_path, chart_images)

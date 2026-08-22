@@ -1,41 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobile Analytics Intelligence Report - 2026-08-22</title>
     <style>
         
     @page {
         size: a4 portrait;
-        margin: 1.4cm 1.2cm 1.4cm 1.2cm;
+        margin: 1.2cm 1.2cm 1.2cm 1.2cm;
     }
     body {
-        font-family: Helvetica, Arial, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         color: #1e293b;
-        line-height: 1.4;
+        line-height: 1.45;
         font-size: 9pt;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 10px;
     }
     h1 {
-        font-size: 15pt;
+        font-size: 16pt;
         color: #0f172a;
         border-bottom: 2px solid #4f46e5;
-        padding-bottom: 4px;
+        padding-bottom: 5px;
         margin-top: 0;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
     h2 {
-        font-size: 11.5pt;
+        font-size: 12pt;
         color: #1e293b;
         background-color: #f1f5f9;
-        padding: 5px 8px;
+        padding: 6px 10px;
         border-left: 4px solid #4f46e5;
-        margin-top: 12px;
-        margin-bottom: 6px;
+        margin-top: 14px;
+        margin-bottom: 8px;
+        border-radius: 2px;
     }
     h3 {
-        font-size: 10pt;
+        font-size: 10.5pt;
         color: #334155;
-        margin-top: 8px;
+        margin-top: 10px;
         margin-bottom: 4px;
     }
     p, li {
@@ -45,7 +55,7 @@
     ul, ol {
         margin-top: 2px;
         margin-bottom: 6px;
-        padding-left: 16px;
+        padding-left: 18px;
     }
     li {
         margin-bottom: 2px;
@@ -54,30 +64,30 @@
         width: 100%;
         border-collapse: collapse;
         margin-top: 6px;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
         font-size: 8pt;
     }
     th {
         background-color: #4f46e5;
         color: #ffffff;
         text-align: left;
-        padding: 4px 6px;
+        padding: 5px 8px;
         font-weight: bold;
     }
     td {
         border-bottom: 1px solid #e2e8f0;
-        padding: 4px 6px;
+        padding: 5px 8px;
     }
     tr:nth-child(even) td {
         background-color: #f8fafc;
     }
     pre, code {
-        font-family: Courier, monospace;
+        font-family: "SF Mono", Monaco, Menlo, Consolas, Courier, monospace;
         font-size: 7.5pt;
         background-color: #f8fafc;
     }
     pre {
-        padding: 6px;
+        padding: 8px;
         border: 1px solid #e2e8f0;
         border-radius: 4px;
         white-space: pre-wrap;
@@ -86,156 +96,168 @@
         background: #f8fafc;
         border: 1px solid #e2e8f0;
         padding: 8px 12px;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
         font-size: 8.5pt;
     }
-    .chart-box {
+    .console-links-box {
+        background-color: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-left: 4px solid #4f46e5;
+        padding: 8px 12px;
+        margin-bottom: 14px;
+        font-size: 8pt;
+    }
+    .console-links-box a {
+        color: #4f46e5;
+        text-decoration: underline;
+        font-weight: bold;
+    }
+    .charts-grid {
         text-align: center;
         margin-top: 10px;
         margin-bottom: 14px;
     }
+    .chart-card {
+        margin-bottom: 12px;
+        text-align: center;
+    }
     .chart-img {
         max-width: 100%;
         height: auto;
-        border: 1px solid #e2e8f0;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
     }
     .footer-note {
-        margin-top: 16px;
+        margin-top: 18px;
         border-top: 1px solid #e2e8f0;
-        padding-top: 6px;
+        padding-top: 8px;
         font-size: 7.5pt;
-        color: #94a3b8;
+        color: #64748b;
         text-align: center;
     }
     
-        .console-links-box {
-            background-color: #f8fafc;
-            border: 1px solid #cbd5e1;
-            border-left: 4px solid #4f46e5;
-            padding: 8px 12px;
-            margin-bottom: 14px;
-            font-size: 8pt;
-        }
-        .console-links-box a {
-            color: #4f46e5;
-            text-decoration: underline;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
+<div class="container">
     <div class="header-box">
         <strong>Mobile Product Analytics Portfolio</strong> &bull; Automated Daily Briefing &bull; <em>2026-08-22</em>
     </div>
 
-    <!-- Prominent Direct Cloud Console Links in PDF -->
+    <!-- Direct Cloud Console Quick Access -->
     <div class="console-links-box">
         <strong>🔗 Direct Cloud Console Quick Access:</strong><br>
         &bull; <strong>GA4 Property (533563138):</strong> 
-        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome">GA4 Main Reports</a> | 
-        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/dashboard?r=realtime-overview">Realtime Users</a> | 
-        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/explorer?params=_u..nav%3Ddefault&r=events-overview">Events Explorer</a><br>
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome" target="_blank">GA4 Main Reports</a> | 
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/dashboard?r=realtime-overview" target="_blank">Realtime Users</a> | 
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/explorer?params=_u..nav%3Ddefault&r=events-overview" target="_blank">Events Explorer</a><br>
         &bull; <strong>Firebase (neural-sound-ios):</strong> 
-        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics">Firebase Analytics</a> | 
-        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics">Crashlytics Stability</a> | 
-        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/settings/general">Project Settings</a>
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics" target="_blank">Firebase Analytics</a> | 
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics" target="_blank">Crashlytics Stability</a> | 
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/settings/general" target="_blank">Project Settings</a>
     </div>
 
-    <h1>Portfolio Analytics &amp; Strategic Growth Audit</h1>
+    <h1>Portfolio Analytics &amp; Executive Growth Architecture Report</h1>
 <p><strong>Prepared by:</strong> Principal Mobile Analytics &amp; Growth Architect<br />
-<strong>Scope:</strong> Multi-App Comparative Analysis (<code>com.neuralsound.mss</code> &amp; <code>com.neuralSound.audiocleaner</code>)<br />
-<strong>Reporting Period:</strong> Daily Snapshot (Latest 24 Hours ending 2026-08-21) + Multi-Horizon Historical Context</p>
+<strong>Data Scope:</strong> Cross-App Firebase / GA4 Daily &amp; Historical Multi-Horizon Intelligence<br />
+<strong>Reporting Date:</strong> August 22, 2026 (Dataset Snapshot: August 15 – August 21, 2026)</p>
 <hr />
 <h1>1. Portfolio Executive Summary &amp; Health Dashboard</h1>
-<h3>Portfolio Side-by-Side Health Overview</h3>
+<h3>Cross-App Portfolio Benchmark Table</h3>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Metric</th>
+<th style="text-align: left;">Metric / Horizon</th>
 <th style="text-align: left;">Music Separation iOS (<code>com.neuralsound.mss</code>)</th>
 <th style="text-align: left;">Vocal Cleaner (<code>com.neuralSound.audiocleaner</code>)</th>
-<th style="text-align: left;">Combined Portfolio Total / Avg</th>
+<th style="text-align: left;">Portfolio Total / Composite</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>Yesterday Active Users (AU)</strong></td>
+<td style="text-align: left;"><strong>Yesterday Active Users (DAU)</strong></td>
 <td style="text-align: left;">143</td>
 <td style="text-align: left;">3</td>
-<td style="text-align: left;"><strong>146 AU</strong></td>
+<td style="text-align: left;"><strong>146</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Yesterday New Users (NU)</strong></td>
+<td style="text-align: left;"><strong>Yesterday New Users</strong></td>
 <td style="text-align: left;">107 (74.8%)</td>
 <td style="text-align: left;">0 (0.0%)</td>
-<td style="text-align: left;"><strong>107 NU (73.3%)</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Past 7D / 30D / Lifetime AU</strong></td>
-<td style="text-align: left;">419 / 841 / 1,056</td>
-<td style="text-align: left;">11 / 27 / 27</td>
-<td style="text-align: left;"><strong>430 / 868 / 1,083</strong></td>
+<td style="text-align: left;"><strong>107 (73.3%)</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Yesterday Sessions</strong></td>
 <td style="text-align: left;">169</td>
 <td style="text-align: left;">17</td>
-<td style="text-align: left;"><strong>186 Sessions</strong></td>
+<td style="text-align: left;"><strong>186</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Engagement Rate (Yesterday)</strong></td>
 <td style="text-align: left;">84.6%</td>
 <td style="text-align: left;">88.2%</td>
-<td style="text-align: left;"><strong>84.9% Weighted Avg</strong></td>
+<td style="text-align: left;"><strong>84.9%</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Avg Session Duration</strong></td>
-<td style="text-align: left;">333.1s (~5.5 mins)</td>
-<td style="text-align: left;">3,531.1s (~58.8 mins)</td>
-<td style="text-align: left;"><strong>625.3s Weighted Avg</strong></td>
+<td style="text-align: left;">5m 33s (333.1s)</td>
+<td style="text-align: left;">58m 51s (3,531.1s)*</td>
+<td style="text-align: left;"><strong>10m 32s (Composite)</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Crash-Free User Rate</strong></td>
-<td style="text-align: left;"><strong>100.0%</strong></td>
-<td style="text-align: left;"><strong>66.67%</strong> (🚨 Alert)</td>
-<td style="text-align: left;"><strong>99.3% Weighted Avg</strong></td>
+<td style="text-align: left;"><strong>100.0%</strong> 🟢</td>
+<td style="text-align: left;"><strong>66.67%</strong> 🔴</td>
+<td style="text-align: left;"><strong>99.32%</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Primary Geo Footprint</strong></td>
+<td style="text-align: left;"><strong>Past 7 Days Users (WAU)</strong></td>
+<td style="text-align: left;">419</td>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;"><strong>430</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Past 30 Days Users (MAU)</strong></td>
+<td style="text-align: left;">841</td>
+<td style="text-align: left;">27</td>
+<td style="text-align: left;"><strong>868</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Lifetime Active Users</strong></td>
+<td style="text-align: left;">1,056</td>
+<td style="text-align: left;">27</td>
+<td style="text-align: left;"><strong>1,083</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Top Growth Market</strong></td>
 <td style="text-align: left;">South Korea (76.9%)</td>
 <td style="text-align: left;">Bangladesh (100.0%)</td>
-<td style="text-align: left;">South Korea (75.3%)</td>
+<td style="text-align: left;">South Korea / Bangladesh</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Primary Growth Driver</strong></td>
-<td style="text-align: left;">Paid/Viral Acquisition Spike</td>
-<td style="text-align: left;">Organic High-Intent Power Users</td>
-<td style="text-align: left;">Single-App Scaling (MSS)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Key Operational Risk</strong></td>
-<td style="text-align: left;">Telemetry Event Spam &amp; Build 1.3.08 ER Drop</td>
-<td style="text-align: left;">Micro-Scale, 33.3% Crash Rate &amp; StoreKit Failures</td>
-<td style="text-align: left;">Critical Build &amp; Monetization Bugs</td>
+<td style="text-align: left;"><strong>Primary Risk / Bottleneck</strong></td>
+<td style="text-align: left;">Slider Event Flooding &amp; Low D7 Retention</td>
+<td style="text-align: left;">Critical App Crash (33.3% rate) &amp; StoreKit Loop</td>
+<td style="text-align: left;">Technical Stability &amp; Telemetry Noise</td>
 </tr>
 </tbody>
 </table>
-<h3>Cross-App Growth &amp; Strategic Portfolio Trends</h3>
+<p><em>*Note: Vocal Cleaner's extreme session duration is skewed by background recording/audio processing timers remaining active without user termination.</em></p>
+<h3>Portfolio Health &amp; Cross-App Trends Synthesis</h3>
 <ol>
-<li><strong>Extreme Portfolio Asymmetry</strong>: <strong>Music Separation iOS</strong> accounts for <strong>97.9% of active daily users</strong> and 98.4% of total lifetime users. <strong>Vocal Cleaner</strong> remains at an ultra-niche micro-scale (27 total lifetime users) with zero new user acquisition over the last 24 hours.</li>
-<li><strong>Growth Surge vs. Monetization Bottleneck</strong>: Music Separation iOS is undergoing a strong growth velocity curve (growing from 30 AU on Aug 15 to 143 AU on Aug 21, driven by a acquisition push in South Korea). Conversely, Vocal Cleaner exhibits zero acquisition velocity, but contains intense monetization activity (paywall loops and StoreKit retry events) concentrated among a single returning user.</li>
-<li><strong>Telemetry &amp; Production Quality Risks</strong>:</li>
-<li><strong>Music Separation iOS</strong> suffers from extreme event flooding on UI slider interactions (<code>player_pitch_changed</code> firing 570.6 times/user), threatening GA4 data thresholds and cloud logging costs.</li>
-<li><strong>Vocal Cleaner</strong> suffers from severe stability degradation with a <strong>66.67% Crash-Free Rate</strong> (1 out of 3 users experienced an unhandled <code>app_exception</code>), accompanied by a 41.7% transaction failure rate (<code>purchase_failed</code> + <code>purchase_storekit_failed</code>).</li>
+<li><strong>Asymmetric Portfolio Scale &amp; Hyper-Growth Spike</strong>: <em>Music Separation iOS</em> accounts for <strong>97.9% of portfolio DAU</strong> and <strong>97.4% of WAU</strong>. The app experienced a massive acquisition velocity spike starting August 18, growing DAU by <strong>376% in 4 days</strong> (from 30 to 143 daily users). Over <strong>30% of its lifetime user base</strong> was acquired in the last 7 days alone, heavily concentrated in <strong>South Korea</strong>.</li>
+<li><strong>Critical Telemetry Infrastructure Defects</strong>: Both applications suffer from implementation flaws in logging:</li>
+<li><strong>Music Separation iOS</strong>: Un-debounced UI sliders (<code>player_pitch_changed</code>, <code>player_tempo_changed</code>) generate up to <strong>570 events per user</strong>, threatening to hit GA4 event volume limits and artificially inflating events-per-session (97.8 events/session).</li>
+<li><strong>Vocal Cleaner</strong>: A single user generated <strong>12 <code>purchase_started</code></strong>, <strong>10 <code>purchase_approved</code></strong>, <strong>6 <code>purchase</code></strong>, and <strong>5 <code>purchase_failed</code></strong> events in 24 hours, pointing to a payment retry loop or broken transaction state machine.</li>
+<li><strong>Severe Quality &amp; Stability Divergence</strong>: While <em>Music Separation iOS</em> maintains a <strong>100% crash-free user rate</strong>, <em>Vocal Cleaner</em> exhibits a dangerous <strong>66.67% crash-free rate</strong> (1 out of 3 users crashed yesterday), rendering the build unviable for user acquisition until patched.</li>
 </ol>
 <hr />
-<h1>2. Application Deep-Dive: Music Separation iOS</h1>
+<h1>2. Deep-Dive: Music Separation iOS</h1>
 <h3>App Header &amp; Health Score</h3>
 <ul>
-<li><strong>App Name:</strong> Music Separation iOS</li>
-<li><strong>Bundle ID:</strong> <code>com.neuralsound.mss</code> | <strong>GA4 Property ID:</strong> <code>533563138</code> | <strong>Stream ID:</strong> <code>14402502632</code></li>
-<li><strong>Health Score:</strong> <strong>8.5 / 10</strong></li>
-<li><strong>Health Rationale:</strong> Exceptional engagement rates (84.6%), robust onboarding conversion (&gt;95%), and 100% crash-free stability on the primary build (1.3.07). The score is penalized due to severe unthrottled event telemetry (over 5,700 pitch events across 10 users) and an early engagement drop on the newly deployed 1.3.08 build (53.8% ER).</li>
+<li><strong>Bundle ID</strong>: <code>com.neuralsound.mss</code> | <strong>GA4 Property ID</strong>: <code>533563138</code> | <strong>Stream ID</strong>: <code>14402502632</code></li>
+<li><strong>Health Score</strong>: <strong>8.4 / 10</strong></li>
+<li><strong>Rationale</strong>: Strong acquisition momentum (+376% 7d growth), high daily engagement rate (84.6%), and 100% crash-free stability. Deductions applied for: (1) Severe UI slider telemetry event flooding bug, (2) Low absolute returning user volume (only 41 returning DAU vs. 107 new), (3) Extreme market single-point concentration risk (South Korea = 76.9% DAU), and (4) Engagement regression in the new staged rollout version (<code>1.3.08</code>).</li>
 </ul>
 <hr />
 <h3>📅 Multi-Horizon Growth &amp; Historical Scale Comparison</h3>
@@ -247,7 +269,7 @@
 <th style="text-align: left;">New Users (NU)</th>
 <th style="text-align: left;">Total Sessions</th>
 <th style="text-align: left;">Engagement Rate</th>
-<th style="text-align: left;">Growth &amp; Retention Trajectory Analysis</th>
+<th style="text-align: left;">Growth / Trajectory Dynamics</th>
 </tr>
 </thead>
 <tbody>
@@ -257,23 +279,23 @@
 <td style="text-align: left;">107</td>
 <td style="text-align: left;">169</td>
 <td style="text-align: left;">84.6%</td>
-<td style="text-align: left;"><strong>Peak Velocity</strong>: 74.8% of daily users are newly acquired.</td>
+<td style="text-align: left;"><strong>Peak Velocity</strong>: 74.8% of daily users are new installs.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Past 7 Days</strong></td>
+<td style="text-align: left;"><strong>Past 7 Days (WAU)</strong></td>
 <td style="text-align: left;">419</td>
 <td style="text-align: left;">311</td>
 <td style="text-align: left;">595</td>
 <td style="text-align: left;">84.5%</td>
-<td style="text-align: left;"><strong>Acquisition Acceleration</strong>: 74.2% of 7D users are new.</td>
+<td style="text-align: left;"><strong>Hyper-Growth Spike</strong>: 29.4% of total lifetime users joined this week.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Past 30 Days</strong></td>
+<td style="text-align: left;"><strong>Past 30 Days (MAU)</strong></td>
 <td style="text-align: left;">841</td>
 <td style="text-align: left;">708</td>
 <td style="text-align: left;">1,648</td>
 <td style="text-align: left;">85.6%</td>
-<td style="text-align: left;"><strong>Scaling Phase</strong>: 84.2% of monthly cohort acquired recently.</td>
+<td style="text-align: left;"><strong>Explosive Expansion</strong>: MAU comprises 79.6% of all-time installs.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Past Year (365 Days)</strong></td>
@@ -281,36 +303,35 @@
 <td style="text-align: left;">933</td>
 <td style="text-align: left;">2,487</td>
 <td style="text-align: left;">84.8%</td>
-<td style="text-align: left;"><strong>Historical Baseline</strong>: App scale is overwhelmingly recent.</td>
+<td style="text-align: left;"><strong>Recent Inception</strong>: Entire app lifecycle is contained within recent months.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>All-Time / Lifetime</strong></td>
+<td style="text-align: left;"><strong>All-Time / Lifetime Total</strong></td>
 <td style="text-align: left;">1,056</td>
 <td style="text-align: left;">933</td>
 <td style="text-align: left;">2,487</td>
 <td style="text-align: left;">84.8%</td>
-<td style="text-align: left;"><strong>Total Footprint</strong>: 88.4% lifetime user acquisition concentrated in 30d.</td>
+<td style="text-align: left;"><strong>Baseline Scale</strong>: 1.05k Total Lifetime Installs.</td>
 </tr>
 </tbody>
 </table>
-<h4>Scale &amp; Trajectory Analysis</h4>
+<h4>Velocity, Acquisition Trajectory &amp; Retention Dynamics Analysis</h4>
 <ul>
-<li><strong>Growth Velocity:</strong> High velocity trajectory. The app has expanded its active user base by <strong>376.7% over the last 7 days</strong> (rising from 30 AU on Aug 15 to 143 AU on Aug 21).</li>
-<li><strong>Acquisition Trajectory:</strong> User acquisition is heavily front-loaded into recent days, with 708 out of 933 lifetime new users (75.9%) arriving within the last 30 days.</li>
-<li><strong>Lifetime Retention &amp; User Decay:</strong> Retention density is low relative to new acquisition; returning users represent only 25.2% of yesterday's active base (41 AU). While the app successfully attracts new installs, long-term retention loops require strengthening.</li>
+<li><strong>Acquisition Velocity</strong>: The app is undergoing early-stage viral discovery. The 7-day run-rate (419 WAU) represents <strong>49.8% of the 30-day active base</strong>, proving that acquisition velocity has accelerated dramatically within the last 72 to 96 hours.</li>
+<li><strong>Retention Deficit</strong>: While acquisition is spiking, lifetime retention depth remains shallow. Out of 1,056 all-time users, 30-day active users stand at 841, but 7-day active users drop to 419. Only <strong>41 returning users</strong> accessed the app yesterday, showing that despite high initial session engagement (84.6%), early user retention (D1-D7) requires optimization.</li>
 </ul>
 <hr />
 <h3>Old vs. New User Cohort Deep-Dive</h3>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Cohort Segment</th>
+<th style="text-align: left;">User Cohort Type</th>
 <th style="text-align: left;">Active Users</th>
 <th style="text-align: left;">Sessions</th>
 <th style="text-align: left;">Avg Session Duration</th>
 <th style="text-align: left;">Engagement Rate</th>
-<th style="text-align: left;">Screen / Page Views</th>
-<th style="text-align: left;">Key Cohort Behavior</th>
+<th style="text-align: left;">Screen Views</th>
+<th style="text-align: left;">Key Behavioral Insights</th>
 </tr>
 </thead>
 <tbody>
@@ -318,47 +339,45 @@
 <td style="text-align: left;"><strong>New Users</strong></td>
 <td style="text-align: left;">114</td>
 <td style="text-align: left;">112</td>
-<td style="text-align: left;">347.8s (~5.8 min)</td>
+<td style="text-align: left;">347.8s (5m 47s)</td>
 <td style="text-align: left;"><strong>94.6%</strong></td>
 <td style="text-align: left;">229</td>
-<td style="text-align: left;">Exceptional initial activation; high onboarding completion.</td>
+<td style="text-align: left;">High initial exploration; complete onboarding and run core separation audio processing.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Returning Users</strong></td>
 <td style="text-align: left;">41</td>
 <td style="text-align: left;">52</td>
-<td style="text-align: left;">332.9s (~5.5 min)</td>
+<td style="text-align: left;">332.9s (5m 32s)</td>
 <td style="text-align: left;"><strong>69.2%</strong></td>
 <td style="text-align: left;">39</td>
-<td style="text-align: left;">Lower engagement rate (-25.4% vs New); reduced screen browsing.</td>
+<td style="text-align: left;">Lower engagement rate (-25.4% vs new). High utility focus; users perform targeted edits and exit.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>(not set) / Ghost</strong></td>
+<td style="text-align: left;"><strong>Unattributed / <code>(not set)</code></strong></td>
 <td style="text-align: left;">0</td>
 <td style="text-align: left;">5</td>
 <td style="text-align: left;">6.5s</td>
 <td style="text-align: left;">20.0%</td>
 <td style="text-align: left;">1</td>
-<td style="text-align: left;">Transient background execution / push notification ping.</td>
+<td style="text-align: left;">Ghost background executions or background fetch events.</td>
 </tr>
 </tbody>
 </table>
-<h4>Cohort Dynamics</h4>
 <ul>
-<li>New users demonstrate a high engagement rate (<strong>94.6%</strong>), driven by an optimized onboarding experience (<code>first_journey_login_completed</code> = 106 users out of 109 <code>first_open</code>).</li>
-<li>Returning users exhibit a noticeable drop in Engagement Rate (<strong>69.2%</strong>), suggesting that utility wear-off or lack of feature re-engagement loops occurs once initial audio stems are processed.</li>
+<li><strong>Cohort Insight</strong>: New users display extraordinary initial engagement (<strong>94.6%</strong>), validating product-market fit during first-touch experiences. Returning users show a <strong>25.4 percentage-point drop in engagement rate (69.2%)</strong>, indicating that utility drops after initial file separation or users experience workflow fatigue.</li>
 </ul>
 <hr />
 <h3>7-Day Velocity &amp; Trajectory</h3>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Date</th>
-<th style="text-align: left;">Active Users (AU)</th>
-<th style="text-align: left;">New Users (NU)</th>
+<th style="text-align: left;">Date (YYYY-MM-DD)</th>
+<th style="text-align: left;">Active Users (DAU)</th>
+<th style="text-align: left;">New Users</th>
 <th style="text-align: left;">Total Sessions</th>
 <th style="text-align: left;">Engagement Rate</th>
-<th style="text-align: left;">Daily Commentary</th>
+<th style="text-align: left;">Daily Trend Notes</th>
 </tr>
 </thead>
 <tbody>
@@ -368,7 +387,7 @@
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">46</td>
 <td style="text-align: left;">82.6%</td>
-<td style="text-align: left;">Baseline activity; organic usage.</td>
+<td style="text-align: left;">Baseline steady state. High sessions/user ratio (1.53).</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2026-08-16</strong></td>
@@ -376,7 +395,7 @@
 <td style="text-align: left;">7</td>
 <td style="text-align: left;">38</td>
 <td style="text-align: left;">84.2%</td>
-<td style="text-align: left;">Steady state retention.</td>
+<td style="text-align: left;">Organic weekend stability.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2026-08-17</strong></td>
@@ -384,7 +403,7 @@
 <td style="text-align: left;">14</td>
 <td style="text-align: left;">45</td>
 <td style="text-align: left;">80.0%</td>
-<td style="text-align: left;">Initial user acquisition uptick (+100% NU).</td>
+<td style="text-align: left;">Early acquisition uptick (+100% new users DoD).</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2026-08-18</strong></td>
@@ -392,7 +411,7 @@
 <td style="text-align: left;">36</td>
 <td style="text-align: left;">71</td>
 <td style="text-align: left;">83.1%</td>
-<td style="text-align: left;">Expansion phase begins (+157% NU).</td>
+<td style="text-align: left;">Expansion inflection point (+58.3% DAU DoD).</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2026-08-19</strong></td>
@@ -400,7 +419,7 @@
 <td style="text-align: left;">78</td>
 <td style="text-align: left;">120</td>
 <td style="text-align: left;"><strong>90.8%</strong></td>
-<td style="text-align: left;"><strong>Primary Acquisition Spike</strong> (South Korea campaign/viral node).</td>
+<td style="text-align: left;">Korean viral acquisition surge begins. Peak engagement.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2026-08-20</strong></td>
@@ -408,7 +427,7 @@
 <td style="text-align: left;">65</td>
 <td style="text-align: left;">113</td>
 <td style="text-align: left;">82.3%</td>
-<td style="text-align: left;">Sustained high volume plateau.</td>
+<td style="text-align: left;">Mid-week plateau / user absorption phase.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2026-08-21</strong></td>
@@ -416,59 +435,52 @@
 <td style="text-align: left;"><strong>107</strong></td>
 <td style="text-align: left;"><strong>169</strong></td>
 <td style="text-align: left;">84.6%</td>
-<td style="text-align: left;"><strong>All-Time Peak Volume</strong> (+376% AU vs. Aug 15).</td>
+<td style="text-align: left;"><strong>All-Time Peak DAU</strong>: Driven by organic growth in South Korea.</td>
 </tr>
 </tbody>
 </table>
 <hr />
 <h3>User Funnel Diagrams</h3>
-<h4>Onboarding &amp; Activation Funnel</h4>
-<pre><code>[109 Unique Users]  first_open
-       │
-       ▼  (100% Conversion / 111 Users Viewed)
-[111 Unique Users]  onboarding_viewed / onboarding_step_viewed (449 events)
-       │
-       ▼  (99.1% Step Conversion)
-[110 Unique Users]  onboarding_next_tapped
-       │
-       ▼  (100% Transition)
-[117 Unique Users]  login_screen_viewed
-       │
-       ▼  (94.0% Login Success Rate)
-[110 Unique Users]  login_succeeded
-       │
-       ▼  (96.4% First Journey Completion Rate)
-[106 Unique Users]  first_journey_login_completed  ──► [OVERALL ONBOARDING CONVERSION: 97.2%]
-</code></pre>
-<h4>Core Feature Execution Funnel (Audio Import to Stem Playback)</h4>
-<pre><code>[105 Unique Users]  plus_button_tap / plus_separation_tapped (101 Users)
-       │
-       ▼  (88.6% Target Intent)
-[93 Unique Users]   first_journey_add_separation_clicked
-       │
-       ▼  (83.8% File Selection Intent)
-[78 Users - Files]  import_files_app_tap  ─── OR ───  [63 Users - Photos] import_photos_tap
-       │
-       ├─────────────────────────────────────────┘
-       ▼  (53 Active Users Executed Import - Drop-off: 43.1% from Add Tap)
-[53 Unique Users]   import_started (105 Total Import Events)
-       │
-       ▼  (100% Conversion to Workspace)
-[72 Unique Users]   separation_player_opened (199 Total Open Events)
-       │
-       ▼  (65.3% Playback Conversion)
-[47 Unique Users]   separation_play_started  ──► [OVERALL IMPORT-TO-PLAY CONVERSION: 44.8%]
+<h4>Onboarding Conversion Funnel</h4>
+<pre><code>[109] first_open  (100.0%)
+  │
+  ▼  100.0% Conversion
+[111] onboarding_viewed / onboarding_step_viewed
+  │
+  ▼  99.1% Conversion
+[110] onboarding_next_tapped
+  │
+  ▼  100.0% Conversion (117 viewed UI)
+[110] login_succeeded
+  │
+  ▼  96.4% Conversion
+[106] first_journey_login_completed (Overall Onboarding Funnel Efficiency: 97.2%)
 </code></pre>
 <ul>
-<li><strong>Funnel Bottleneck Identified:</strong> A significant <strong>43.1% drop-off</strong> occurs between selecting an import source (<code>import_files_app_tap</code> / <code>import_photos_tap</code>) and actual process execution (<code>import_started</code>). This points to file format incompatibility, permission prompts, or slow local file picker performance.</li>
+<li><strong>Onboarding Funnel Analysis</strong>: Exceptional funnel performance. <strong>97.2% of users</strong> who open the app complete onboarding and successfully authenticate. Friction at onboarding is virtually zero.</li>
+</ul>
+<h4>Core Feature Execution Funnel (Import to Audio Separation)</h4>
+<pre><code>[106] Onboarded &amp; Authenticated Users
+  │
+  ▼  87.7% Click Action
+[93]  first_journey_add_separation_clicked / plus_button_tap [105]
+  │
+  ▼  50.5% Import Start Rate  &lt;-- 🚨 MAJOR DROP-OFF POINT (-49.5%)
+[53]  import_started
+  │  ├── [78 Users] Files App Import
+  │  └── [63 Users] Photos Import
+  │
+  ▼  88.7% Processing Success Rate
+[47]  separation_play_started (Overall Core Conversion from Intention: 44.8%)
+  │
+  ▼  153.2% Re-engagement / Player Loop
+[72]  separation_player_opened -&gt; [20] Pitch/Tempo Player Opened
+</code></pre>
+<ul>
+<li><strong>Core Loop Bottleneck</strong>: The primary product drop-off occurs between clicking "Add Separation" / <code>plus_button_tap</code> (105 users) and actually executing <code>import_started</code> (53 users). <strong>49.5% of users abandon the workflow when the OS File/Photo Picker native sheet opens</strong>, likely due to permission prompts, unsupported file formats, or lack of sample audio files.</li>
 </ul>
 <hr />
 <h3>Crash &amp; Stability Health</h3>
-<ul>
-<li><strong>Overall Crash-Free User Rate:</strong> <strong>100.0%</strong></li>
-<li><strong>Unhandled Exceptions / Crashes:</strong> 0 logged in GA4 daily stream.</li>
-<li><strong>Version-Level Stability Matrix:</strong></li>
-</ul>
 <table>
 <thead>
 <tr>
@@ -476,8 +488,8 @@
 <th style="text-align: left;">Active Users</th>
 <th style="text-align: left;">Sessions</th>
 <th style="text-align: left;">Engagement Rate</th>
-<th style="text-align: left;">Crash-Free User Rate</th>
-<th style="text-align: left;">Rollout Status</th>
+<th style="text-align: left;">Crash-Free Users Rate</th>
+<th style="text-align: left;">Deployment Status</th>
 </tr>
 </thead>
 <tbody>
@@ -485,124 +497,78 @@
 <td style="text-align: left;"><strong>1.3.07</strong></td>
 <td style="text-align: left;">136</td>
 <td style="text-align: left;">152</td>
-<td style="text-align: left;">86.8%</td>
+<td style="text-align: left;"><strong>86.8%</strong></td>
 <td style="text-align: left;"><strong>100.0%</strong></td>
-<td style="text-align: left;">Production Baseline (95.1% User Base)</td>
+<td style="text-align: left;">Production Baseline (95.1% Traffic)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>1.3.08</strong></td>
 <td style="text-align: left;">5</td>
 <td style="text-align: left;">13</td>
-<td style="text-align: left;"><strong>53.8%</strong></td>
+<td style="text-align: left;"><strong>53.8%</strong> ⚠️</td>
 <td style="text-align: left;"><strong>100.0%</strong></td>
-<td style="text-align: left;">Staged Rollout (3.5% User Base)</td>
+<td style="text-align: left;">Active Staged Rollout (3.5% Traffic)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>1.3.06</strong></td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">100.0%</td>
-<td style="text-align: left;"><strong>100.0%</strong></td>
-<td style="text-align: left;">Legacy Build (&lt;1.5% User Base)</td>
+<td style="text-align: left;">100.0%</td>
+<td style="text-align: left;">Legacy Version (1.4% Traffic)</td>
 </tr>
 </tbody>
 </table>
+<ul>
+<li><strong>Stability Status</strong>: Excellent absolute stability with <strong>100.0% Crash-Free Users</strong> across all active builds.</li>
+</ul>
 <hr />
 <h3>🚨 New Build / Staged Rollout Alert Section</h3>
-<pre><code>================================================================================
-🚨 STAGED ROLLOUT WARNING: APP VERSION 1.3.08
-================================================================================
-Target Build: v1.3.08 | Sample Size: 5 Users / 13 Sessions
-Baseline Build: v1.3.07 | Sample Size: 136 Users / 152 Sessions
-
-CRITICAL ANOMALY DETECTED:
-- Engagement Rate in v1.3.08 dropped by -33.0% (53.8% vs. 86.8% Baseline).
-- Average Sessions per User spiked to 2.6 (vs. 1.12 Baseline), indicating repeated app restarts or friction.
-- Crash-Free Rate remains 100%, indicating an ANR, UI freeze, audio engine deadlock, or broken flow rather than a hard crash.
-
-ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine regression testing.
-================================================================================
+<pre><code>[STAGED ROLLOUT WARNING: BUILD 1.3.08]
+----------------------------------------------------------------------------------
+Baseline (v1.3.07) Engagement Rate : 86.8%  (136 Users, 152 Sessions)
+New Build (v1.3.08) Engagement Rate: 53.8%  (5 Users, 13 Sessions)
+Delta Shift                         : -33.0 Percentage Points (Significant Drop)
+Crash-Free Users Rate               : 100.0% (No raw crashes reported)
+----------------------------------------------------------------------------------
 </code></pre>
+<ul>
+<li><strong>Architectural Risk Assessment</strong>: Build <code>1.3.08</code> shows a <strong>33.0 percentage-point collapse in Engagement Rate</strong> compared to <code>1.3.07</code>. While the sample size is small (5 users, 13 sessions), the lower engagement rate indicates potential non-fatal bugs, UI regressions, broken playback state machines, or audio pipeline hangs that stall user activity without triggering a crash. <strong>Halt staged rollout expansion until build 1.3.08 UX telemetry is verified.</strong></li>
+</ul>
 <hr />
 <h3>Top In-App Events &amp; Feature Lookups</h3>
-<h4>Telemetry Analysis &amp; UI Debouncing Bug Lookup</h4>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Event Name</th>
-<th style="text-align: left;">Event Count</th>
-<th style="text-align: left;">Total Users</th>
-<th style="text-align: left;">Events / User</th>
-<th style="text-align: left;">Severity / Telemetry Classification</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><code>player_pitch_changed</code></td>
-<td style="text-align: left;"><strong>5,706</strong></td>
-<td style="text-align: left;">10</td>
-<td style="text-align: left;"><strong>570.6</strong></td>
-<td style="text-align: left;">🚨 <strong>CRITICAL BUG</strong>: Continuous slider event unthrottled.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>player_tempo_changed</code></td>
-<td style="text-align: left;"><strong>2,046</strong></td>
-<td style="text-align: left;">9</td>
-<td style="text-align: left;"><strong>227.3</strong></td>
-<td style="text-align: left;">🚨 <strong>HIGH BUG</strong>: Continuous slider missing debouncing.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>audio_sessions</code></td>
-<td style="text-align: left;">1,265</td>
-<td style="text-align: left;">75</td>
-<td style="text-align: left;">17.3</td>
-<td style="text-align: left;">Normal high-frequency audio engine heartbeat.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>user_engagement</code></td>
-<td style="text-align: left;">1,020</td>
-<td style="text-align: left;">143</td>
-<td style="text-align: left;">7.1</td>
-<td style="text-align: left;">Expected GA4 core telemetry.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>separation_play_started</code></td>
-<td style="text-align: left;">571</td>
-<td style="text-align: left;">47</td>
-<td style="text-align: left;">12.4</td>
-<td style="text-align: left;">Normal playback iteration.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>player_stem_balance_changed</code></td>
-<td style="text-align: left;">132</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;"><strong>132.0</strong></td>
-<td style="text-align: left;">⚠️ <strong>MEDIUM BUG</strong>: Single user balance slider spam.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>player_stem_muted</code></td>
-<td style="text-align: left;">209</td>
-<td style="text-align: left;">5</td>
-<td style="text-align: left;">41.8</td>
-<td style="text-align: left;">High stem toggle activity (normal usage).</td>
-</tr>
-</tbody>
-</table>
-<h4>Diagnostic Findings:</h4>
-<ol>
-<li><strong>Pitch &amp; Tempo Slider Flooding</strong>: <code>player_pitch_changed</code> (570.6 events/user) and <code>player_tempo_changed</code> (227.3 events/user) fire raw events on every pixel touch shift of the UI slider. <strong>Immediate fix required</strong>: Apply a <strong>300ms–500ms trailing-edge debouncer</strong> or trigger telemetry only on <code>onTouchUp</code> / slider release.</li>
-<li><strong>Audio Engine Heartbeat Efficiency</strong>: <code>audio_sessions</code> fires 17.3 times per user; verify session batching to avoid exceeding GA4 daily event limits.</li>
-</ol>
+<h4>Critical Telemetry Anomaly: Un-Debounced UI Sliders</h4>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────────┐
+│ TELEMETRY ANOMALY DETECTED: EVENT FLOODING BUG                                 │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ Event Name                  │ Total Events │ Unique Users │ Events / User       │
+├─────────────────────────────┼──────────────┼──────────────┼─────────────────────┤
+│ player_pitch_changed        │ 5,706        │ 10           │ 570.6  🚨 EXTREME  │
+│ player_tempo_changed        │ 2,046        │ 9            │ 227.3  🚨 HIGH     │
+│ player_stem_balance_changed │ 132          │ 1            │ 132.0  🚨 HIGH     │
+└─────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<ul>
+<li><strong>Technical Root Cause</strong>: The pitch, tempo, and stem balance UI sliders trigger analytics logging directly on the UI slider <code>valueChanged</code> continuous event (e.g., <code>UISlider.valueChanged</code> or SwiftUI <code>Binding</code> update) rather than logging on touch release / editing end (<code>touchUpInside</code> / <code>onEditingChanged</code>).</li>
+<li><strong>Impact</strong>: 10 users generated <strong>7,884 slider events</strong> (out of ~16,500 total daily events for the entire app). This pollutes GA4, inflates session event counts to 97.8 per session, risks breaching GA4 daily event logging limits, and artificially distorts engagement telemetry.</li>
+</ul>
+<h4>Core Functional Event Distribution</h4>
+<ul>
+<li><code>user_engagement</code>: 1,020 events (143 users, 7.1/user)</li>
+<li><code>separation_play_started</code>: 571 events (47 users, 12.4/user — strong repeat playback value)</li>
+<li><code>rate_prompt_shown</code>: 120 events (119 users, 1.0/user — rate prompt triggers for 83.2% of DAU)</li>
+<li><code>player_stem_muted</code>: 209 events (5 users, 41.8/user — power feature used heavily by a select sub-segment)</li>
+</ul>
 <hr />
 <h3>Geographic Distribution</h3>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">Country / Territory</th>
-<th style="text-align: left;">Active Users</th>
-<th style="text-align: left;">Total Sessions</th>
-<th style="text-align: left;">Session Density (Sess/User)</th>
-<th style="text-align: left;">Market Share %</th>
+<th style="text-align: left;">Active Users (Yesterday)</th>
+<th style="text-align: left;">Sessions</th>
+<th style="text-align: left;">% of Total DAU</th>
+<th style="text-align: left;">Market Strategic Role</th>
 </tr>
 </thead>
 <tbody>
@@ -610,64 +576,57 @@ ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine r
 <td style="text-align: left;"><strong>South Korea</strong></td>
 <td style="text-align: left;"><strong>110</strong></td>
 <td style="text-align: left;"><strong>126</strong></td>
-<td style="text-align: left;">1.15</td>
 <td style="text-align: left;"><strong>76.9%</strong></td>
+<td style="text-align: left;"><strong>Primary Growth Engine (Viral / Organic UA)</strong></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Iran</strong></td>
 <td style="text-align: left;">7</td>
 <td style="text-align: left;">9</td>
-<td style="text-align: left;">1.29</td>
 <td style="text-align: left;">4.9%</td>
+<td style="text-align: left;">Secondary Niche Market</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Bangladesh</strong></td>
 <td style="text-align: left;">5</td>
 <td style="text-align: left;">13</td>
-<td style="text-align: left;">2.60</td>
 <td style="text-align: left;">3.5%</td>
+<td style="text-align: left;">Emerging / High Session Frequency</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>India</strong></td>
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">2</td>
-<td style="text-align: left;">0.50</td>
 <td style="text-align: left;">2.8%</td>
+<td style="text-align: left;">Low Engagement / Early Discovery</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Japan</strong></td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">3</td>
-<td style="text-align: left;">1.00</td>
 <td style="text-align: left;">2.1%</td>
+<td style="text-align: left;">Strategic APAC Expansion Target</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>United States</strong></td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">2</td>
-<td style="text-align: left;">0.67</td>
 <td style="text-align: left;">2.1%</td>
+<td style="text-align: left;">High-Arpu Expansion Target (Under-indexed)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Canada</strong></td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">3</td>
-<td style="text-align: left;">1.50</td>
-<td style="text-align: left;">1.4%</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>France</strong></td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">3</td>
-<td style="text-align: left;">1.50</td>
-<td style="text-align: left;">1.4%</td>
+<td style="text-align: left;"><strong>Canada / France</strong></td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">2.8%</td>
+<td style="text-align: left;">Tier-1 Secondary Markets</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Other (Oman, PH)</strong></td>
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">2</td>
-<td style="text-align: left;">1.00</td>
 <td style="text-align: left;">1.4%</td>
+<td style="text-align: left;">Rest of World</td>
 </tr>
 </tbody>
 </table>
@@ -677,58 +636,51 @@ ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine r
 <thead>
 <tr>
 <th style="text-align: left;">Priority</th>
-<th style="text-align: left;">Track</th>
-<th style="text-align: left;">Focus Area</th>
-<th style="text-align: left;">Detailed Action Plan</th>
-<th style="text-align: left;">Owner</th>
+<th style="text-align: left;">Track / Owner</th>
+<th style="text-align: left;">Strategic Action &amp; Implementation Plan</th>
+<th style="text-align: left;">Target Metric / ROI Impact</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;"><strong>P0</strong></td>
 <td style="text-align: left;"><strong>Engineering</strong></td>
-<td style="text-align: left;"><strong>Pause 1.3.08 Rollout</strong></td>
-<td style="text-align: left;">Freeze App Store release of 1.3.08. Investigate cause of ER collapse (53.8% vs 86.8%). Check for audio engine thread locks.</td>
-<td style="text-align: left;">Lead iOS Engineer</td>
+<td style="text-align: left;"><strong>Patch Slider Telemetry Debouncing</strong>: Implement a 500ms debounce timer or attach event dispatching strictly to slider touch-up events (<code>UIControl.Event.touchUpInside</code> / SwiftUI <code>onEditingChanged</code>) for <code>player_pitch_changed</code>, <code>player_tempo_changed</code>, and <code>player_stem_balance_changed</code>.</td>
+<td style="text-align: left;">Eliminates &gt;50% of event volume; prevents GA4 quota exhaustion.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>P0</strong></td>
-<td style="text-align: left;"><strong>Analytics</strong></td>
-<td style="text-align: left;"><strong>Fix Telemetry Spam</strong></td>
-<td style="text-align: left;">Implement trailing-edge debouncing on <code>player_pitch_changed</code> and <code>player_tempo_changed</code> UI controls.</td>
-<td style="text-align: left;">Mobile Analytics Lead</td>
+<td style="text-align: left;"><strong>Engineering / QA</strong></td>
+<td style="text-align: left;"><strong>Halt &amp; Investigate Staged Rollout <code>v1.3.08</code></strong>: Freeze rollout expansion at 3.5%. Conduct localized QA testing on <code>1.3.08</code> to identify why session engagement rate plummeted to 53.8% (check audio processing pipeline and UI lockups).</td>
+<td style="text-align: left;">Protects 96.5% of production users from engagement degradation.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>P1</strong></td>
-<td style="text-align: left;"><strong>Product</strong></td>
-<td style="text-align: left;"><strong>Import Drop-off Fix</strong></td>
-<td style="text-align: left;">Redesign file/photo import confirmation UI to eliminate the 43.1% conversion drop-off between selection and processing.</td>
-<td style="text-align: left;">Core Product Designer</td>
+<td style="text-align: left;"><strong>Product / UX</strong></td>
+<td style="text-align: left;"><strong>Optimize File Import Conversion Funnel</strong>: Address the 49.5% drop-off between clicking "+" and importing a file. Introduce a "Try with Sample Track" CTA directly on the empty state import view, and support drag-and-drop / direct audio share sheet extensions.</td>
+<td style="text-align: left;">Increases core feature conversion from 44.8% to &gt;65%.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>P1</strong></td>
-<td style="text-align: left;"><strong>Growth</strong></td>
-<td style="text-align: left;"><strong>South Korea UA Capture</strong></td>
-<td style="text-align: left;">Capitalize on Korean growth surge (76.9% AU); localize store metadata, keywords, and onboarding into Korean.</td>
-<td style="text-align: left;">Growth Marketing Manager</td>
+<td style="text-align: left;"><strong>Growth / Marketing</strong></td>
+<td style="text-align: left;"><strong>Capitalize on South Korea Viral Wave</strong>: Localize App Store Product Pages (ASO) specifically for Korean search terms, and deploy localized onboarding audio demos to consolidate the viral growth loop in SK.</td>
+<td style="text-align: left;">Maximizes conversion from organic Korean impressions.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>P2</strong></td>
-<td style="text-align: left;"><strong>Growth</strong></td>
-<td style="text-align: left;"><strong>Retention Loops</strong></td>
-<td style="text-align: left;">Deploy local push notifications and background stem completion alerts to boost returning user engagement (currently 69.2%).</td>
-<td style="text-align: left;">Lifecycle Specialist</td>
+<td style="text-align: left;"><strong>Product / Retention</strong></td>
+<td style="text-align: left;"><strong>D1-D7 Lifecycle Engagement</strong>: Implement local push notifications reminding users of processed separations or suggesting stem mixing techniques 24 hours after their first separation.</td>
+<td style="text-align: left;">Boosts returning DAU cohort from 41 to &gt;80.</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h1>3. Application Deep-Dive: Vocal Cleaner</h1>
+<h1>3. Deep-Dive: Vocal Cleaner</h1>
 <h3>App Header &amp; Health Score</h3>
 <ul>
-<li><strong>App Name:</strong> Vocal Cleaner</li>
-<li><strong>Bundle ID:</strong> <code>com.neuralSound.audiocleaner</code> | <strong>GA4 Property ID:</strong> <code>533563138</code> | <strong>Stream ID:</strong> <code>15407667671</code></li>
-<li><strong>Health Score:</strong> <strong>4.5 / 10</strong></li>
-<li><strong>Health Rationale:</strong> Extremely low active scale (3 AU yesterday; 27 lifetime users), critical stability issues (<strong>66.67% Crash-Free User Rate</strong>), feature blockage (<code>vc_record_denoise_blocked</code>), and heavy paywall purchase friction with recurring StoreKit errors (<code>purchase_storekit_failed</code>). Retains points due to high engagement duration among power users (3,531 seconds/session).</li>
+<li><strong>Bundle ID</strong>: <code>com.neuralSound.audiocleaner</code> | <strong>GA4 Property ID</strong>: <code>533563138</code> | <strong>Stream ID</strong>: <code>15407667671</code></li>
+<li><strong>Health Score</strong>: <strong>3.8 / 10</strong></li>
+<li><strong>Rationale</strong>: Severe operational risks. (1) <strong>Critical Crash Rate</strong>: Crash-free user rate is <strong>66.67%</strong> (1 in 3 users experienced a crash), (2) <strong>Zero New User Acquisition</strong>: 0 new users joined yesterday, (3) <strong>Broken Monetization Telemetry/State Loop</strong>: Infinite purchase/paywall event loops detected (e.g., 12 purchase attempts and 10 approvals for 1 user), (4) <strong>Geographic Isolation</strong>: 100% of user traffic originates from Bangladesh.</li>
 </ul>
 <hr />
 <h3>📅 Multi-Horizon Growth &amp; Historical Scale Comparison</h3>
@@ -740,7 +692,7 @@ ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine r
 <th style="text-align: left;">New Users (NU)</th>
 <th style="text-align: left;">Total Sessions</th>
 <th style="text-align: left;">Engagement Rate</th>
-<th style="text-align: left;">Growth &amp; Retention Trajectory Analysis</th>
+<th style="text-align: left;">Growth / Trajectory Dynamics</th>
 </tr>
 </thead>
 <tbody>
@@ -749,24 +701,24 @@ ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine r
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">0</td>
 <td style="text-align: left;">17</td>
-<td style="text-align: left;">88.2%</td>
-<td style="text-align: left;"><strong>Zero Acquisition</strong>: Baseline active core returning power users.</td>
+<td style="text-align: left;"><strong>88.2%</strong></td>
+<td style="text-align: left;"><strong>Stagnant</strong>: 0% New User Acquisition.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Past 7 Days</strong></td>
+<td style="text-align: left;"><strong>Past 7 Days (WAU)</strong></td>
 <td style="text-align: left;">11</td>
 <td style="text-align: left;">7</td>
 <td style="text-align: left;">65</td>
 <td style="text-align: left;">73.8%</td>
-<td style="text-align: left;"><strong>Low Scale</strong>: Micro-cohort operating with limited reach.</td>
+<td style="text-align: left;"><strong>Low Scale</strong>: Small test audience / legacy footprint.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Past 30 Days</strong></td>
+<td style="text-align: left;"><strong>Past 30 Days (MAU)</strong></td>
 <td style="text-align: left;">27</td>
 <td style="text-align: left;">27</td>
 <td style="text-align: left;">94</td>
 <td style="text-align: left;">69.1%</td>
-<td style="text-align: left;"><strong>Static Footprint</strong>: Lifetime audience bounded at 27 users.</td>
+<td style="text-align: left;"><strong>Flat Scale</strong>: Entire 30d user base built in single window.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Past Year (365 Days)</strong></td>
@@ -774,36 +726,35 @@ ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine r
 <td style="text-align: left;">27</td>
 <td style="text-align: left;">94</td>
 <td style="text-align: left;">69.1%</td>
-<td style="text-align: left;">Entire app historical lifetime footprint is 27 total users.</td>
+<td style="text-align: left;"><strong>Static Footprint</strong>: Lifetime ceiling reached at 27 users.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>All-Time / Lifetime</strong></td>
+<td style="text-align: left;"><strong>All-Time / Lifetime Total</strong></td>
 <td style="text-align: left;">27</td>
 <td style="text-align: left;">27</td>
 <td style="text-align: left;">94</td>
 <td style="text-align: left;">69.1%</td>
-<td style="text-align: left;"><strong>Flat Scale</strong>: Acquisition channel is currently inactive/dormant.</td>
+<td style="text-align: left;"><strong>Baseline Scale</strong>: Total historical lifetime user cap.</td>
 </tr>
 </tbody>
 </table>
-<h4>Scale &amp; Trajectory Analysis</h4>
+<h4>Velocity, Acquisition Trajectory &amp; Retention Dynamics Analysis</h4>
 <ul>
-<li><strong>Growth Velocity:</strong> Stagnant. No new user acquisition in the last 24 hours, and only 7 new users acquired across the last 7 days.</li>
-<li><strong>Acquisition Trajectory:</strong> Historical acquisition peaked during a brief test window within the last 30 days and has collapsed to zero organic inbound volume.</li>
-<li><strong>Lifetime Retention &amp; Power Usage:</strong> Returning users display an extreme average session duration of <strong>3,531.1 seconds (~58.8 minutes)</strong> across 5.67 sessions per user/day. This signifies a tiny, highly dedicated utility power-user cohort (e.g., audio recording/denoising studio session).</li>
+<li><strong>Scale Stagnation</strong>: The product is currently inactive from an acquisition standpoint. With 0 new users yesterday and a lifetime total of just 27 users, the application behaves like an unreleased internal test build or an unpromoted utility.</li>
+<li><strong>Session Usage</strong>: The 3 active returning users yesterday generated <strong>17 sessions</strong> with an average duration of <strong>3,531.1s (~58 minutes)</strong>. This indicates that users leave the audio noise-cleaning/recording session running in the background, or background processing loops fail to terminate properly.</li>
 </ul>
 <hr />
 <h3>Old vs. New User Cohort Deep-Dive</h3>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Cohort Segment</th>
+<th style="text-align: left;">User Cohort Type</th>
 <th style="text-align: left;">Active Users</th>
 <th style="text-align: left;">Sessions</th>
 <th style="text-align: left;">Avg Session Duration</th>
 <th style="text-align: left;">Engagement Rate</th>
-<th style="text-align: left;">Screen / Page Views</th>
-<th style="text-align: left;">Key Cohort Behavior</th>
+<th style="text-align: left;">Screen Views</th>
+<th style="text-align: left;">Key Behavioral Insights</th>
 </tr>
 </thead>
 <tbody>
@@ -814,25 +765,16 @@ ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine r
 <td style="text-align: left;">0.0s</td>
 <td style="text-align: left;">N/A</td>
 <td style="text-align: left;">0</td>
-<td style="text-align: left;">No new activation in reporting window.</td>
+<td style="text-align: left;">Acquisition completely stalled.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Returning Users</strong></td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">17</td>
-<td style="text-align: left;">3,531.1s (~58.8 min)</td>
+<td style="text-align: left;"><strong>3,531.1s</strong></td>
 <td style="text-align: left;"><strong>88.2%</strong></td>
 <td style="text-align: left;">101</td>
-<td style="text-align: left;">Continuous audio studio work; heavy monetization attempt loops.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>(not set)</strong></td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">0.0s</td>
-<td style="text-align: left;">N/A</td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">High session frequency (5.6 sessions/user). Heavy paywall interaction &amp; processing loops.</td>
 </tr>
 </tbody>
 </table>
@@ -841,12 +783,12 @@ ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine r
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Date</th>
-<th style="text-align: left;">Active Users (AU)</th>
-<th style="text-align: left;">New Users (NU)</th>
+<th style="text-align: left;">Date (YYYY-MM-DD)</th>
+<th style="text-align: left;">Active Users (DAU)</th>
+<th style="text-align: left;">New Users</th>
 <th style="text-align: left;">Total Sessions</th>
 <th style="text-align: left;">Engagement Rate</th>
-<th style="text-align: left;">Daily Commentary</th>
+<th style="text-align: left;">Daily Trend Notes</th>
 </tr>
 </thead>
 <tbody>
@@ -856,7 +798,7 @@ ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine r
 <td style="text-align: left;">0</td>
 <td style="text-align: left;">11</td>
 <td style="text-align: left;">63.6%</td>
-<td style="text-align: left;">Low scale power usage baseline.</td>
+<td style="text-align: left;">Baseline returning user test activity.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2026-08-16</strong></td>
@@ -864,7 +806,7 @@ ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine r
 <td style="text-align: left;">0</td>
 <td style="text-align: left;">9</td>
 <td style="text-align: left;">66.7%</td>
-<td style="text-align: left;">Regular returning session frequency.</td>
+<td style="text-align: left;">Static retention testing.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2026-08-17</strong></td>
@@ -872,7 +814,7 @@ ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine r
 <td style="text-align: left;">0</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">100.0%</td>
-<td style="text-align: left;">Single power user engaged.</td>
+<td style="text-align: left;">Single user power session.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2026-08-18</strong></td>
@@ -880,15 +822,15 @@ ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine r
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">7</td>
 <td style="text-align: left;">85.7%</td>
-<td style="text-align: left;">1 new user acquired.</td>
+<td style="text-align: left;">Minor acquisition ping (1 new user).</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2026-08-19</strong></td>
 <td style="text-align: left;"><strong>8</strong></td>
 <td style="text-align: left;"><strong>6</strong></td>
-<td style="text-align: left;"><strong>17</strong></td>
+<td style="text-align: left;">17</td>
 <td style="text-align: left;">58.8%</td>
-<td style="text-align: left;">Small UA spike (6 new users); lower engagement.</td>
+<td style="text-align: left;">Test campaign / soft-launch spike (6 new users).</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2026-08-20</strong></td>
@@ -896,59 +838,61 @@ ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine r
 <td style="text-align: left;">0</td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">66.7%</td>
-<td style="text-align: left;">Scale drops back to baseline.</td>
+<td style="text-align: left;">Post-spike retention drop.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2026-08-21</strong></td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">0</td>
 <td style="text-align: left;"><strong>17</strong></td>
-<td style="text-align: left;"><strong>88.2%</strong></td>
-<td style="text-align: left;">High density daily active usage (5.67 sess/user).</td>
+<td style="text-align: left;">88.2%</td>
+<td style="text-align: left;">Returning users execute heavy paywall &amp; recording actions.</td>
 </tr>
 </tbody>
 </table>
 <hr />
 <h3>User Funnel Diagrams</h3>
-<h4>Monetization &amp; Purchase Execution Funnel (Single User Purchase Attempt Analysis)</h4>
-<pre><code>[1 Unique User]   paywall_viewed (16 Total Views)
-       │
-       ▼  (100% User Intent / 12 Plan Selection Events)
-[1 Unique User]   paywall_plan_selected (2) / subscribe_tapped (12) / purchase_started (12)
-       │
-       ├─────────────────────────────────────────┐
-       ▼  (83.3% Approval Rate)                  ▼  (StoreKit Errors &amp; Failures)
-[1 User] purchase_approved (10)             [1 User] purchase_failed (5 events)
-       │                                    [1 User] purchase_storekit_failed (2 events)
-       ▼  (60.0% Transaction Completion)        [1 User] purchase_cancelled (1 event)
-[1 User] purchase / purchase_succeeded (6) 
-       │
-       ▼  (Subscription Cycle Active)
-[2 Users] app_store_subscription_renew (35 Events Logged)
+<h4>Recording &amp; Denoise Processing Loop Funnel</h4>
+<pre><code>[2] Unique Users Executing Recording Workflow
+  │
+  ▼
+[6]  vc_record_open
+  │
+  ▼  100% Permission Grant Rate
+[6]  vc_record_permission_result
+  │
+  ▼
+[8]  vc_record_start  ──►  [9] vc_record_pause  ──►  [4] vc_record_done
+  │
+  ▼  50% Denoise Attempt Success Rate
+[4]  vc_record_denoise_tap
+  │
+  ├─► [2] Denoise Action Completed Successfully
+  └─► [2] vc_record_denoise_blocked (Paywall Barrier Reached)
 </code></pre>
-<h4>Core Feature Execution Funnel (Audio Recording &amp; Denoise Workflow)</h4>
-<pre><code>[2 Unique Users]  vc_record_open (6 events)
-       │
-       ▼  (100% User Conversion)
-[2 Unique Users]  vc_record_permission_result (6 events) -&gt; Granted
-       │
-       ▼  (100% User Conversion)
-[2 Unique Users]  vc_record_start (8 events) -&gt; vc_record_pause (9 events)
-       │
-       ▼  (100% User Conversion)
-[2 Unique Users]  vc_record_done (4 events)
-       │
-       ├─────────────────────────────────────────┐
-       ▼  (Processing Successful)                ▼  (Feature Wall / Paywall Block)
-[2 Users] vc_record_denoise_tap (4)         [1 User] vc_record_denoise_blocked (2)
+<h4>Monetization &amp; StoreKit Purchase Loop Anomaly</h4>
+<pre><code>┌─────────────────────────────────────────────────────────────────────────────────┐
+│ MONETIZATION STATE MACHINE ANOMALY DETECTED                                     │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ Event Name                        │ Total Events │ Unique Users │ Events / User │
+├───────────────────────────────────┼──────────────┼──────────────┼───────────────┤
+│ paywall_viewed                    │ 16           │ 1            │ 16.0          │
+│ purchase_started                  │ 12           │ 1            │ 12.0          │
+│ subscribe_tapped                  │ 12           │ 1            │ 12.0          │
+│ purchase_approved                 │ 10           │ 1            │ 10.0          │
+│ purchase                          │ 6            │ 1            │ 6.0           │
+│ purchase_succeeded                │ 6            │ 1            │ 6.0           │
+│ purchase_failed                   │ 5            │ 1            │ 5.0           │
+│ purchase_storekit_failed          │ 2            │ 1            │ 2.0           │
+│ purchase_cancelled                │ 1            │ 1            │ 1.0           │
+│ app_store_subscription_renew      │ 35           │ 2            │ 17.5          │
+└─────────────────────────────────────────────────────────────────────────────────┘
 </code></pre>
+<ul>
+<li><strong>Critical Monetization Loop Analysis</strong>: <strong>A single user triggered 12 purchase start attempts, 10 approvals, 6 successful purchases, and 5 purchase failures in a 24-hour window.</strong> This behavior points to an unstable payment observer loop. The StoreKit receipt verification phase fails locally or times out, causing the app to prompt the paywall again after a successful purchase, forcing the user into a payment loop.</li>
+</ul>
 <hr />
 <h3>Crash &amp; Stability Health</h3>
-<ul>
-<li><strong>Overall Crash-Free User Rate:</strong> <strong>66.67%</strong> (🚨 <strong>CRITICAL ALERT</strong>)</li>
-<li><strong>Active User Breakdown:</strong> Out of 3 active users yesterday, <strong>1 user experienced a fatal <code>app_exception</code></strong>.</li>
-<li><strong>Exception Analysis:</strong> 1 <code>app_exception</code> event recorded. Given the 100% Bangladesh footprint and heavy StoreKit failure logs, the crash is correlated with either memory overflow during long denoise processing runs or an unhandled exception state during StoreKit transaction callbacks.</li>
-</ul>
 <table>
 <thead>
 <tr>
@@ -956,8 +900,8 @@ ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine r
 <th style="text-align: left;">Active Users</th>
 <th style="text-align: left;">Sessions</th>
 <th style="text-align: left;">Engagement Rate</th>
-<th style="text-align: left;">Crash-Free Rate</th>
-<th style="text-align: left;">Operational Status</th>
+<th style="text-align: left;">Crash-Free Users Rate</th>
+<th style="text-align: left;">Deployment Status</th>
 </tr>
 </thead>
 <tbody>
@@ -965,137 +909,51 @@ ACTION REQUIRED: Pause v1.3.08 staged rollout immediately pending audio engine r
 <td style="text-align: left;"><strong>1.0.01</strong></td>
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">17</td>
-<td style="text-align: left;">88.2%</td>
-<td style="text-align: left;"><strong>66.67%</strong></td>
-<td style="text-align: left;">🚨 <strong>Unstable Baseline</strong> (Critical Patch Required)</td>
+<td style="text-align: left;"><strong>88.2%</strong></td>
+<td style="text-align: left;"><strong>66.67%</strong> 🚨</td>
+<td style="text-align: left;">Active Production Build (100% Traffic)</td>
 </tr>
 </tbody>
 </table>
+<h4>Stability Incident Brief</h4>
+<ul>
+<li><strong>Crash Index</strong>: <strong>33.3% User Crash Impact Rate</strong>. 1 out of 3 active daily users suffered an unhandled application crash or native fatal exception (<code>app_exception</code> logged in event stream).</li>
+<li><strong>Suspected Failure Vector</strong>: Low-level audio buffer overflow or memory pressure exception during background audio noise cancellation processing (<code>vc_record_denoise_tap</code>), or an unhandled exception inside the StoreKit purchase completion handler.</li>
+</ul>
 <hr />
 <h3>🚨 New Build / Staged Rollout Alert Section</h3>
-<pre><code>================================================================================
-🚨 CRITICAL BUILD STABILITY ALERT: VOCAL CLEANER v1.0.01
-================================================================================
-Target Build: v1.0.01 | Sample Size: 3 Users / 17 Sessions
-
-CRITICAL DEFECT DETECTED:
-- Crash-Free User Rate is 66.67% (Industry standard target: &gt;99.0%).
-- 1 out of 3 daily users suffered an unhandled app crash (`app_exception`).
-- 5 x `purchase_failed` and 2 x `purchase_storekit_failed` events triggered by 1 user, indicating broken IAP callback handlers or StoreKit 2 integration bugs.
-
-ACTION REQUIRED: Immediately deploy hotfix build v1.0.02 targeting StoreKit transaction handlers and denoise memory buffers.
-================================================================================
+<pre><code>[CRITICAL BUILD ALERT: BUILD 1.0.01 IS UNSTABLE]
+----------------------------------------------------------------------------------
+Active Version                  : 1.0.01 (100% Traffic Base)
+Crash-Free User Rate            : 66.67% (UNACCEPTABLE PRODUCTION THRESHOLD)
+Fatal Exception Logged          : app_exception (1 Event logged)
+StoreKit Failure Rate           : 7 Out of 12 Purchase Attempts Failed/Cancelled
+----------------------------------------------------------------------------------
 </code></pre>
+<ul>
+<li><strong>Architectural Risk Assessment</strong>: Build <code>1.0.01</code> is unfit for public distribution. It exhibits both <strong>fatal application crashes</strong> and <strong>severe transaction handling bugs</strong>. <strong>Block all paid acquisition campaigns immediately</strong> until build <code>1.0.02</code> is compiled with fix patches and thoroughly verified via Xcode Diagnostic Tools and StoreKit Sandbox testing.</li>
+</ul>
 <hr />
 <h3>Top In-App Events &amp; Feature Lookups</h3>
-<h4>Telemetry Analysis &amp; Monetization Loop Bug Lookup</h4>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Event Name</th>
-<th style="text-align: left;">Event Count</th>
-<th style="text-align: left;">Total Users</th>
-<th style="text-align: left;">Events / User</th>
-<th style="text-align: left;">Feature Analysis &amp; Operational Diagnosis</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><code>user_engagement</code></td>
-<td style="text-align: left;">167</td>
-<td style="text-align: left;">3</td>
-<td style="text-align: left;">55.7</td>
-<td style="text-align: left;">Sustained long-duration active usage.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>screen_view</code></td>
-<td style="text-align: left;">101</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">50.5</td>
-<td style="text-align: left;">High screen navigation depth per user.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>app_store_subscription_renew</code></td>
-<td style="text-align: left;">35</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">17.5</td>
-<td style="text-align: left;">Active recurring subscription telemetry.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>paywall_viewed</code></td>
-<td style="text-align: left;">16</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;"><strong>16.0</strong></td>
-<td style="text-align: left;">⚠️ Paywall loop: User opened paywall 16 times in 1 day.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>subscribe_tapped</code></td>
-<td style="text-align: left;">12</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;"><strong>12.0</strong></td>
-<td style="text-align: left;">High purchase intent retried 12 times due to errors.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>purchase_started</code></td>
-<td style="text-align: left;">12</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">12.0</td>
-<td style="text-align: left;">Transaction attempt initiated 12 times.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>purchase_approved</code></td>
-<td style="text-align: left;">10</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">10.0</td>
-<td style="text-align: left;">StoreKit approved purchase 10 times.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>purchase_succeeded</code> / <code>purchase</code></td>
-<td style="text-align: left;">6 / 6</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">6.0</td>
-<td style="text-align: left;">6 confirmed purchase events.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>purchase_failed</code></td>
-<td style="text-align: left;"><strong>5</strong></td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;"><strong>5.0</strong></td>
-<td style="text-align: left;">🚨 <strong>IAP Bug</strong>: 5 transaction failures logged.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>purchase_storekit_failed</code></td>
-<td style="text-align: left;"><strong>2</strong></td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;"><strong>2.0</strong></td>
-<td style="text-align: left;">🚨 <strong>StoreKit Bug</strong>: StoreKit framework errors.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>vc_record_denoise_blocked</code></td>
-<td style="text-align: left;"><strong>2</strong></td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;"><strong>2.0</strong></td>
-<td style="text-align: left;">⚠️ User blocked from denoising due to paywall wall.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>app_exception</code></td>
-<td style="text-align: left;"><strong>1</strong></td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;"><strong>1.0</strong></td>
-<td style="text-align: left;">🚨 Unhandled fatal application crash.</td>
-</tr>
-</tbody>
-</table>
+<ul>
+<li><code>user_engagement</code>: 167 events (3 users, 55.7/user)</li>
+<li><code>screen_view</code>: 101 events (2 users, 50.5/user)</li>
+<li><code>app_store_subscription_renew</code>: 35 events (2 users, 17.5/user — StoreKit renewal notification handling)</li>
+<li><code>paywall_viewed</code>: 16 events (1 user, 16.0/user — paywall re-display loop)</li>
+<li><code>purchase_started</code> / <code>subscribe_tapped</code>: 12 events (1 user, 12.0/user)</li>
+<li><code>vc_record_pause</code> / <code>vc_record_start</code>: 17 aggregate events (2 users)</li>
+<li><code>app_exception</code>: 1 event (1 user — fatal crash trigger)</li>
+</ul>
 <hr />
 <h3>Geographic Distribution</h3>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">Country / Territory</th>
-<th style="text-align: left;">Active Users</th>
-<th style="text-align: left;">Total Sessions</th>
-<th style="text-align: left;">Session Density (Sess/User)</th>
-<th style="text-align: left;">Market Share %</th>
+<th style="text-align: left;">Active Users (Yesterday)</th>
+<th style="text-align: left;">Sessions</th>
+<th style="text-align: left;">% of Total DAU</th>
+<th style="text-align: left;">Market Strategic Role</th>
 </tr>
 </thead>
 <tbody>
@@ -1103,72 +961,81 @@ ACTION REQUIRED: Immediately deploy hotfix build v1.0.02 targeting StoreKit tran
 <td style="text-align: left;"><strong>Bangladesh</strong></td>
 <td style="text-align: left;"><strong>3</strong></td>
 <td style="text-align: left;"><strong>17</strong></td>
-<td style="text-align: left;"><strong>5.67</strong></td>
 <td style="text-align: left;"><strong>100.0%</strong></td>
+<td style="text-align: left;"><strong>Sole Active Region (Test / Local Base)</strong></td>
 </tr>
 </tbody>
 </table>
+<ul>
+<li><strong>Geographic Risk</strong>: The application has 0 presence in Tier-1 markets (US, UK, EU, JP). Operational expansion is impossible until core stability and StoreKit bugs are resolved.</li>
+</ul>
 <hr />
 <h3>Prioritized Strategic Action Matrix (Vocal Cleaner)</h3>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">Priority</th>
-<th style="text-align: left;">Track</th>
-<th style="text-align: left;">Focus Area</th>
-<th style="text-align: left;">Detailed Action Plan</th>
-<th style="text-align: left;">Owner</th>
+<th style="text-align: left;">Track / Owner</th>
+<th style="text-align: left;">Strategic Action &amp; Implementation Plan</th>
+<th style="text-align: left;">Target Metric / ROI Impact</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;"><strong>P0</strong></td>
 <td style="text-align: left;"><strong>Engineering</strong></td>
-<td style="text-align: left;"><strong>Fix App Crash &amp; StoreKit</strong></td>
-<td style="text-align: left;">Debug <code>app_exception</code> crash logs and resolve StoreKit transaction failure loops (<code>purchase_storekit_failed</code>). Deploy v1.0.02 patch.</td>
-<td style="text-align: left;">Lead iOS Engineer</td>
+<td style="text-align: left;"><strong>Fix Crash in Build 1.0.01</strong>: Symbolicate and resolve the <code>app_exception</code> crash. Inspect memory allocation during real-time denoise DSP buffer processing and thread safety in StoreKit transaction observers.</td>
+<td style="text-align: left;">Restores Crash-Free Users Rate to <strong>&gt;99.0%</strong>.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>P0</strong></td>
-<td style="text-align: left;"><strong>Product</strong></td>
-<td style="text-align: left;"><strong>IAP Retry Flow Optimization</strong></td>
-<td style="text-align: left;">Fix payment state machine to prevent users from repeating purchase attempts 12 times due to unhandledStoreKit state hangs.</td>
-<td style="text-align: left;">Monetization PM</td>
+<td style="text-align: left;"><strong>Engineering</strong></td>
+<td style="text-align: left;"><strong>Re-architect StoreKit Transaction Observer</strong>: Fix the payment state machine. Ensure <code>SKPaymentQueue.default().finishTransaction(transaction)</code> is called cleanly upon verification, and resolve the state handling bug that re-prompts paywalls after successful purchases.</td>
+<td style="text-align: left;">Resolves transaction looping; prevents duplicate billing complaints.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>P1</strong></td>
-<td style="text-align: left;"><strong>Growth</strong></td>
-<td style="text-align: left;"><strong>User Acquisition Engine</strong></td>
-<td style="text-align: left;">Initiate basic ASA (Apple Search Ads) campaigns targeting "voice denoiser" keywords to scale baseline beyond 3 AU/day.</td>
-<td style="text-align: left;">Growth Marketing Lead</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>P1</strong></td>
-<td style="text-align: left;"><strong>Product</strong></td>
-<td style="text-align: left;"><strong>Denoise Barrier UX</strong></td>
-<td style="text-align: left;">Revamp <code>vc_record_denoise_blocked</code> paywall prompt to present clear trial options rather than hard feature blocks.</td>
-<td style="text-align: left;">Product Designer</td>
+<td style="text-align: left;"><strong>Product / Revenue</strong></td>
+<td style="text-align: left;"><strong>Fix Denoise Paywall Lockout</strong>: Clarify paywall triggers when <code>vc_record_denoise_blocked</code> fires. Provide users with 1 free daily denoise clean before enforcing paywall limits to allow core feature evaluation.</td>
+<td style="text-align: left;">Elevates user retention and trial activation rates.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>P2</strong></td>
-<td style="text-align: left;"><strong>Analytics</strong></td>
-<td style="text-align: left;"><strong>Telemetry Stream Audit</strong></td>
-<td style="text-align: left;">Consolidate duplicate purchase events (<code>purchase</code> vs. <code>purchase_succeeded</code>) to standardize revenue tracking.</td>
-<td style="text-align: left;">Analytics Engineer</td>
+<td style="text-align: left;"><strong>Growth</strong></td>
+<td style="text-align: left;"><strong>Initiate Soft Launch UA Campaign</strong>: Once build stability (P0) is verified, launch targeted Apple Search Ads (ASA) campaigns targeting keywords like "vocal cleaner", "noise remover", and "voice isolate" across US/EU markets.</td>
+<td style="text-align: left;">Establishes sustainable multi-region acquisition baseline.</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<p><em>Report compiled autonomously by Mobile Analytics &amp; Growth Architect Engine.</em></p>
-    <h2>📊 Visual Graphs & Performance Charts</h2><div class='chart-box'><p><img class='chart-img' src='/Users/donieltripura/Neural Sound/Analysis/Workflow/reports/charts/music_separation_ios_trend.png' /></p><p><img class='chart-img' src='/Users/donieltripura/Neural Sound/Analysis/Workflow/reports/charts/music_separation_ios_horizons.png' /></p><p><img class='chart-img' src='/Users/donieltripura/Neural Sound/Analysis/Workflow/reports/charts/music_separation_ios_funnel.png' /></p><p><img class='chart-img' src='/Users/donieltripura/Neural Sound/Analysis/Workflow/reports/charts/music_separation_ios_cohort.png' /></p><p><img class='chart-img' src='/Users/donieltripura/Neural Sound/Analysis/Workflow/reports/charts/music_separation_ios_version.png' /></p><p><img class='chart-img' src='/Users/donieltripura/Neural Sound/Analysis/Workflow/reports/charts/vocal_cleaner_trend.png' /></p><p><img class='chart-img' src='/Users/donieltripura/Neural Sound/Analysis/Workflow/reports/charts/vocal_cleaner_horizons.png' /></p><p><img class='chart-img' src='/Users/donieltripura/Neural Sound/Analysis/Workflow/reports/charts/vocal_cleaner_version.png' /></p></div>
+<h1>4. Overall Portfolio Strategic Roadmap</h1>
+<pre><code>  ┌─────────────────────────────────────────────────────────────────────────────────┐
+  │                        PORTFOLIO EXECUTION TIMELINE                             │
+  └─────────────────────────────────────────────────────────────────────────────────┘
+    WEEK 1: EMERGENCY STABILITY &amp; TELEMETRY PATCHES (P0)
+    ├── [Music Separation iOS] Deploy v1.3.09: Fix UI Slider Debouncing.
+    ├── [Music Separation iOS] Freeze v1.3.08 staged rollout; audit engagement regression.
+    └── [Vocal Cleaner] Deploy v1.0.02: Fix fatal app crash &amp; StoreKit purchase loop.
+
+    WEEK 2 - 3: FUNNEL OPTIMIZATION &amp; GEOGRAPHIC EXPANSION (P1)
+    ├── [Music Separation iOS] Redesign import workflow; add sample tracks to fix 49.5% drop.
+    ├── [Music Separation iOS] Localize ASO for South Korea market surge.
+    └── [Vocal Cleaner] Implement 1-free-tier denoise processing model.
+
+    WEEK 4+: RETENTION ENGINE &amp; SCALED ACQUISITION (P2)
+    ├── [Music Separation iOS] Implement post-processing local retention push notifications.
+    └── [Vocal Cleaner] Launch US/EU ASA acquisition test suite upon stability sign-off.
+</code></pre>
+    <h2>📊 Visual Graphs & Performance Charts</h2><div class='charts-grid'><div class='chart-card'><h3>Music Separation Ios Trend</h3><img class='chart-img' src='charts/music_separation_ios_trend.png' alt='Music Separation Ios Trend' /></div><div class='chart-card'><h3>Music Separation Ios Horizons</h3><img class='chart-img' src='charts/music_separation_ios_horizons.png' alt='Music Separation Ios Horizons' /></div><div class='chart-card'><h3>Music Separation Ios Funnel</h3><img class='chart-img' src='charts/music_separation_ios_funnel.png' alt='Music Separation Ios Funnel' /></div><div class='chart-card'><h3>Music Separation Ios Cohort</h3><img class='chart-img' src='charts/music_separation_ios_cohort.png' alt='Music Separation Ios Cohort' /></div><div class='chart-card'><h3>Music Separation Ios Version</h3><img class='chart-img' src='charts/music_separation_ios_version.png' alt='Music Separation Ios Version' /></div><div class='chart-card'><h3>Vocal Cleaner Trend</h3><img class='chart-img' src='charts/vocal_cleaner_trend.png' alt='Vocal Cleaner Trend' /></div><div class='chart-card'><h3>Vocal Cleaner Horizons</h3><img class='chart-img' src='charts/vocal_cleaner_horizons.png' alt='Vocal Cleaner Horizons' /></div><div class='chart-card'><h3>Vocal Cleaner Version</h3><img class='chart-img' src='charts/vocal_cleaner_version.png' alt='Vocal Cleaner Version' /></div></div>
 
     <div class="footer-note">
         <strong>Direct Console Links:</strong><br>
-        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome">🔗 Open Google Analytics 4 Dashboard</a> &bull;
-        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics">🔥 Open Firebase Analytics Console</a> &bull;
-        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics">💥 Open Firebase Crashlytics</a>
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome" target="_blank">🔗 Open Google Analytics 4 Dashboard</a> &bull;
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics" target="_blank">🔥 Open Firebase Analytics Console</a> &bull;
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics" target="_blank">💥 Open Firebase Crashlytics</a>
         <br><br>
         Generated automatically by Neural Sound Analytics Pipeline &bull; Gemini AI &bull; 2026-08-22
     </div>
+</div>
 </body>
 </html>
