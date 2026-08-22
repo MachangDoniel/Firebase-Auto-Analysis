@@ -224,22 +224,39 @@ def extract_executive_summary(report_text, max_length=950):
 
 def send_macos_notification(title, message, pdf_path=None):
     """
-    Sends native macOS desktop notification attributed to Finder
-    (prevents Script Editor from opening on click).
+    Sends native macOS desktop notification.
+    Uses terminal-notifier so clicking the banner opens the PDF directly in Preview!
     """
     if sys.platform != "darwin":
         return
     try:
         clean_msg = message.replace('"', '\\"').replace("'", "\\'")[:160]
-        script = f'tell application "Finder" to display notification "{clean_msg}" with title "{title}" subtitle "Neural Sound Analytics"'
-        subprocess.run(["osascript", "-e", script], check=False)
-        print("✅ macOS notification banner sent (via Finder).")
+        pdf_file = str(pdf_path) if pdf_path and os.path.exists(pdf_path) else None
         
-        # Optional: Auto-open PDF in Preview if AUTO_OPEN_PDF is enabled in .env
-        auto_open = os.getenv("AUTO_OPEN_PDF_ON_MAC", "false").lower() in ("true", "1", "yes")
-        if auto_open and pdf_path and os.path.exists(pdf_path):
-            subprocess.run(["open", "-a", "Preview", str(pdf_path)], check=False)
-            print(f"✅ Automatically opened PDF in Preview: {pdf_path}")
+        # 1. Use terminal-notifier if available (provides direct click-to-open-PDF)
+        terminal_notifier_bin = "/opt/homebrew/bin/terminal-notifier"
+        if not os.path.exists(terminal_notifier_bin):
+            terminal_notifier_bin = "terminal-notifier"
+            
+        cmd = [
+            terminal_notifier_bin,
+            "-title", title,
+            "-subtitle", "Daily Mobile Intelligence",
+            "-message", "Click here to open the full PDF report 📄",
+            "-sound", "default"
+        ]
+        if pdf_file:
+            cmd.extend(["-open", f"file://{pdf_file}"])
+            
+        res = subprocess.run(cmd, capture_output=True, text=True, check=False)
+        if res.returncode == 0:
+            print("✅ macOS notification banner sent (Clicking opens PDF).")
+            return
+
+        # 2. Fallback: Native AppleScript via System Events
+        script = f'tell application "System Events" to display notification "{clean_msg}" with title "{title}" subtitle "Neural Sound Analytics"'
+        subprocess.run(["osascript", "-e", script], check=False)
+        print("✅ macOS notification banner sent.")
     except Exception as e:
         print(f"⚠️ Failed to send macOS notification: {e}", file=sys.stderr)
 
