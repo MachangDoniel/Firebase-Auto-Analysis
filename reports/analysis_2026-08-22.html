@@ -111,134 +111,502 @@
     <div class="header-box">
         <strong>Neural Sound iOS</strong> &bull; Automated Daily Analytics Briefing &bull; <em>2026-08-22</em>
     </div>
-    <p>Here is an executive-ready analytics briefing based on your daily iOS app performance report.</p>
+    <h1>📊 Neural Sound iOS — Executive Daily Analytics &amp; Growth Intelligence</h1>
 <hr />
-<h1>📊 Executive Mobile Analytics Briefing</h1>
-<h3><strong>App Health Score: 8.2 / 10</strong></h3>
+<h3>🎯 Product Overview &amp; Health Score</h3>
+<h4>Overall Health Score: <strong>7.8 / 10</strong></h4>
+<h4>Mathematical Rationale:</h4>
 <ul>
-<li><strong>Key Driver:</strong> Exceptional top-of-funnel onboarding conversion (&gt;95%) and deep session engagement (~10.4 mins/session).</li>
-<li><strong>Primary Risk:</strong> Heavy reliance on new user acquisition (73.3% of DAU are new), high rate-prompt trigger frequency on Day 1, and analytics event spamming on slider interactions.</li>
+<li><strong>Acquisition Momentum (+3.0 / 3.0):</strong> Phenomenal DAU expansion (+342% over 7 days, rising from 33 to 146 daily active users), heavily powered by new user volume (+2,575%).</li>
+<li><strong>Engagement &amp; Session Depth (+2.5 / 2.5):</strong> Industry-leading engagement rate (<strong>84.9%</strong>) and average session duration (<strong>10.4 minutes</strong> across all users; <strong>18.7 minutes</strong> for returning power users).</li>
+<li><strong>Funnel Health &amp; Onboarding (+1.8 / 2.0):</strong> Flawless top-of-funnel authentication/onboarding completion (<strong>97.2%</strong> conversion from <code>first_open</code> to <code>first_journey_login_completed</code>).</li>
+<li><strong>Telemetry &amp; Release Stability (-1.5 / 2.5):</strong> Critical telemetry flaws (un-debounced audio sliders generating 5,700+ events/day across just 10 users) and a alarming engagement drop in staged version <code>1.3.08</code> (<strong>53.8%</strong> vs <strong>86.8%</strong> in <code>1.3.07</code>).</li>
+</ul>
+<h4>Executive Summary:</h4>
+<ul>
+<li><strong>Surging Volume:</strong> Neural Sound iOS achieved <strong>146 Active Users</strong> and <strong>186 Sessions</strong> yesterday, experiencing a massive traffic surge driven primarily by viral organic acquisition in South Korea (<strong>75.3% of total DAU</strong>).</li>
+<li><strong>Power User Stickiness:</strong> While new users average <strong>5.8 minutes</strong> per session, returning power users spend <strong>18.7 minutes</strong> per session, demonstrating deep utility in audio stem separation, pitch, and tempo manipulation.</li>
+<li><strong>Key Anomalies:</strong></li>
+<li><strong>Analytics Noise:</strong> Continuous slider drag events (<code>player_pitch_changed</code>, <code>player_tempo_changed</code>) fire raw events without debouncing (up to <strong>570 events/user</strong>), polluting event payloads.</li>
+<li><strong>Aggressive Review Prompts:</strong> <code>rate_prompt_shown</code> triggered <strong>123 times across 122 users</strong>, meaning almost every new user was prompted for a rating on Day 0.</li>
+<li><strong>Staged Rollout Alert:</strong> Version <code>1.3.08</code> shows a severe drop in engagement rate (<strong>53.8%</strong>) compared to production release <code>1.3.07</code> (<strong>86.8%</strong>).</li>
 </ul>
 <hr />
-<h2>1. 📊 Executive Summary</h2>
-<ul>
-<li><strong>Strong Acquisition Day:</strong> The app recorded <strong>146 Active Users</strong> across <strong>186 Sessions</strong>, driven primarily by <strong>107 New Users</strong> (73.3% of total DAU).</li>
-<li><strong>Exceptional Session Depth:</strong> Average session duration reached <strong>10 minutes 25 seconds</strong> (625.4s) with an <strong>84.9% Engagement Rate</strong>, demonstrating strong utility once users enter the core experience.</li>
-<li><strong>Onboarding Friction is Minimal:</strong> Over 95% of users who start onboarding complete both registration and their first app journey.</li>
-<li><strong>Power User Behavior:</strong> Audio manipulation tools (Pitch and Tempo adjustment) show extreme engagement from a small niche cohort.</li>
-</ul>
-<hr />
-<h2>2. 👥 User Activity &amp; Engagement</h2>
+<h2>👥 1. Old vs. New User Cohort Deep-Dive</h2>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Metric</th>
-<th style="text-align: left;">Value</th>
-<th style="text-align: left;">Specialist Commentary</th>
+<th style="text-align: left;">Cohort</th>
+<th style="text-align: center;">Active Users</th>
+<th style="text-align: center;">% of Active</th>
+<th style="text-align: center;">Total Sessions</th>
+<th style="text-align: center;">Sessions / User</th>
+<th style="text-align: center;">Avg Session Duration</th>
+<th style="text-align: center;">Engagement Rate</th>
+<th style="text-align: center;">Screenviews / User</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>Active Users (DAU)</strong></td>
-<td style="text-align: left;"><strong>146</strong></td>
-<td style="text-align: left;">Core daily cohort size.</td>
-</tr>
-<tr>
 <td style="text-align: left;"><strong>New Users</strong></td>
-<td style="text-align: left;"><strong>107</strong> (73.3%)</td>
-<td style="text-align: left;">Strong acquisition pull, but indicates low returning user baseline (39 returning users / 26.7%).</td>
+<td style="text-align: center;">114</td>
+<td style="text-align: center;">72.2%</td>
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">0.98</td>
+<td style="text-align: center;">347.8s (5.8 min)</td>
+<td style="text-align: center;"><strong>94.6%</strong></td>
+<td style="text-align: center;">2.01 (229 total)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Sessions</strong></td>
-<td style="text-align: left;"><strong>186</strong></td>
-<td style="text-align: left;">~1.27 sessions per active user daily.</td>
+<td style="text-align: left;"><strong>Returning Users</strong></td>
+<td style="text-align: center;">44</td>
+<td style="text-align: center;">27.8%</td>
+<td style="text-align: center;">69</td>
+<td style="text-align: center;">1.57</td>
+<td style="text-align: center;"><strong>1,120.8s (18.7 min)</strong></td>
+<td style="text-align: center;"><strong>73.9%</strong></td>
+<td style="text-align: center;"><strong>3.18 (140 total)</strong></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Engagement Rate</strong></td>
-<td style="text-align: left;"><strong>84.9%</strong></td>
-<td style="text-align: left;">Very high baseline for iOS utility/music tools (benchmark: ~60-70%).</td>
+<td style="text-align: left;"><strong>(not set)</strong></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0%</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">6.5s (0.1 min)</td>
+<td style="text-align: center;">20.0%</td>
+<td style="text-align: center;">0.02 (1 total)</td>
+</tr>
+</tbody>
+</table>
+<h3>Behavioral Analysis &amp; Retention Drop-Off Risk</h3>
+<ul>
+<li><strong>New User Dynamics:</strong> New users show an exceptionally high initial engagement rate (<strong>94.6%</strong>) and spend nearly 6 minutes during their first onboarding and setup session. They quickly pass through account creation and experiment with stem separation.</li>
+<li><strong>Returning Power Users:</strong> Returning users represent the core product-market fit. They execute longer sessions (<strong>18.7 min</strong>), view more screens per session (<strong>3.18 screenviews</strong>), and repeatedly manipulate audio stems, pitch, and tempo.</li>
+<li><strong>Retention Leakage Risk:</strong> Despite top-of-funnel acquisition spiking by <strong>+2,575%</strong> (4 new users on Aug 15 vs 107 on Aug 21), returning active users only grew by <strong>+34.5%</strong> (29 returning users on Aug 15 vs 39 on Aug 21). <strong>New users are engaging deeply on Day 0, but D1–D7 retention conversion remains a key bottleneck.</strong></li>
+</ul>
+<hr />
+<h2>📈 2. 7-Day Performance &amp; Velocity Trajectory</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Date</th>
+<th style="text-align: center;">DAU</th>
+<th style="text-align: center;">New Users</th>
+<th style="text-align: center;">Returning Users</th>
+<th style="text-align: center;">Sessions</th>
+<th style="text-align: center;">Engagement Rate</th>
+<th style="text-align: left;">Visual Velocity Trajectory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>2026-08-15</strong></td>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">29</td>
+<td style="text-align: center;">57</td>
+<td style="text-align: center;">78.9%</td>
+<td style="text-align: left;"><code>[██░░░░░░░░] 33</code></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Avg. Session Duration</strong></td>
-<td style="text-align: left;"><strong>10m 25s</strong></td>
-<td style="text-align: left;">High duration reflects active audio processing, playback, and stem editing.</td>
+<td style="text-align: left;"><strong>2026-08-16</strong></td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">47</td>
+<td style="text-align: center;">80.9%</td>
+<td style="text-align: left;"><code>[██░░░░░░░░] 30</code></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Screen Views / Session</strong></td>
-<td style="text-align: left;"><strong>~1.99</strong></td>
-<td style="text-align: left;">Low screen navigation depth confirms users spend most of their time on a single interface (the Player/Stem screen).</td>
+<td style="text-align: left;"><strong>2026-08-17</strong></td>
+<td style="text-align: center;">37</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">48</td>
+<td style="text-align: center;">81.2%</td>
+<td style="text-align: left;"><code>[███░░░░░░░] 37</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-08-18</strong></td>
+<td style="text-align: center;">59</td>
+<td style="text-align: center;">37</td>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">78</td>
+<td style="text-align: center;">83.3%</td>
+<td style="text-align: left;"><code>[████░░░░░░] 59</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-08-19</strong></td>
+<td style="text-align: center;">102</td>
+<td style="text-align: center;">84</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">137</td>
+<td style="text-align: center;">86.9%</td>
+<td style="text-align: left;"><code>[███████░░░] 102</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-08-20</strong></td>
+<td style="text-align: center;">94</td>
+<td style="text-align: center;">65</td>
+<td style="text-align: center;">29</td>
+<td style="text-align: center;">116</td>
+<td style="text-align: center;">81.9%</td>
+<td style="text-align: left;"><code>[██████░░░░] 94</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-08-21</strong></td>
+<td style="text-align: center;"><strong>146</strong></td>
+<td style="text-align: center;"><strong>107</strong></td>
+<td style="text-align: center;"><strong>39</strong></td>
+<td style="text-align: center;"><strong>186</strong></td>
+<td style="text-align: center;"><strong>84.9%</strong></td>
+<td style="text-align: left;"><code>[██████████] 146</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-text">7-Day DAU Growth Momentum:
+33 Users ───► 30 ───► 37 ───► 59 ───► 102 ───► 94 ───► 146 Users (+342% 7-Day Velocity)
+</code></pre>
+<h3>Momentum Analysis:</h3>
+<ul>
+<li><strong>Acquisition Trajectory:</strong> <strong>Exponential Acceleration</strong>. The surge beginning August 18 represents a breakout organic loop or external feature campaign.</li>
+<li><strong>Quality Preservation:</strong> As DAU increased 4.4x, the overall <strong>Engagement Rate remained high (84.9%)</strong>, confirming that acquired users are high-intent target users rather than low-quality ad clicks.</li>
+</ul>
+<hr />
+<h2>⚡ 3. End-to-End User Journey &amp; Funnel Diagrams</h2>
+<h3>Diagram 1: Onboarding &amp; Auth Funnel</h3>
+<pre><code class="language-text">  [ App First Open ]          (109 Users / 109 Events)
+          │
+          ▼  100.0% Step Conversion
+  [ Onboarding Viewed ]       (111 Users / 113 Events)
+          │
+          ▼  99.1% Step Conversion
+  [ Login Succeeded ]        (110 Users / 110 Events)
+          │
+          ▼  96.4% Step Conversion
+  [ First Journey Done ]     (106 Users / 106 Events)
+
+  ────────────────────────────────────────────────────────
+  OVERALL FUNNEL CONVERSION (First Open ──► Journey Done): 97.2%
+  Friction Risk: MINIMAL (Exceptional iOS Auth Flow)
+</code></pre>
+<h3>Diagram 2: Core Audio Creation &amp; Player Funnel</h3>
+<pre><code class="language-text">  [ Plus Button Tapped ]             (105 Unique Users / 225 Events)
+          │
+          ├─────────────────────────────────────────┐
+          ▼ 74.3% Initiated Import                  ▼ 56.2% Initiated Import
+  [ Import Files App Tapped ] (78 Users)    [ Import Photos Tapped ] (63 Users)
+          │                                         │
+          └────────────────────┬────────────────────┘
+                               ▼
+  [ Import Started ]                 (53 Unique Users / 105 Events)
+  ⚠️ BOTTLENECK 1: 49.5% Drop-off from Plus Tap to Import Completion
+                               │
+                               ▼ 100.0% Transferred (Includes Ret Users)
+  [ Separation Player Opened ]       (72 Unique Users / 199 Events)
+                               │
+                               ▼ 65.3% Conversion to Playback
+  [ Separation Play Started ]        (47 Unique Users / 571 Events)
+  ⚠️ BOTTLENECK 2: 34.7% Drop-off from Player Opened to Audio Playback
+
+  ────────────────────────────────────────────────────────
+  OVERALL CORE FUNNEL CONVERSION (Plus Tap ──► Play Started): 44.8%
+</code></pre>
+<h3>High-Friction Drop-Off Identification:</h3>
+<ol>
+<li><strong>File Selection &amp; Processing Drop-off (49.5% Loss):</strong> 105 users tap <code>plus_button_tap</code>, but only 53 successfully complete <code>import_started</code>. This indicates file format incompatibility, permission prompts blocking access, or large file processing latency before import confirmation.</li>
+<li><strong>Player Execution Drop-off (34.7% Loss):</strong> 72 users open <code>separation_player_opened</code>, but only 47 trigger <code>separation_play_started</code>. Users are landing on the player screen without audio automatically playing or encountering stem processing delay banners.</li>
+</ol>
+<hr />
+<h2>🎛️ 4. Feature Telemetry &amp; Power-User Lookups</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Event Name</th>
+<th style="text-align: center;">Event Count</th>
+<th style="text-align: center;">Total Users</th>
+<th style="text-align: center;">Events / User</th>
+<th style="text-align: left;">Feature Analysis &amp; Telemetry Anomalies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>player_pitch_changed</code></td>
+<td style="text-align: center;"><strong>5,706</strong></td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;"><strong>570.6</strong></td>
+<td style="text-align: left;">🚨 <strong>CRITICAL BUG:</strong> Continuous slider tracking un-debounced. Fires on every pixel change.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>player_tempo_changed</code></td>
+<td style="text-align: center;"><strong>2,046</strong></td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;"><strong>227.3</strong></td>
+<td style="text-align: left;">🚨 <strong>CRITICAL BUG:</strong> Continuous slider tracking un-debounced. Fires on every pixel change.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>audio_sessions</code></td>
+<td style="text-align: center;">1,265</td>
+<td style="text-align: center;">75</td>
+<td style="text-align: center;">16.9</td>
+<td style="text-align: left;">Core audio engine initialization event; healthy active utilization.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>user_engagement</code></td>
+<td style="text-align: center;">1,187</td>
+<td style="text-align: center;">146</td>
+<td style="text-align: center;">8.1</td>
+<td style="text-align: left;">Native Firebase heartbeat event.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>separation_play_started</code></td>
+<td style="text-align: center;">571</td>
+<td style="text-align: center;">47</td>
+<td style="text-align: center;">12.1</td>
+<td style="text-align: left;">Core playback execution; high repetition among active listeners.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>onboarding_step_viewed</code></td>
+<td style="text-align: center;">449</td>
+<td style="text-align: center;">111</td>
+<td style="text-align: center;">4.0</td>
+<td style="text-align: left;">Indicates a 4-step onboarding slide sequence.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>screen_view</code></td>
+<td style="text-align: center;">370</td>
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">3.3</td>
+<td style="text-align: left;">General screen transitions.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>onboarding_next_tapped</code></td>
+<td style="text-align: center;">336</td>
+<td style="text-align: center;">110</td>
+<td style="text-align: center;">3.1</td>
+<td style="text-align: left;">Navigation progression in onboarding.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>separation_page_viewed</code></td>
+<td style="text-align: center;">327</td>
+<td style="text-align: center;">165</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: left;">High surface visibility across new and returning users.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plus_button_tap</code></td>
+<td style="text-align: center;">225</td>
+<td style="text-align: center;">105</td>
+<td style="text-align: center;">2.1</td>
+<td style="text-align: left;">High intent entry point for creation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>player_stem_muted</code></td>
+<td style="text-align: center;">209</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;"><strong>41.8</strong></td>
+<td style="text-align: left;">Power feature usage; vocal/instrument isolation testing.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>separation_player_opened</code></td>
+<td style="text-align: center;">199</td>
+<td style="text-align: center;">72</td>
+<td style="text-align: center;">2.8</td>
+<td style="text-align: left;">Primary audio utility interface navigation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>player_stem_balance_changed</code></td>
+<td style="text-align: center;">132</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><strong>132.0</strong></td>
+<td style="text-align: left;">Single power user deeply tweaking stem volumes (Un-debounced slider).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rate_prompt_shown</code></td>
+<td style="text-align: center;">123</td>
+<td style="text-align: center;">122</td>
+<td style="text-align: center;"><strong>1.0</strong></td>
+<td style="text-align: left;">⚠️ <strong>AGRESSIVE TRIGGER:</strong> Fired for ~100% of new users regardless of value delivered.</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2>3. ⚡ Feature &amp; Event Performance</h2>
-<h3>📥 A. Onboarding &amp; Registration Funnel (Extremely Healthy)</h3>
-<ul>
-<li><strong>Start:</strong> <code>onboarding_viewed</code> (111 users)</li>
-<li><strong>Completion:</strong> <code>login_succeeded</code> (110 users) → <strong>99.1% Conversion</strong></li>
-<li><strong>First Value Realized:</strong> <code>first_journey_login_completed</code> (106 users) → <strong>95.4% Overall Completion Rate</strong></li>
-<li><em>Verdict:</em> The onboarding and login flow is seamless with almost zero drop-off.</li>
-</ul>
-<h3>🎧 B. Core Utility &amp; Creation Funnel</h3>
-<ol>
-<li><strong>Initiation:</strong> 105 users tapped <code>plus_button_tap</code>.</li>
-<li><strong>Feature Choice:</strong> 101 users chose <code>plus_separation_tapped</code>.</li>
-<li><strong>Import Source:</strong></li>
-<li><strong>Files App:</strong> 78 users (<code>import_files_app_tap</code>)</li>
-<li><strong>Photos Library:</strong> 63 users (<code>import_photos_tap</code>)</li>
-<li><strong>Player Conversion:</strong></li>
-<li>72 users opened the player (<code>separation_player_opened</code>).</li>
-<li><strong>47 users actually hit play (<code>separation_play_started</code>).</strong></li>
-<li><em>Friction Warning:</em> <strong>~34.7% drop-off</strong> between opening the player and starting audio playback. This suggests potential processing delays, file load errors, or confusing UI controls.</li>
-</ol>
-<h3>🎛️ C. Power User Features &amp; Analytics Noise</h3>
-<ul>
-<li><strong><code>player_pitch_changed</code>:</strong> 5,706 events triggered by <strong>only 10 users</strong> (~570 events/user).</li>
-<li><strong><code>player_tempo_changed</code>:</strong> 2,046 events triggered by <strong>only 9 users</strong> (~227 events/user).</li>
-<li><strong><code>player_stem_balance_changed</code>:</strong> 132 events triggered by <strong>1 single user</strong>.</li>
-<li><em>Insight:</em> Users tweaking sliders fire continuous analytics events on every step change. This inflates event volume and GA4 logging costs without providing additional behavioral value.</li>
-</ul>
-<hr />
-<h2>4. 📱 App Version Adoption &amp; Stability</h2>
-<pre><code>App Version Distribution (Active Users)
-██████████████████████████████████ 93.15% (v1.3.07 - Production)
-█ 3.42% (v1.3.08 - Staged Rollout)
-█ 2.05% (v1.0.01 - Legacy)
-█ 1.37% (v1.3.06 - Legacy)
+<h2>📱 5. App Version Adoption &amp; Global Footprint</h2>
+<h3>App Version Distribution</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">App Version</th>
+<th style="text-align: center;">Active Users</th>
+<th style="text-align: center;">% Share</th>
+<th style="text-align: center;">Total Sessions</th>
+<th style="text-align: center;">Engagement Rate</th>
+<th style="text-align: left;">Status &amp; Stability Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1.3.07</strong></td>
+<td style="text-align: center;">136</td>
+<td style="text-align: center;">93.2%</td>
+<td style="text-align: center;">152</td>
+<td style="text-align: center;"><strong>86.8%</strong></td>
+<td style="text-align: left;"><strong>Production Main:</strong> Highly stable, primary production build.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.3.08</strong></td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3.4%</td>
+<td style="text-align: center;">13</td>
+<td style="text-align: center;"><strong>53.8%</strong></td>
+<td style="text-align: left;">⚠️ <strong>Staged Rollout Alert:</strong> Severe engagement drop (<strong>-33.0%</strong> vs 1.3.07).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.0.01</strong></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2.1%</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">88.2%</td>
+<td style="text-align: left;">Legacy version; persistent long-tail power users.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.3.06</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1.4%</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">100.0%</td>
+<td style="text-align: left;">Legacy build; near full deprecation.</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-text">Version Adoption Visualization:
+v1.3.07 [████████████████████████████████████████] 93.2%
+v1.3.08 [██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 3.4% (ENGAGEMENT DROP ALERT)
+v1.0.01 [█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 2.1%
+v1.3.06 [█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 1.4%
 </code></pre>
-<ul>
-<li><strong>Production Baseline (<code>1.3.07</code>):</strong> Stable, serving <strong>93.15%</strong> of active users (136 users / 152 sessions).</li>
-<li><strong>Staged Rollout (<code>1.3.08</code>):</strong> 5 users / 13 sessions. Appears to be an internal build or initial phased release.</li>
-<li><strong>Legacy Risk:</strong> 3 users remain on <code>1.0.01</code>. Consider enforcing a non-blocking update prompt if API contracts change.</li>
-</ul>
+<h3>Global Geographic Footprint</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Country</th>
+<th style="text-align: center;">Active Users</th>
+<th style="text-align: center;">% DAU Share</th>
+<th style="text-align: center;">Total Sessions</th>
+<th style="text-align: center;">Sessions / User</th>
+<th style="text-align: left;">Growth &amp; Market Context</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>South Korea</strong></td>
+<td style="text-align: center;"><strong>110</strong></td>
+<td style="text-align: center;"><strong>75.3%</strong></td>
+<td style="text-align: center;"><strong>126</strong></td>
+<td style="text-align: center;">1.15</td>
+<td style="text-align: left;"><strong>Primary Viral Hub:</strong> Dominates current traffic.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Bangladesh</strong></td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">5.5%</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">3.75</td>
+<td style="text-align: left;">High frequency repeat sessions.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Iran</strong></td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">4.8%</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">1.29</td>
+<td style="text-align: left;">Organic long-tail adoption.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>India</strong></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2.7%</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0.50</td>
+<td style="text-align: left;">Emerging audience.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Japan</strong></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2.1%</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1.00</td>
+<td style="text-align: left;">High ARPU target region.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>United States</strong></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2.1%</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0.67</td>
+<td style="text-align: left;">Key tier-1 expansion market.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Other (Canada, FR, PH, OM)</strong></td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">4.1%</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">1.33</td>
+<td style="text-align: left;">Rest of World aggregation.</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h2>5. 💡 Actionable Recommendations</h2>
-<h3>🔧 Engineering &amp; Analytics Optimizations</h3>
-<ol>
-<li><strong>Debounce Slider Analytics Events (High Priority):</strong></li>
-<li><em>Problem:</em> <code>player_pitch_changed</code> and <code>player_tempo_changed</code> are spamming GA4 (7,700+ combined events from 10 users).</li>
-<li>
-<p><em>Fix:</em> Debounce parameter change tracking. Send an event only when the user <em>releases</em> the pitch/tempo slider, or log the final delta value when playback starts/stops.</p>
-</li>
-<li>
-<p><strong>Investigate Player Play Drop-off (Medium Priority):</strong></p>
-</li>
-<li><em>Problem:</em> 25 out of 72 users who opened <code>separation_player</code> did not trigger <code>separation_play_started</code>.</li>
-<li><em>Fix:</em> Verify if stem separation generation time is causing bounce, or if auto-play should be enabled upon player load.</li>
-</ol>
-<h3>📈 Product &amp; Growth Strategy</h3>
-<ol>
-<li><strong>Optimize App Store Rating Prompt Timing (Critical):</strong></li>
-<li><em>Problem:</em> <code>rate_prompt_shown</code> was triggered for <strong>122 users</strong>, while total New Users were <strong>107</strong>. The prompt is likely being shown on Session 1 / Day 1 before value is established.</li>
-<li>
-<p><em>Fix:</em> Move the rating prompt trigger to a "Joy Moment"—e.g., after a user successfully completes their 3rd stem separation or spends &gt;5 minutes in the player. Showing it immediately risks lower review scores.</p>
-</li>
-<li>
-<p><strong>Focus on Day 1 -&gt; Day 7 Retention:</strong></p>
-</li>
-<li><em>Problem:</em> 73.3% of DAU comes from new users, meaning retention of past cohorts is low.</li>
-<li><em>Fix:</em> Implement push notification re-engagement campaigns targeting users who imported audio but haven't returned in 48 hours (e.g., <em>"Your audio track is ready for key/pitch editing"</em>).</li>
-</ol>
+<h2>💡 6. Strategic Action Matrix (Prioritized)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Priority</th>
+<th style="text-align: center;">Category</th>
+<th style="text-align: left;">Issue / Finding</th>
+<th style="text-align: left;">Recommended Action</th>
+<th style="text-align: left;">Expected Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>P0</strong></td>
+<td style="text-align: center;"><strong>Engineering</strong></td>
+<td style="text-align: left;"><strong>Slider Telemetry Flooding:</strong> <code>player_pitch_changed</code> and <code>player_tempo_changed</code> generate ~8,000 spam events daily due to continuous touch logging.</td>
+<td style="text-align: left;">Replace drag events with <code>UIControl.Event.editingDidEnd</code> or implement a <strong>500ms debounce buffer</strong> on slider change listeners in Swift.</td>
+<td style="text-align: left;">Reduces overall analytics payload volume by <strong>~65%</strong>, preventing Firebase rate limiting and billing inflation.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>P0</strong></td>
+<td style="text-align: center;"><strong>Engineering / Product</strong></td>
+<td style="text-align: left;"><strong>v1.3.08 Performance Degradation:</strong> Staged rollout build <code>1.3.08</code> engagement rate dropped to <strong>53.8%</strong> (vs 86.8% in v1.3.07).</td>
+<td style="text-align: left;">Immediately pause the 1.3.08 staged rollout in App Store Connect; review crash reports, audio processing engine logs, and UI thread blocking.</td>
+<td style="text-align: left;">Protects new cohort experience and prevents negative App Store reviews.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>P1</strong></td>
+<td style="text-align: center;"><strong>Product / Growth</strong></td>
+<td style="text-align: left;"><strong>Premature Rating Prompts:</strong> <code>rate_prompt_shown</code> triggers on 122/109 new users on Day 0 before core audio value is realized.</td>
+<td style="text-align: left;">Restrict <code>SKStoreReviewController</code> triggering to post-event conditions: <strong>after a user successfully completes 2+ stem separations</strong>.</td>
+<td style="text-align: left;">Prevents review fatigue, avoids store penalties, and increases 5-star rating conversion.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>P1</strong></td>
+<td style="text-align: center;"><strong>Growth</strong></td>
+<td style="text-align: left;"><strong>South Korea Acquisition Surge:</strong> <strong>75.3%</strong> of DAU originated in South Korea, but app localization and Korean-specific keywords may be lacking.</td>
+<td style="text-align: left;">Localize App Store metadata (Korean title, subtitle, keywords, screenshots) and launch targeted outreach to local music schools/K-Pop cover creators.</td>
+<td style="text-align: left;">Capitalizes on viral momentum to convert viral traffic into a permanent growth engine.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>P2</strong></td>
+<td style="text-align: center;"><strong>Product</strong></td>
+<td style="text-align: left;"><strong>Creation Funnel Drop-off:</strong> <strong>49.5%</strong> drop-off between <code>plus_button_tap</code> and <code>import_started</code>; <strong>34.7%</strong> drop-off before starting playback.</td>
+<td style="text-align: left;">Add audio file loading indicators, support drag-and-drop iOS file imports, and implement an auto-play toggle when opening the player.</td>
+<td style="text-align: left;">Increases D0 core feature conversion from 44.8% to <strong>&gt;60%</strong>, accelerating D1 retention.</td>
+</tr>
+</tbody>
+</table>
     <div class="footer-note">
         Generated automatically by Neural Sound Analytics Pipeline &bull; Gemini AI &bull; 2026-08-22
     </div>

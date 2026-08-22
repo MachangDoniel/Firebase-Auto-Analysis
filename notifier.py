@@ -208,15 +208,25 @@ def extract_executive_summary(report_text, max_length=950):
     return summary
 
 
-def send_macos_notification(title, message):
-    """Sends native macOS desktop notification banner."""
+def send_macos_notification(title, message, pdf_path=None):
+    """
+    Sends native macOS desktop notification attributed to Finder
+    (prevents Script Editor from opening on click).
+    """
     if sys.platform != "darwin":
         return
     try:
-        clean_msg = message.replace('"', '\\"').replace("'", "\\'")[:180]
-        script = f'display notification "{clean_msg}" with title "{title}" subtitle "Neural Sound Analytics"'
+        clean_msg = message.replace('"', '\\"').replace("'", "\\'")[:160]
+        # Route through Finder application so clicking the banner does not launch Script Editor
+        script = f'tell application "Finder" to display notification "{clean_msg}" with title "{title}" subtitle "Neural Sound Analytics"'
         subprocess.run(["osascript", "-e", script], check=False)
-        print("✅ macOS notification banner sent.")
+        print("✅ macOS notification banner sent (via Finder).")
+        
+        # Optional: Auto-open PDF in Preview if AUTO_OPEN_PDF is enabled in .env
+        auto_open = os.getenv("AUTO_OPEN_PDF_ON_MAC", "false").lower() in ("true", "1", "yes")
+        if auto_open and pdf_path and os.path.exists(pdf_path):
+            subprocess.run(["open", "-a", "Preview", str(pdf_path)], check=False)
+            print(f"✅ Automatically opened PDF in Preview: {pdf_path}")
     except Exception as e:
         print(f"⚠️ Failed to send macOS notification: {e}", file=sys.stderr)
 
@@ -329,10 +339,11 @@ def dispatch_all_notifications(report_text, date_str=None):
     # 1. Generate HTML & PDF Documents
     html_path, pdf_path = generate_documents(report_text, date_str)
     
-    # 2. Native macOS banner
+    # 2. Native macOS banner (routed via Finder)
     send_macos_notification(
         title="Firebase Analytics PDF Ready",
-        message="Daily PDF report has been generated and dispatched."
+        message="Daily PDF report has been generated and dispatched.",
+        pdf_path=pdf_path
     )
     
     # 3. Telegram (Executive summary + PDF document)
