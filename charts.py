@@ -23,9 +23,10 @@ def generate_all_charts(app_name, analytics_data, output_dir):
     Generates a suite of visual charts for a single app:
     1. 7-Day Velocity Trend Chart
     2. Multi-Horizon Growth Comparison (Yesterday, 7d, 30d, 365d, All-Time)
-    3. Funnel Conversion Bar Chart
-    4. New vs Returning Cohort Comparison
-    5. App Version Distribution & New Build Alert
+    3. Product Sales & In-App Purchases Revenue Breakdown
+    4. Funnel Conversion Bar Chart
+    5. New vs Returning Cohort Comparison
+    6. App Version Distribution & New Build Alert
     Returns dictionary of generated chart image paths.
     """
     output_dir = Path(output_dir)
@@ -60,7 +61,35 @@ def generate_all_charts(app_name, analytics_data, output_dir):
         plt.close(fig)
         chart_paths["trend_chart"] = str(trend_file)
 
-    # 2. Multi-Horizon Growth Comparison Chart (Yesterday, 7d, 30d, 365d, All-Time)
+    # 2. Product Sales & In-App Purchases Revenue Breakdown
+    products = analytics_data.get("product_sales_30d", [])
+    if products:
+        p_names = [p["item_id"].replace("neuralsound.", "").replace("cleaner.", "") for p in products[:5]][::-1]
+        p_revs = [p["revenue_usd"] for p in products[:5]][::-1]
+        p_qtys = [p["quantity"] for p in products[:5]][::-1]
+        
+        fig, ax = plt.subplots(figsize=(7, 3.2), dpi=200)
+        colors = plt.cm.viridis(np.linspace(0.4, 0.85, len(p_names)))
+        bars = ax.barh(p_names, p_revs, color=colors, height=0.55, edgecolor="#cbd5e1")
+        
+        for bar, rev, qty in zip(bars, p_revs, p_qtys):
+            ax.text(bar.get_width() + (max(p_revs) * 0.02 if max(p_revs) > 0 else 0.5), bar.get_y() + bar.get_height()/2,
+                    f"${rev:,.2f} ({qty} sold)", va="center", ha="left", fontsize=8, color="#0f172a", fontweight="bold")
+                    
+        ax.set_title(f"{app_name} — In-App Purchases & Product Revenue (30D)", fontsize=11, fontweight="bold", pad=10, color="#0f172a")
+        ax.set_xlim(0, max(p_revs) * 1.35 if max(p_revs) > 0 else 10)
+        ax.grid(axis="x", linestyle=":", alpha=0.6, color="#cbd5e1")
+        ax.tick_params(colors="#475569", labelsize=8)
+        for spine in ["top", "right"]:
+            ax.spines[spine].set_visible(False)
+            
+        rev_file = output_dir / f"{clean_app_id}_revenue.png"
+        plt.tight_layout()
+        plt.savefig(rev_file)
+        plt.close(fig)
+        chart_paths["revenue_chart"] = str(rev_file)
+
+    # 3. Multi-Horizon Growth Comparison Chart (Yesterday, 7d, 30d, 365d, All-Time)
     horizons = analytics_data.get("multi_horizon_benchmarks", [])
     if horizons:
         labels = [h["horizon"] for h in horizons]
@@ -83,7 +112,6 @@ def generate_all_charts(app_name, analytics_data, output_dir):
         for spine in ["top", "right"]:
             ax.spines[spine].set_visible(False)
             
-        # Add labels over bars
         for rect in rects1:
             h = rect.get_height()
             if h > 0:
@@ -101,7 +129,7 @@ def generate_all_charts(app_name, analytics_data, output_dir):
         plt.close(fig)
         chart_paths["horizon_chart"] = str(horizon_file)
 
-    # 3. Funnel Conversion Horizontal Bar Chart
+    # 4. Funnel Conversion Horizontal Bar Chart
     events = {e["eventName"]: e["totalUsers"] for e in analytics_data.get("top_events_telemetry", [])}
     funnel_keys = [
         ("Onboarding", events.get("onboarding_viewed", 0) or events.get("first_open", 0)),
@@ -141,16 +169,15 @@ def generate_all_charts(app_name, analytics_data, output_dir):
         plt.close(fig)
         chart_paths["funnel_chart"] = str(funnel_file)
 
-    # 4. New vs Returning Cohort Comparison Bar Chart
+    # 5. New vs Returning Cohort Comparison Bar Chart
     cohorts = analytics_data.get("new_vs_returning_cohorts", [])
     if len(cohorts) >= 2:
         names = ["New Users", "Returning Users"]
         dau_vals = [c.get("activeUsers", 0) for c in cohorts[:2]]
-        dur_vals = [c.get("avgSessionDuration_sec", 0) / 60 for c in cohorts[:2]]  # in minutes
+        dur_vals = [c.get("avgSessionDuration_sec", 0) / 60 for c in cohorts[:2]]
         
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7, 2.8), dpi=200)
         
-        # User split
         ax1.bar(names, dau_vals, color=["#06b6d4", "#6366f1"], width=0.45)
         ax1.set_title("User Volume (DAU)", fontsize=9.5, fontweight="bold", color="#0f172a")
         ax1.tick_params(labelsize=8, colors="#475569")
@@ -160,7 +187,6 @@ def generate_all_charts(app_name, analytics_data, output_dir):
         ax1.spines["top"].set_visible(False)
         ax1.spines["right"].set_visible(False)
         
-        # Avg Duration (Minutes)
         ax2.bar(names, dur_vals, color=["#38bdf8", "#818cf8"], width=0.45)
         ax2.set_title("Avg Session Duration (Mins)", fontsize=9.5, fontweight="bold", color="#0f172a")
         ax2.tick_params(labelsize=8, colors="#475569")
@@ -176,7 +202,7 @@ def generate_all_charts(app_name, analytics_data, output_dir):
         plt.close(fig)
         chart_paths["cohort_chart"] = str(cohort_file)
 
-    # 5. App Version Distribution Donut Chart
+    # 6. App Version Distribution Donut Chart
     versions = analytics_data.get("app_versions", [])
     if versions:
         v_labels = [v["appVersion"] for v in versions[:4]]

@@ -1,8 +1,8 @@
 """
-Multi-App Firebase Analytics & Crash Intelligence Pipeline
+Multi-App Firebase Analytics, In-App Purchases & Crash Intelligence Pipeline
 Supports multiple apps across separate GA4 properties or stream IDs in the same project.
-Generates visual charts, crash analytics, multi-horizon benchmarks (Yesterday, 7d, 30d, 1yr, Lifetime),
-new build comparisons, and PDF reports.
+Tracks In-App Purchases (Subscriptions & Consumable Minutes), Revenue, Multi-Horizon Benchmarks,
+Crash Analytics, New Build Comparisons, and Multi-Channel Delivery (PDF + MD + Charts).
 """
 
 import os
@@ -94,8 +94,8 @@ def build_stream_filter(stream_id):
 
 def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id=None, bundle_id=""):
     """
-    Queries GA4 for complete analytics, crash metrics, new vs returning cohorts,
-    multi-horizon growth (Yesterday, 7d, 30d, 1yr, All-Time), top events, and app version stability.
+    Queries GA4 for complete analytics, in-app purchases & product sales, crash metrics,
+    new vs returning cohorts, multi-horizon growth, top events, and app versions.
     """
     property_path = f"properties/{ga4_property_id.strip()}"
     dim_filter = build_stream_filter(stream_id)
@@ -103,6 +103,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
 
     yesterday_range = [DateRange(start_date="yesterday", end_date="yesterday")]
     seven_day_range = [DateRange(start_date="7daysAgo", end_date="yesterday")]
+    thirty_day_range = [DateRange(start_date="30daysAgo", end_date="yesterday")]
 
     # 1. Overview & Stability Metrics (Yesterday)
     overview_req = RunReportRequest(
@@ -116,10 +117,10 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
             Metric(name="screenPageViews"),
             Metric(name="engagementRate"),
             Metric(name="averageSessionDuration"),
-            Metric(name="userEngagementDuration"),
             Metric(name="eventsPerSession"),
             Metric(name="bounceRate"),
             Metric(name="crashFreeUsersRate"),
+            Metric(name="purchaseRevenue"),
         ],
     )
     overview_res = client.run_report(overview_req)
@@ -129,7 +130,58 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
         for header, val in zip(overview_res.metric_headers, row.metric_values):
             overview_data[header.name] = val.value
 
-    # 2. Multi-Horizon Growth Benchmarks (Yesterday, 7 Days, 30 Days, 365 Days, Lifetime)
+    # 2. In-App Purchases & Product Revenue (Past 30 Days Breakdown)
+    products_req = RunReportRequest(
+        property=property_path,
+        date_ranges=thirty_day_range,
+        dimension_filter=dim_filter,
+        dimensions=[Dimension(name="itemId"), Dimension(name="itemName")],
+        metrics=[Metric(name="itemsPurchased"), Metric(name="itemRevenue")],
+        order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="itemsPurchased"), desc=True)],
+    )
+    products_res = client.run_report(products_req)
+    products_data = []
+    for row in products_res.rows:
+        products_data.append({
+            "item_id": row.dimension_values[0].value,
+            "item_name": row.dimension_values[1].value,
+            "quantity": int(row.metric_values[0].value),
+            "revenue_usd": round(float(row.metric_values[1].value), 2),
+        })
+
+    # 3. Recent Transaction Log (When, Who, Product, Build/Version, Country, Amount)
+    transactions_req = RunReportRequest(
+        property=property_path,
+        date_ranges=thirty_day_range,
+        dimension_filter=dim_filter,
+        dimensions=[
+            Dimension(name="date"),
+            Dimension(name="appVersion"),
+            Dimension(name="itemId"),
+            Dimension(name="itemName"),
+            Dimension(name="country")
+        ],
+        metrics=[Metric(name="itemsPurchased"), Metric(name="itemRevenue")],
+        order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"), desc=True)],
+        limit=25,
+    )
+    transactions_res = client.run_report(transactions_req)
+    transactions_data = []
+    for row in transactions_res.rows:
+        date_str = row.dimension_values[0].value
+        formatted_date = f"{date_str[:4]}-{date_str[4:6]}-{date_str[6:]}" if len(date_str) == 8 else date_str
+        version_str = row.dimension_values[1].value
+        transactions_data.append({
+            "date": formatted_date,
+            "app_version": version_str,
+            "product_id": row.dimension_values[2].value,
+            "product_name": row.dimension_values[3].value,
+            "country": row.dimension_values[4].value,
+            "quantity": int(row.metric_values[0].value),
+            "revenue_usd": round(float(row.metric_values[1].value), 2),
+        })
+
+    # 4. Multi-Horizon Growth Benchmarks (Yesterday, 7 Days, 30 Days, 365 Days, Lifetime)
     horizon_defs = [
         ("Yesterday", "yesterday", "yesterday"),
         ("Past 7 Days", "7daysAgo", "yesterday"),
@@ -148,6 +200,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
                 Metric(name="newUsers"),
                 Metric(name="sessions"),
                 Metric(name="engagementRate"),
+                Metric(name="purchaseRevenue"),
             ]
         )
         h_res = client.run_report(h_req)
@@ -159,9 +212,10 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
                 "newUsers": int(r.metric_values[1].value),
                 "sessions": int(r.metric_values[2].value),
                 "engagementRate": f"{round(float(r.metric_values[3].value)*100, 1)}%",
+                "revenue_usd": round(float(r.metric_values[4].value), 2),
             })
 
-    # 3. New vs Returning Cohorts (Yesterday)
+    # 5. New vs Returning Cohorts (Yesterday)
     cohort_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
@@ -187,7 +241,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
             "screenPageViews": int(row.metric_values[4].value),
         })
 
-    # 4. 7-Day Velocity
+    # 6. 7-Day Velocity
     trend_req = RunReportRequest(
         property=property_path,
         date_ranges=seven_day_range,
@@ -214,7 +268,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
             "engagementRate": f"{round(float(row.metric_values[3].value) * 100, 1)}%",
         })
 
-    # 5. Top Events Telemetry
+    # 7. Top Events Telemetry
     events_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
@@ -238,7 +292,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
             "eventsPerUser": round(float(row.metric_values[2].value), 1),
         })
 
-    # 6. App Versions & Build Comparison (Detecting New Builds)
+    # 8. App Versions & Build Comparison
     versions_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
@@ -264,7 +318,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
             "crashFreeUsersRate": f"{round(float(row.metric_values[3].value) * 100, 2)}%" if float(row.metric_values[3].value) > 0 else "100.0%",
         })
 
-    # 7. Geographic Distribution
+    # 9. Geographic Distribution
     geo_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
@@ -289,6 +343,8 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
         "ga4_property_id": ga4_property_id,
         "stream_id": stream_id,
         "yesterday_overview": overview_data,
+        "product_sales_30d": products_data,
+        "recent_transactions": transactions_data,
         "multi_horizon_benchmarks": horizon_data,
         "new_vs_returning_cohorts": cohort_data,
         "past_7_days_trend": trend_data,
@@ -297,7 +353,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
         "geographic_distribution": geo_data,
     }
 
-    # Generate visual PNG charts for this app (includes multi-horizon chart)
+    # Generate visual PNG charts for this app (includes Revenue Chart)
     chart_paths = generate_all_charts(app_name, app_payload, CHARTS_DIR)
     app_payload["chart_paths"] = chart_paths
 
@@ -314,23 +370,21 @@ def analyze_all_apps_with_gemini(all_apps_data):
     data_json = json.dumps(all_apps_data, indent=2)
 
     prompt = f"""
-You are a Principal Mobile Analytics & Growth Architect.
+You are a Principal Mobile Analytics & Monetization Growth Architect.
 Analyze the following multi-app daily Firebase / GA4 analytics dataset covering all active mobile applications.
 
 ### Mandatory Structure for Multi-App Report:
-1. Provide an overarching **Portfolio Executive Summary & Health Dashboard** comparing all apps side-by-side (Total Users, Sessions, Engagement, Crash-Free Rates, and Cross-App Trends).
+1. Provide an overarching **Portfolio Executive Summary & Health Dashboard** comparing all apps side-by-side (Total Users, Total Revenue, Top Selling Products, Engagement, and Crash-Free Rates).
 2. For **EACH APPLICATION (e.g. Music Separation iOS and Vocal Cleaner)**, provide a dedicated deep-dive section containing:
    - **App Header & Health Score** (X / 10 with rationale)
-   - **📅 Multi-Horizon Growth & Historical Scale Comparison**: Present a clean markdown table comparing:
-     * **Yesterday (Latest 24h)**
-     * **Past 7 Days (Weekly Scale)**
-     * **Past 30 Days (Monthly Scale)**
-     * **Past Year (365 Days)**
-     * **All-Time / Lifetime Total**
-     Include analysis of growth velocity, user acquisition trajectory, and lifetime retention.
+   - **💰 In-App Purchases, Subscriptions & Consumable Minutes Breakdown**:
+     * **Product Sales Summary Table**: Item/Product ID, Product Name, Plan Type (Monthly / Weekly / Consumable Minutes), Units Sold (30D), Total Revenue ($ USD), and % Share.
+     * **Transaction Timeline Log Table**: Date/Timestamp, Product Purchased, Units, Revenue ($ USD), and Country of Purchase.
+     * **Monetization Velocity & Conversion Analysis**: Compare Subscriptions vs Consumable Minute packs (e.g. 60 min vs 300 min), Paywall Conversion Rate, and Purchaser LTV.
+   - **📅 Multi-Horizon Growth & Historical Scale Comparison**: Table comparing Yesterday, Past 7d, Past 30d, Past Year (365d), and Lifetime.
    - **Old vs. New User Cohort Deep-Dive** (Table comparing New Users vs Returning Users with duration and engagement).
    - **7-Day Velocity & Trajectory** (Table & daily trend commentary).
-   - **User Funnel Diagrams** (ASCII/Unicode diagrams for onboarding and core feature execution).
+   - **User Funnel Diagrams** (ASCII/Unicode diagrams for onboarding, paywall conversion, and core feature execution).
    - **Crash & Stability Health** (Crash-free user rates and exceptions).
    - **🚨 New Build / Staged Rollout Alert Section**: Explicitly detect and compare new builds against the production baseline.
    - **Top In-App Events & Feature Lookups** (Including slider debouncing or telemetry bugs).
@@ -367,8 +421,8 @@ Multi-App Dataset:
 
     # Deterministic Fallback: Generate structured metrics report directly without AI
     print("⚠️ All Gemini models / API keys unavailable. Generating deterministic metrics report...", file=sys.stderr)
-    fallback_report = f"# 📊 Daily Mobile Analytics Report (Automated Data Mode)\n\n"
-    fallback_report += f"> ⚠️ *Gemini AI synthesis was temporarily bypassed. Below is your raw verified multi-app telemetry and performance data.*\n\n"
+    fallback_report = f"# 📊 Daily Mobile Analytics & Monetization Report (Automated Data Mode)\n\n"
+    fallback_report += f"> ⚠️ *Gemini AI synthesis was temporarily bypassed. Below is your raw verified multi-app telemetry, product sales, and performance data.*\n\n"
     
     for app in all_apps_data:
         app_name = app.get("app_name", "App")
@@ -381,10 +435,10 @@ Multi-App Dataset:
         fallback_report += f"| **Engagement Rate** | {round(float(yesterday.get('engagementRate', 0))*100, 1)}% |\n"
         fallback_report += f"| **Crash-Free User Rate** | {round(float(yesterday.get('crashFreeUsersRate', 1))*100, 2)}% |\n\n"
         
-        fallback_report += f"### 📅 Multi-Horizon Benchmarks\n\n"
-        fallback_report += f"| Horizon | Active Users | New Users | Sessions | Engagement Rate |\n| :--- | :--- | :--- | :--- | :--- |\n"
-        for h in app.get("multi_horizon_benchmarks", []):
-            fallback_report += f"| **{h['horizon']}** | {h['activeUsers']} | {h['newUsers']} | {h['sessions']} | {h['engagementRate']} |\n"
+        fallback_report += f"### 💰 Product Sales & Subscriptions (30 Days)\n\n"
+        fallback_report += f"| Product ID | Product Name | Units Sold | Total Revenue ($ USD) |\n| :--- | :--- | :--- | :--- |\n"
+        for p in app.get("product_sales_30d", []):
+            fallback_report += f"| `{p['item_id']}` | {p['item_name']} | {p['quantity']} | ${p['revenue_usd']:.2f} |\n"
         fallback_report += "\n---\n\n"
 
     return fallback_report
@@ -394,7 +448,7 @@ def log_results(analysis_result, all_apps_data):
     """Outputs analysis, saves logs, and dispatches across all channels with charts."""
     timestamp_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     divider = "=" * 60
-    log_entry = f"\n{divider}\n[MULTI-APP FIREBASE ANALYTICS AI REPORT - {timestamp_str}]\n{divider}\n{analysis_result}\n"
+    log_entry = f"\n{divider}\n[MULTI-APP FIREBASE ANALYTICS & MONETIZATION AI REPORT - {timestamp_str}]\n{divider}\n{analysis_result}\n"
 
     print(log_entry)
     with open(LOG_FILE, "a", encoding="utf-8") as f:
@@ -413,7 +467,7 @@ def log_results(analysis_result, all_apps_data):
 
 
 def main():
-    print(f"=== Starting Multi-App Firebase Analytics AI Pipeline: {datetime.now()} ===")
+    print(f"=== Starting Multi-App Firebase Analytics & Monetization AI Pipeline: {datetime.now()} ===")
     try:
         apps = load_apps_configuration()
         print(f"Loaded {len(apps)} configured application(s): {[a['app_name'] for a in apps]}")
