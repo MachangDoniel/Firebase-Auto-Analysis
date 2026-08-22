@@ -1,7 +1,7 @@
 """
-Comprehensive Firebase / Google Analytics (GA4) to Gemini AI Pipeline
-Extracts multi-dimensional iOS app analytics (New vs Returning cohorts, 7-day trends,
-full event funnels, versions, geo, devices) and generates executive PDF & notifications.
+Multi-App Firebase Analytics & Crash Intelligence Pipeline
+Supports multiple apps, visual charts generation (matplotlib),
+crash analytics, new build comparisons, and multi-channel PDF delivery.
 """
 
 import os
@@ -26,51 +26,71 @@ from google.analytics.data_v1beta.types import (
 from google.oauth2 import service_account
 from google import genai
 from notifier import dispatch_all_notifications
+from charts import generate_all_charts
 
 # ==========================================
-# Configuration & Environment Variables
+# Configuration
 # ==========================================
-SERVICE_ACCOUNT_KEY = os.getenv("FIREBASE_KEY_PATH", str(BASE_DIR / "serviceAccountKey.json"))
-GA4_PROPERTY_ID = os.getenv("GA4_PROPERTY_ID")
+APPS_CONFIG_FILE = BASE_DIR / "apps_config.json"
+DEFAULT_SERVICE_KEY = os.getenv("FIREBASE_KEY_PATH", str(BASE_DIR / "serviceAccountKey.json"))
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
 LOG_FILE = BASE_DIR / "daily_analysis.log"
-
-if not os.path.isabs(SERVICE_ACCOUNT_KEY):
-    SERVICE_ACCOUNT_KEY = str(BASE_DIR / SERVICE_ACCOUNT_KEY)
+CHARTS_DIR = BASE_DIR / "reports" / "charts"
 
 
-def get_analytics_client():
-    """Initializes Google Analytics Data API client using Service Account credentials."""
-    if not os.path.exists(SERVICE_ACCOUNT_KEY):
-        raise FileNotFoundError(
-            f"Service account key not found at '{SERVICE_ACCOUNT_KEY}'. "
-            "Download your serviceAccountKey.json from Firebase Console > Project Settings > Service Accounts."
-        )
+def load_apps_configuration():
+    """Loads configured apps from apps_config.json or falls back to .env single-app."""
+    apps = []
+    if os.path.exists(APPS_CONFIG_FILE):
+        try:
+            with open(APPS_CONFIG_FILE, "r", encoding="utf-8") as f:
+                raw_apps = json.load(f)
+                for a in raw_apps:
+                    if a.get("ga4_property_id") and a.get("ga4_property_id").strip():
+                        apps.append(a)
+        except Exception as e:
+            print(f"Warning: Failed to load apps_config.json: {e}", file=sys.stderr)
 
-    credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_KEY)
+    if not apps:
+        # Fallback to single app in .env
+        ga4_id = os.getenv("GA4_PROPERTY_ID")
+        if ga4_id and ga4_id.strip():
+            apps.append({
+                "app_id": "primary-app",
+                "app_name": "Neural Sound iOS",
+                "ga4_property_id": ga4_id.strip(),
+                "platform": "iOS",
+                "service_account_key": DEFAULT_SERVICE_KEY,
+            })
+
+    if not apps:
+        raise ValueError("No apps configured. Please set GA4_PROPERTY_ID in .env or add apps to apps_config.json.")
+
+    return apps
+
+
+def get_analytics_client(key_path):
+    """Initializes GA4 client for a given service account key."""
+    if not os.path.isabs(key_path):
+        key_path = str(BASE_DIR / key_path)
+    if not os.path.exists(key_path):
+        raise FileNotFoundError(f"Service account key not found at '{key_path}'.")
+    credentials = service_account.Credentials.from_service_account_file(key_path)
     return BetaAnalyticsDataClient(credentials=credentials)
 
 
-def fetch_comprehensive_ga4_data(client):
+def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name):
     """
-    Queries Google Analytics 4 across 6 comprehensive analytical dimensions:
-    1. Daily Overview (Yesterday)
-    2. New vs. Returning User Cohort Breakdown (Old vs New behavior)
-    3. 7-Day Daily Trend (Trajectory & growth)
-    4. Complete Event Telemetry & Funnel (Top 30 events)
-    5. App Version Adoption (Current, Staged, Legacy)
-    6. Geographic & Top Device Distribution
+    Queries GA4 for complete analytics, crash metrics, new vs returning cohorts,
+    7-day velocity, top events, and app version stability.
     """
-    if not GA4_PROPERTY_ID or GA4_PROPERTY_ID.strip() == "":
-        raise ValueError("GA4_PROPERTY_ID is missing in .env.")
-
-    property_path = f"properties/{GA4_PROPERTY_ID.strip()}"
-    print(f"[{datetime.now().isoformat()}] Querying GA4 Multi-Dimensional Data: {property_path}...")
+    property_path = f"properties/{ga4_property_id.strip()}"
+    print(f"[{datetime.now().isoformat()}] Querying [{app_name}] Property: {property_path}...")
 
     yesterday_range = [DateRange(start_date="yesterday", end_date="yesterday")]
     seven_day_range = [DateRange(start_date="7daysAgo", end_date="yesterday")]
 
-    # 1. Yesterday Overview Metrics
+    # 1. Overview & Stability Metrics
     overview_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
@@ -83,6 +103,8 @@ def fetch_comprehensive_ga4_data(client):
             Metric(name="averageSessionDuration"),
             Metric(name="userEngagementDuration"),
             Metric(name="eventsPerSession"),
+            Metric(name="bounceRate"),
+            Metric(name="crashFreeUsersRate"),
         ],
     )
     overview_res = client.run_report(overview_req)
@@ -92,7 +114,7 @@ def fetch_comprehensive_ga4_data(client):
         for header, val in zip(overview_res.metric_headers, row.metric_values):
             overview_data[header.name] = val.value
 
-    # 2. New vs. Returning Cohort Breakdown (Old vs New)
+    # 2. New vs Returning Cohorts
     cohort_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
@@ -117,7 +139,7 @@ def fetch_comprehensive_ga4_data(client):
             "screenPageViews": int(row.metric_values[4].value),
         })
 
-    # 3. 7-Day Trend (Daily trajectory)
+    # 3. 7-Day Velocity
     trend_req = RunReportRequest(
         property=property_path,
         date_ranges=seven_day_range,
@@ -143,7 +165,7 @@ def fetch_comprehensive_ga4_data(client):
             "engagementRate": f"{round(float(row.metric_values[3].value) * 100, 1)}%",
         })
 
-    # 4. Detailed Event Telemetry (Top 30 events)
+    # 4. Top Events Telemetry
     events_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
@@ -166,7 +188,7 @@ def fetch_comprehensive_ga4_data(client):
             "eventsPerUser": round(float(row.metric_values[2].value), 1),
         })
 
-    # 5. App Versions Breakdown
+    # 5. App Versions & Build Comparison (Detecting New Builds)
     versions_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
@@ -175,6 +197,7 @@ def fetch_comprehensive_ga4_data(client):
             Metric(name="activeUsers"),
             Metric(name="sessions"),
             Metric(name="engagementRate"),
+            Metric(name="crashFreeUsersRate"),
         ],
         order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="activeUsers"), desc=True)],
         limit=10,
@@ -187,9 +210,10 @@ def fetch_comprehensive_ga4_data(client):
             "activeUsers": int(row.metric_values[0].value),
             "sessions": int(row.metric_values[1].value),
             "engagementRate": f"{round(float(row.metric_values[2].value) * 100, 1)}%",
+            "crashFreeUsersRate": f"{round(float(row.metric_values[3].value) * 100, 2)}%" if float(row.metric_values[3].value) > 0 else "100.0%",
         })
 
-    # 6. Geographic Breakdown (Top 10 Countries)
+    # 6. Geographic Distribution
     geo_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
@@ -207,8 +231,9 @@ def fetch_comprehensive_ga4_data(client):
             "sessions": int(row.metric_values[1].value),
         })
 
-    return {
-        "report_generated_at": datetime.now().isoformat(),
+    app_payload = {
+        "app_name": app_name,
+        "ga4_property_id": ga4_property_id,
         "yesterday_overview": overview_data,
         "new_vs_returning_cohorts": cohort_data,
         "past_7_days_trend": trend_data,
@@ -217,73 +242,42 @@ def fetch_comprehensive_ga4_data(client):
         "geographic_distribution": geo_data,
     }
 
+    # Generate visual PNG charts for this app
+    chart_paths = generate_all_charts(app_name, app_payload, CHARTS_DIR)
+    app_payload["chart_paths"] = chart_paths
 
-def analyze_with_gemini(analytics_payload):
-    """
-    Sends multi-dimensional GA4 data to Gemini to produce an in-depth,
-    diagram-rich, structured executive analysis.
-    """
+    return app_payload
+
+
+def analyze_all_apps_with_gemini(all_apps_data):
+    """Sends all apps data to Gemini for comprehensive multi-app executive analysis."""
     gemini_api_key = os.getenv("GEMINI_API_KEY")
     if not gemini_api_key:
         raise ValueError("GEMINI_API_KEY is not set.")
 
     client = genai.Client(api_key=gemini_api_key)
-    print(f"Sending rich analytics payload to Gemini ({GEMINI_MODEL})...")
+    print(f"Sending multi-app dataset to Gemini ({GEMINI_MODEL})...")
 
-    data_json = json.dumps(analytics_payload, indent=2)
+    data_json = json.dumps(all_apps_data, indent=2)
 
     prompt = f"""
-You are a Principal Mobile Analytics & Growth Architect specializing in iOS audio/utility products.
-Analyze the following multi-dimensional Firebase / GA4 daily analytics dataset for **Neural Sound iOS**.
+You are a Principal Mobile Analytics & Growth Architect.
+Analyze the following multi-app daily Firebase / GA4 analytics dataset covering all active mobile applications.
 
-### Mandatory Report Structure & Requirements:
+### Guidelines for Multi-App Report:
+1. Provide an overarching **Portfolio Executive Summary & Health Dashboard** comparing total users, revenue/conversion trends, and overall stability.
+2. For **EACH INDIVIDUAL APPLICATION**, provide a dedicated deep-dive section containing:
+   - **App Health Score** (X/10)
+   - **Old vs. New User Cohort Deep-Dive** (Table comparing New Users vs Returning Users with duration and engagement).
+   - **7-Day Velocity & Trajectory** (Table & commentary).
+   - **User Funnel Diagrams** (ASCII/Unicode diagrams for onboarding and core feature execution).
+   - **Crash & Stability Health** (Crash-free user rates and exceptions).
+   - **🚨 New Build / Staged Rollout Alert Section**: Explicitly detect and compare new builds (e.g., 1.3.08) against the production baseline (1.3.07), highlighting any engagement or crash regressions.
+   - **Top In-App Events & Feature Lookups** (Including slider debouncing or telemetry bugs).
+   - **Geographic Distribution**.
+   - **Prioritized Strategic Action Matrix** (P0, P1, P2 with Engineering/Product/Growth fixes).
 
-# 📊 Neural Sound iOS — Executive Daily Analytics & Growth Intelligence
-
-### 🎯 Product Overview & Health Score
-- **Overall Health Score:** (X / 10 with clear mathematical rationale)
-- **Executive Summary:** Bulleted highlights of yesterday's performance, user velocity, and notable anomalies.
-
----
-
-## 👥 1. Old vs. New User Cohort Deep-Dive (CRITICAL)
-- Create a clear markdown comparison table: **New Users** vs **Returning (Old) Users** (Active users, % of DAU, Sessions/user, Avg Session Duration, Engagement Rate, Screenviews).
-- Detailed behavioral analysis: How do new users interact differently from returning power users? What is the retention drop-off risk?
-
----
-
-## 📈 2. 7-Day Performance & Velocity Trajectory
-- Include a 7-day trend table showing Date, DAU, New Users, Returning Users, Sessions, and Engagement Rate.
-- Add a text/ASCII visual progress bar or trend indicator for daily volume.
-- Momentum analysis: Is acquisition accelerating, plateauing, or decaying?
-
----
-
-## ⚡ 3. End-to-End User Journey & Funnel Diagrams (DIAGRAMS REQUIRED)
-- **Provide 2 ASCII/Unicode diagrams:**
-  1. **Onboarding & Auth Funnel Diagram** (`first_open` ──► `onboarding_viewed` ──► `login_succeeded` ──► `first_journey_completed`) with explicit conversion percentages.
-  2. **Core Audio Creation & Player Funnel Diagram** (`plus_button_tap` ──► `import_files`/`photos` ──► `separation_player_opened` ──► `separation_play_started`) with drop-off bottlenecks highlighted.
-- Identify friction points and high-friction drop-offs.
-
----
-
-## 🎛️ 4. Feature Telemetry & Power-User Lookups
-- Table of key feature interactions and in-app event counts.
-- Identify telemetry anomalies (e.g. un-debounced slider tracking on pitch/tempo).
-
----
-
-## 📱 5. App Version Adoption & Global Footprint
-- Version distribution table & visual ASCII bar chart (Production vs Staged Rollout vs Legacy versions).
-- Top geographic markets table (Top countries by active users and engagement).
-
----
-
-## 💡 6. Strategic Action Matrix (Prioritized)
-Provide a structured table:
-| Priority | Category (Eng / Product / Growth) | Issue / Finding | Recommended Action | Expected Impact |
-
-Data Payload:
+Multi-App Dataset:
 ```json
 {data_json}
 ```
@@ -296,31 +290,49 @@ Data Payload:
     return response.text
 
 
-def log_results(analysis_result):
-    """Outputs analysis to terminal, saves to log file, and dispatches to all channels."""
+def log_results(analysis_result, all_apps_data):
+    """Outputs analysis, saves logs, and dispatches across all channels with charts."""
     timestamp_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     divider = "=" * 60
-    log_entry = f"\n{divider}\n[FIREBASE ANALYTICS AI REPORT - {timestamp_str}]\n{divider}\n{analysis_result}\n"
+    log_entry = f"\n{divider}\n[MULTI-APP FIREBASE ANALYTICS AI REPORT - {timestamp_str}]\n{divider}\n{analysis_result}\n"
 
     print(log_entry)
     with open(LOG_FILE, "a", encoding="utf-8") as f:
         f.write(log_entry)
     print(f"Report saved to: {LOG_FILE}")
 
+    # Gather all generated chart images
+    all_charts = []
+    for app in all_apps_data:
+        for chart_path in app.get("chart_paths", {}).values():
+            if os.path.exists(chart_path):
+                all_charts.append(chart_path)
+
     # Dispatch to Telegram, Discord, Gmail, macOS banners, and reports/ directory
-    dispatch_all_notifications(analysis_result)
+    dispatch_all_notifications(analysis_result, chart_images=all_charts)
 
 
 def main():
-    print(f"=== Starting Comprehensive Firebase Analytics AI Pipeline: {datetime.now()} ===")
+    print(f"=== Starting Multi-App Firebase Analytics AI Pipeline: {datetime.now()} ===")
     try:
-        client = get_analytics_client()
-        payload = fetch_comprehensive_ga4_data(client)
-        result = analyze_with_gemini(payload)
-        log_results(result)
-        print("=== Pipeline Execution Finished Successfully ===")
+        apps = load_apps_configuration()
+        print(f"Loaded {len(apps)} configured application(s).")
+
+        all_apps_data = []
+        for app in apps:
+            client = get_analytics_client(app.get("service_account_key", DEFAULT_SERVICE_KEY))
+            app_data = fetch_app_analytics_and_crashes(
+                client=client,
+                ga4_property_id=app["ga4_property_id"],
+                app_name=app["app_name"],
+            )
+            all_apps_data.append(app_data)
+
+        ai_analysis = analyze_all_apps_with_gemini(all_apps_data)
+        log_results(ai_analysis, all_apps_data)
+        print("=== Multi-App Pipeline Execution Finished Successfully ===")
     except Exception as err:
-        print(f"Error during pipeline execution: {err}", file=sys.stderr)
+        print(f"Error during multi-app pipeline execution: {err}", file=sys.stderr)
         sys.exit(1)
 
 

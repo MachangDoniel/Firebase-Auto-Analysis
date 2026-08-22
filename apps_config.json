@@ -1,0 +1,23 @@
+[
+  {
+    "app_id": "neural-sound-ios",
+    "app_name": "Neural Sound iOS",
+    "ga4_property_id": "533563138",
+    "platform": "iOS",
+    "service_account_key": "serviceAccountKey.json"
+  },
+  {
+    "app_id": "app-two",
+    "app_name": "Second App (Optional)",
+    "ga4_property_id": "",
+    "platform": "iOS",
+    "service_account_key": "serviceAccountKey.json"
+  },
+  {
+    "app_id": "app-three",
+    "app_name": "Third App (Optional)",
+    "ga4_property_id": "",
+    "platform": "iOS / Android",
+    "service_account_key": "serviceAccountKey.json"
+  }
+]

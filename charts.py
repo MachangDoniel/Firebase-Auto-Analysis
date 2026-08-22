@@ -1,0 +1,165 @@
+"""
+Visual Charts Generator for Firebase / GA4 Analytics
+Generates modern, presentation-grade visual charts (PNGs) for inclusion in
+PDF reports, HTML dashboards, and Discord/Telegram messages.
+"""
+
+import os
+from pathlib import Path
+import matplotlib
+matplotlib.use("Agg")  # Non-interactive backend
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Set cohesive modern visual style
+plt.rcParams["font.family"] = "sans-serif"
+plt.rcParams["font.sans-serif"] = ["Helvetica", "Arial", "DejaVu Sans"]
+plt.rcParams["axes.edgecolor"] = "#cbd5e1"
+plt.rcParams["axes.linewidth"] = 0.8
+
+
+def generate_all_charts(app_name, analytics_data, output_dir):
+    """
+    Generates a suite of visual charts for a single app:
+    1. 7-Day Velocity Trend Chart
+    2. Funnel Conversion Bar Chart
+    3. New vs Returning Cohort Comparison
+    4. App Version Distribution & New Build Alert
+    5. Geographic Footprint Chart
+    Returns dictionary of generated chart image paths.
+    """
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    clean_app_id = "".join(c if c.isalnum() else "_" for c in app_name.lower())
+    
+    chart_paths = {}
+    
+    # 1. 7-Day Trend Line & Area Chart
+    trend_data = analytics_data.get("past_7_days_trend", [])
+    if trend_data and len(trend_data) > 1:
+        dates = [d["date"][5:] for d in trend_data]  # MM-DD
+        dau = [d["activeUsers"] for d in trend_data]
+        new_users = [d["newUsers"] for d in trend_data]
+        
+        fig, ax = plt.subplots(figsize=(7, 3.2), dpi=200)
+        ax.plot(dates, dau, color="#4f46e5", marker="o", linewidth=2.5, label="Active Users (DAU)")
+        ax.fill_between(dates, dau, color="#4f46e5", alpha=0.12)
+        ax.plot(dates, new_users, color="#06b6d4", marker="s", linewidth=2, linestyle="--", label="New Users")
+        
+        ax.set_title(f"{app_name} — 7-Day User Velocity & Trajectory", fontsize=11, fontweight="bold", pad=10, color="#0f172a")
+        ax.set_ylabel("Daily Users", fontsize=9, color="#475569")
+        ax.grid(True, linestyle=":", alpha=0.6, color="#cbd5e1")
+        ax.legend(loc="upper left", frameon=True, fontsize=8.5)
+        ax.tick_params(colors="#475569", labelsize=8.5)
+        for spine in ["top", "right"]:
+            ax.spines[spine].set_visible(False)
+            
+        trend_file = output_dir / f"{clean_app_id}_trend.png"
+        plt.tight_layout()
+        plt.savefig(trend_file)
+        plt.close(fig)
+        chart_paths["trend_chart"] = str(trend_file)
+
+    # 2. Funnel Conversion Horizontal Bar Chart
+    events = {e["eventName"]: e["totalUsers"] for e in analytics_data.get("top_events_telemetry", [])}
+    funnel_keys = [
+        ("Onboarding", events.get("onboarding_viewed", 0) or events.get("first_open", 0)),
+        ("Auth Complete", events.get("login_succeeded", 0)),
+        ("Journey Done", events.get("first_journey_login_completed", 0)),
+        ("Plus Button", events.get("plus_button_tap", 0)),
+        ("Import Action", events.get("import_started", 0) or (events.get("import_files_app_tap", 0) + events.get("import_photos_tap", 0)) // 2),
+        ("Player Opened", events.get("separation_player_opened", 0)),
+        ("Play Started", events.get("separation_play_started", 0)),
+    ]
+    funnel_keys = [f for f in funnel_keys if f[1] > 0]
+    
+    if len(funnel_keys) >= 3:
+        stages = [k[0] for k in funnel_keys][::-1]
+        counts = [k[1] for k in funnel_keys][::-1]
+        base_count = funnel_keys[0][1]
+        percentages = [f"{round((c / base_count) * 100, 1)}%" for c in counts]
+        
+        fig, ax = plt.subplots(figsize=(7, 3.4), dpi=200)
+        colors = plt.cm.Blues(np.linspace(0.4, 0.85, len(stages)))
+        bars = ax.barh(stages, counts, color=colors, height=0.55, edgecolor="#cbd5e1")
+        
+        for bar, pct, count in zip(bars, percentages, counts):
+            ax.text(bar.get_width() + (max(counts) * 0.02), bar.get_y() + bar.get_height()/2,
+                    f"{count} ({pct})", va="center", ha="left", fontsize=8, color="#0f172a", fontweight="bold")
+                    
+        ax.set_title(f"{app_name} — Core Conversion Funnel & Bottlenecks", fontsize=11, fontweight="bold", pad=10, color="#0f172a")
+        ax.set_xlim(0, max(counts) * 1.25)
+        ax.grid(axis="x", linestyle=":", alpha=0.6, color="#cbd5e1")
+        ax.tick_params(colors="#475569", labelsize=8.5)
+        for spine in ["top", "right"]:
+            ax.spines[spine].set_visible(False)
+            
+        funnel_file = output_dir / f"{clean_app_id}_funnel.png"
+        plt.tight_layout()
+        plt.savefig(funnel_file)
+        plt.close(fig)
+        chart_paths["funnel_chart"] = str(funnel_file)
+
+    # 3. New vs Returning Cohort Comparison Bar Chart
+    cohorts = analytics_data.get("new_vs_returning_cohorts", [])
+    if len(cohorts) >= 2:
+        names = ["New Users", "Returning Users"]
+        dau_vals = [c.get("activeUsers", 0) for c in cohorts[:2]]
+        dur_vals = [c.get("avgSessionDuration_sec", 0) / 60 for c in cohorts[:2]]  # in minutes
+        
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7, 2.8), dpi=200)
+        
+        # User split
+        ax1.bar(names, dau_vals, color=["#06b6d4", "#6366f1"], width=0.45)
+        ax1.set_title("User Volume (DAU)", fontsize=9.5, fontweight="bold", color="#0f172a")
+        ax1.tick_params(labelsize=8, colors="#475569")
+        for i, v in enumerate(dau_vals):
+            ax1.text(i, v + (max(dau_vals)*0.03), str(v), ha="center", fontweight="bold", fontsize=8.5)
+        ax1.set_ylim(0, max(dau_vals) * 1.2)
+        ax1.spines["top"].set_visible(False)
+        ax1.spines["right"].set_visible(False)
+        
+        # Avg Duration (Minutes)
+        ax2.bar(names, dur_vals, color=["#38bdf8", "#818cf8"], width=0.45)
+        ax2.set_title("Avg Session Duration (Mins)", fontsize=9.5, fontweight="bold", color="#0f172a")
+        ax2.tick_params(labelsize=8, colors="#475569")
+        for i, v in enumerate(dur_vals):
+            ax2.text(i, v + (max(dur_vals)*0.03), f"{round(v, 1)}m", ha="center", fontweight="bold", fontsize=8.5)
+        ax2.set_ylim(0, max(dur_vals) * 1.2)
+        ax2.spines["top"].set_visible(False)
+        ax2.spines["right"].set_visible(False)
+        
+        cohort_file = output_dir / f"{clean_app_id}_cohort.png"
+        plt.tight_layout()
+        plt.savefig(cohort_file)
+        plt.close(fig)
+        chart_paths["cohort_chart"] = str(cohort_file)
+
+    # 4. App Version Distribution Donut Chart
+    versions = analytics_data.get("app_versions", [])
+    if versions:
+        v_labels = [v["appVersion"] for v in versions[:4]]
+        v_counts = [v["activeUsers"] for v in versions[:4]]
+        
+        fig, ax = plt.subplots(figsize=(6, 3), dpi=200)
+        colors = ["#4f46e5", "#ec4899", "#f59e0b", "#10b981"][:len(v_labels)]
+        
+        wedges, texts, autotexts = ax.pie(
+            v_counts, labels=v_labels, autopct="%1.1f%%",
+            startangle=140, colors=colors, textprops=dict(color="#0f172a", fontsize=8.5),
+            wedgeprops=dict(width=0.45, edgecolor="#ffffff", linewidth=2)
+        )
+        for at in autotexts:
+            at.set_color("#ffffff")
+            at.set_fontsize(7.5)
+            at.set_weight("bold")
+            
+        ax.set_title(f"{app_name} — App Version Distribution", fontsize=10.5, fontweight="bold", pad=8, color="#0f172a")
+        
+        version_file = output_dir / f"{clean_app_id}_version.png"
+        plt.tight_layout()
+        plt.savefig(version_file)
+        plt.close(fig)
+        chart_paths["version_chart"] = str(version_file)
+
+    return chart_paths

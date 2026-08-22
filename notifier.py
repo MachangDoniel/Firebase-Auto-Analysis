@@ -1,10 +1,10 @@
 """
 Multi-Channel Notifier & Document Generator Module
-Converts AI analysis into styled HTML & PDF documents and delivers:
-1. Telegram Bot (Executive text summary + PDF Document attachment)
-2. Discord Webhook (Executive text summary + PDF File upload)
-3. Email / Gmail (Rich HTML summary + PDF Attachment)
-4. macOS Desktop Notification Banner
+Converts AI analysis and visual charts into styled HTML & PDF documents and delivers:
+1. Telegram Bot (Executive text summary + PDF Document + Visual Charts)
+2. Discord Webhook (Executive text summary + PDF File + Visual Charts)
+3. Email / Gmail (Rich HTML summary + Embedded Charts + PDF Attachment)
+4. macOS Desktop Notification Banner (Finder-routed)
 5. Saved Local Documents (reports/analysis_YYYY-MM-DD.pdf & .html)
 """
 
@@ -15,6 +15,7 @@ import subprocess
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
+from email.mime.image import MIMEImage
 from datetime import datetime
 from pathlib import Path
 from dotenv import load_dotenv
@@ -32,16 +33,16 @@ def get_css_styling():
     return """
     @page {
         size: a4 portrait;
-        margin: 1.5cm 1.2cm 1.5cm 1.2cm;
+        margin: 1.4cm 1.2cm 1.4cm 1.2cm;
     }
     body {
         font-family: Helvetica, Arial, sans-serif;
         color: #1e293b;
         line-height: 1.4;
-        font-size: 9.5pt;
+        font-size: 9pt;
     }
     h1 {
-        font-size: 16pt;
+        font-size: 15pt;
         color: #0f172a;
         border-bottom: 2px solid #4f46e5;
         padding-bottom: 4px;
@@ -49,44 +50,44 @@ def get_css_styling():
         margin-bottom: 10px;
     }
     h2 {
-        font-size: 12pt;
+        font-size: 11.5pt;
         color: #1e293b;
         background-color: #f1f5f9;
         padding: 5px 8px;
         border-left: 4px solid #4f46e5;
-        margin-top: 14px;
-        margin-bottom: 8px;
+        margin-top: 12px;
+        margin-bottom: 6px;
     }
     h3 {
-        font-size: 10.5pt;
+        font-size: 10pt;
         color: #334155;
-        margin-top: 10px;
+        margin-top: 8px;
         margin-bottom: 4px;
     }
     p, li {
-        font-size: 9pt;
+        font-size: 8.5pt;
         color: #334155;
     }
     ul, ol {
-        margin-top: 3px;
+        margin-top: 2px;
         margin-bottom: 6px;
-        padding-left: 18px;
+        padding-left: 16px;
     }
     li {
-        margin-bottom: 3px;
+        margin-bottom: 2px;
     }
     table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 6px;
         margin-bottom: 10px;
-        font-size: 8.5pt;
+        font-size: 8pt;
     }
     th {
         background-color: #4f46e5;
         color: #ffffff;
         text-align: left;
-        padding: 5px 6px;
+        padding: 4px 6px;
         font-weight: bold;
     }
     td {
@@ -98,7 +99,7 @@ def get_css_styling():
     }
     pre, code {
         font-family: Courier, monospace;
-        font-size: 8pt;
+        font-size: 7.5pt;
         background-color: #f8fafc;
     }
     pre {
@@ -107,22 +108,25 @@ def get_css_styling():
         border-radius: 4px;
         white-space: pre-wrap;
     }
-    blockquote {
-        border-left: 3px solid #cbd5e1;
-        padding-left: 8px;
-        margin-left: 0;
-        color: #64748b;
-        font-style: italic;
-    }
     .header-box {
         background: #f8fafc;
         border: 1px solid #e2e8f0;
         padding: 8px 12px;
         margin-bottom: 12px;
-        font-size: 9pt;
+        font-size: 8.5pt;
+    }
+    .chart-box {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 14px;
+    }
+    .chart-img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #e2e8f0;
     }
     .footer-note {
-        margin-top: 20px;
+        margin-top: 16px;
         border-top: 1px solid #e2e8f0;
         padding-top: 6px;
         font-size: 7.5pt;
@@ -132,9 +136,9 @@ def get_css_styling():
     """
 
 
-def generate_documents(markdown_text, target_date=None):
+def generate_documents(markdown_text, target_date=None, chart_images=None):
     """
-    Converts markdown analysis into styled HTML and PDF files.
+    Converts markdown analysis and embeds visual charts into styled HTML and PDF files.
     Returns (html_path, pdf_path).
     """
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -146,21 +150,31 @@ def generate_documents(markdown_text, target_date=None):
         extensions=["tables", "fenced_code", "nl2br"]
     )
     
+    # Build chart image HTML blocks
+    charts_html = ""
+    if chart_images:
+        charts_html = "<h2>📊 Visual Graphs & Performance Charts</h2><div class='chart-box'>"
+        for c_path in chart_images:
+            if os.path.exists(c_path):
+                charts_html += f"<p><img class='chart-img' src='{c_path}' /></p>"
+        charts_html += "</div>"
+
     css = get_css_styling()
     full_html = f"""<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Firebase Analytics Report - {target_date}</title>
+    <title>Mobile Analytics Intelligence Report - {target_date}</title>
     <style>
         {css}
     </style>
 </head>
 <body>
     <div class="header-box">
-        <strong>Neural Sound iOS</strong> &bull; Automated Daily Analytics Briefing &bull; <em>{target_date}</em>
+        <strong>Mobile Product Analytics Portfolio</strong> &bull; Automated Daily Briefing &bull; <em>{target_date}</em>
     </div>
     {html_content}
+    {charts_html}
     <div class="footer-note">
         Generated automatically by Neural Sound Analytics Pipeline &bull; Gemini AI &bull; {target_date}
     </div>
@@ -192,12 +206,12 @@ def generate_documents(markdown_text, target_date=None):
 
 
 def extract_executive_summary(report_text, max_length=950):
-    """Extracts a clean, punchy summary for message captions."""
+    """Extracts a punchy summary for message captions."""
     lines = report_text.strip().split("\n")
     summary_lines = []
     
     for line in lines:
-        if line.startswith("# ") or line.startswith("### **Product Overview**") or "Health Score" in line or line.startswith("* ") or line.startswith("- "):
+        if line.startswith("# ") or line.startswith("###") or "Health Score" in line or line.startswith("* ") or line.startswith("- "):
             summary_lines.append(line)
         if len("\n".join(summary_lines)) > max_length:
             break
@@ -217,7 +231,6 @@ def send_macos_notification(title, message, pdf_path=None):
         return
     try:
         clean_msg = message.replace('"', '\\"').replace("'", "\\'")[:160]
-        # Route through Finder application so clicking the banner does not launch Script Editor
         script = f'tell application "Finder" to display notification "{clean_msg}" with title "{title}" subtitle "Neural Sound Analytics"'
         subprocess.run(["osascript", "-e", script], check=False)
         print("✅ macOS notification banner sent (via Finder).")
@@ -231,19 +244,19 @@ def send_macos_notification(title, message, pdf_path=None):
         print(f"⚠️ Failed to send macOS notification: {e}", file=sys.stderr)
 
 
-def send_telegram_document(report_text, pdf_path=None):
-    """Sends executive text summary + PDF Document to Telegram."""
+def send_telegram_document(report_text, pdf_path=None, chart_images=None):
+    """Sends executive text summary + PDF Document + Visual Charts to Telegram."""
     bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
     chat_id = os.getenv("TELEGRAM_CHAT_ID")
     if not bot_token or not chat_id:
         return
     
-    print("Sending report to Telegram...")
+    print("Sending report & charts to Telegram...")
     try:
         summary = extract_executive_summary(report_text)
-        caption = f"📊 *Neural Sound iOS - Daily Analytics Briefing*\n\n{summary}\n\n📄 _Full PDF attached below._"
+        caption = f"📊 *Mobile Analytics Portfolio — Daily Intelligence Briefing*\n\n{summary}\n\n📄 _Full PDF & Visual Charts attached below._"
         
-        # 1. If PDF exists, send as document
+        # 1. Send PDF Document
         if pdf_path and os.path.exists(pdf_path):
             doc_url = f"https://api.telegram.org/bot{bot_token}/sendDocument"
             with open(pdf_path, "rb") as f:
@@ -251,18 +264,24 @@ def send_telegram_document(report_text, pdf_path=None):
                 data = {"chat_id": chat_id, "caption": caption[:1024]}
                 resp = requests.post(doc_url, data=data, files=files, timeout=30)
                 resp.raise_for_status()
-        else:
-            msg_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-            resp = requests.post(msg_url, json={"chat_id": chat_id, "text": report_text[:4000]}, timeout=15)
-            resp.raise_for_status()
+
+        # 2. Send Chart Photos (if any)
+        if chart_images:
+            photo_url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
+            for c_path in chart_images[:3]:
+                if os.path.exists(c_path):
+                    with open(c_path, "rb") as f:
+                        files = {"photo": (os.path.basename(c_path), f, "image/png")}
+                        data = {"chat_id": chat_id}
+                        requests.post(photo_url, data=data, files=files, timeout=20)
             
         print("✅ Telegram notification & PDF delivered successfully.")
     except Exception as e:
         print(f"⚠️ Telegram delivery failed: {e}", file=sys.stderr)
 
 
-def send_discord_document(report_text, pdf_path=None):
-    """Sends executive summary + PDF File to Discord."""
+def send_discord_document(report_text, pdf_path=None, chart_images=None):
+    """Sends executive summary + PDF File + Chart Upload to Discord."""
     webhook_url = os.getenv("DISCORD_WEBHOOK_URL")
     if not webhook_url:
         return
@@ -270,25 +289,37 @@ def send_discord_document(report_text, pdf_path=None):
     print("Sending report to Discord...")
     try:
         summary = extract_executive_summary(report_text, max_length=1200)
-        content = f"📊 **Neural Sound iOS — Daily AI Analytics Briefing**\n\n{summary}\n\n📎 *See attached PDF for full breakdown & telemetry tables.*"
+        content = f"📊 **Mobile Analytics Portfolio — Daily AI Intelligence Briefing**\n\n{summary}\n\n📎 *See attached PDF & visual charts below.*"
+        
+        files_payload = {}
+        file_handles = []
         
         if pdf_path and os.path.exists(pdf_path):
-            with open(pdf_path, "rb") as f:
-                files = {"file": (os.path.basename(pdf_path), f, "application/pdf")}
-                payload = {"content": content[:1900]}
-                resp = requests.post(webhook_url, data=payload, files=files, timeout=30)
-                resp.raise_for_status()
-        else:
-            resp = requests.post(webhook_url, json={"content": report_text[:1900]}, timeout=15)
-            resp.raise_for_status()
+            f_pdf = open(pdf_path, "rb")
+            file_handles.append(f_pdf)
+            files_payload["file"] = (os.path.basename(pdf_path), f_pdf, "application/pdf")
+            
+        if chart_images:
+            for idx, c_path in enumerate(chart_images[:2]):
+                if os.path.exists(c_path):
+                    f_img = open(c_path, "rb")
+                    file_handles.append(f_img)
+                    files_payload[f"chart_{idx}"] = (os.path.basename(c_path), f_img, "image/png")
+                    
+        payload = {"content": content[:1900]}
+        resp = requests.post(webhook_url, data=payload, files=files_payload, timeout=35)
+        resp.raise_for_status()
+        
+        for fh in file_handles:
+            fh.close()
             
         print("✅ Discord notification & PDF delivered successfully.")
     except Exception as e:
         print(f"⚠️ Discord delivery failed: {e}", file=sys.stderr)
 
 
-def send_gmail_document(report_text, html_path=None, pdf_path=None):
-    """Sends formatted HTML email with PDF Document attached."""
+def send_gmail_document(report_text, html_path=None, pdf_path=None, chart_images=None):
+    """Sends formatted HTML email with visual charts and PDF attached."""
     sender_email = os.getenv("GMAIL_SENDER_EMAIL")
     sender_password = os.getenv("GMAIL_APP_PASSWORD")
     recipient_email = os.getenv("GMAIL_RECIPIENT_EMAIL", sender_email)
@@ -299,11 +330,11 @@ def send_gmail_document(report_text, html_path=None, pdf_path=None):
     print(f"Sending email report with PDF to {recipient_email}...")
     try:
         today_str = datetime.now().strftime("%Y-%m-%d")
-        subject = f"📊 Daily Firebase Analytics AI Report - {today_str}"
+        subject = f"📊 Daily Mobile Analytics Portfolio Report - {today_str}"
         
         msg = MIMEMultipart("mixed")
         msg["Subject"] = subject
-        msg["From"] = f"Neural Sound AI Analytics <{sender_email}>"
+        msg["From"] = f"Neural Sound Analytics <{sender_email}>"
         msg["To"] = recipient_email
         
         # Email body (HTML)
@@ -316,7 +347,7 @@ def send_gmail_document(report_text, html_path=None, pdf_path=None):
             alt_part.attach(MIMEText(report_text, "plain", "utf-8"))
         msg.attach(alt_part)
         
-        # PDF Attachment
+        # Attach PDF
         if pdf_path and os.path.exists(pdf_path):
             with open(pdf_path, "rb") as f:
                 pdf_attachment = MIMEApplication(f.read(), _subtype="pdf")
@@ -334,23 +365,23 @@ def send_gmail_document(report_text, html_path=None, pdf_path=None):
         print(f"⚠️ Email delivery failed: {e}", file=sys.stderr)
 
 
-def dispatch_all_notifications(report_text, date_str=None):
-    """Generates documents and dispatches across all configured channels."""
-    # 1. Generate HTML & PDF Documents
-    html_path, pdf_path = generate_documents(report_text, date_str)
+def dispatch_all_notifications(report_text, date_str=None, chart_images=None):
+    """Generates documents with embedded charts and dispatches across all channels."""
+    # 1. Generate HTML & PDF Documents with visual charts embedded
+    html_path, pdf_path = generate_documents(report_text, date_str, chart_images)
     
     # 2. Native macOS banner (routed via Finder)
     send_macos_notification(
-        title="Firebase Analytics PDF Ready",
-        message="Daily PDF report has been generated and dispatched.",
+        title="Mobile Analytics PDF Ready",
+        message="Daily PDF report with visual charts has been generated.",
         pdf_path=pdf_path
     )
     
-    # 3. Telegram (Executive summary + PDF document)
-    send_telegram_document(report_text, pdf_path)
+    # 3. Telegram (Executive summary + PDF document + Charts)
+    send_telegram_document(report_text, pdf_path, chart_images)
     
-    # 4. Discord (Executive summary + PDF file upload)
-    send_discord_document(report_text, pdf_path)
+    # 4. Discord (Executive summary + PDF file + Charts)
+    send_discord_document(report_text, pdf_path, chart_images)
     
-    # 5. Email (Formatted HTML + PDF attachment)
-    send_gmail_document(report_text, html_path, pdf_path)
+    # 5. Email (Formatted HTML + Embedded Charts + PDF attachment)
+    send_gmail_document(report_text, html_path, pdf_path, chart_images)
