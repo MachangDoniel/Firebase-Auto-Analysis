@@ -1,7 +1,8 @@
 """
 Multi-App Firebase Analytics & Crash Intelligence Pipeline
 Supports multiple apps across separate GA4 properties or stream IDs in the same project.
-Generates visual charts, crash analytics, new build comparisons, and PDF reports.
+Generates visual charts, crash analytics, multi-horizon benchmarks (Yesterday, 7d, 30d, 1yr, Lifetime),
+new build comparisons, and PDF reports.
 """
 
 import os
@@ -94,7 +95,7 @@ def build_stream_filter(stream_id):
 def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id=None, bundle_id=""):
     """
     Queries GA4 for complete analytics, crash metrics, new vs returning cohorts,
-    7-day velocity, top events, and app version stability for a specific app/stream.
+    multi-horizon growth (Yesterday, 7d, 30d, 1yr, All-Time), top events, and app version stability.
     """
     property_path = f"properties/{ga4_property_id.strip()}"
     dim_filter = build_stream_filter(stream_id)
@@ -103,7 +104,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
     yesterday_range = [DateRange(start_date="yesterday", end_date="yesterday")]
     seven_day_range = [DateRange(start_date="7daysAgo", end_date="yesterday")]
 
-    # 1. Overview & Stability Metrics
+    # 1. Overview & Stability Metrics (Yesterday)
     overview_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
@@ -128,7 +129,39 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
         for header, val in zip(overview_res.metric_headers, row.metric_values):
             overview_data[header.name] = val.value
 
-    # 2. New vs Returning Cohorts
+    # 2. Multi-Horizon Growth Benchmarks (Yesterday, 7 Days, 30 Days, 365 Days, Lifetime)
+    horizon_defs = [
+        ("Yesterday", "yesterday", "yesterday"),
+        ("Past 7 Days", "7daysAgo", "yesterday"),
+        ("Past 30 Days", "30daysAgo", "yesterday"),
+        ("Past Year (365d)", "365daysAgo", "yesterday"),
+        ("All-Time", "2020-01-01", "yesterday"),
+    ]
+    horizon_data = []
+    for h_label, start_d, end_d in horizon_defs:
+        h_req = RunReportRequest(
+            property=property_path,
+            date_ranges=[DateRange(start_date=start_d, end_date=end_d)],
+            dimension_filter=dim_filter,
+            metrics=[
+                Metric(name="activeUsers"),
+                Metric(name="newUsers"),
+                Metric(name="sessions"),
+                Metric(name="engagementRate"),
+            ]
+        )
+        h_res = client.run_report(h_req)
+        if h_res.rows:
+            r = h_res.rows[0]
+            horizon_data.append({
+                "horizon": h_label,
+                "activeUsers": int(r.metric_values[0].value),
+                "newUsers": int(r.metric_values[1].value),
+                "sessions": int(r.metric_values[2].value),
+                "engagementRate": f"{round(float(r.metric_values[3].value)*100, 1)}%",
+            })
+
+    # 3. New vs Returning Cohorts (Yesterday)
     cohort_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
@@ -154,7 +187,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
             "screenPageViews": int(row.metric_values[4].value),
         })
 
-    # 3. 7-Day Velocity
+    # 4. 7-Day Velocity
     trend_req = RunReportRequest(
         property=property_path,
         date_ranges=seven_day_range,
@@ -181,7 +214,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
             "engagementRate": f"{round(float(row.metric_values[3].value) * 100, 1)}%",
         })
 
-    # 4. Top Events Telemetry
+    # 5. Top Events Telemetry
     events_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
@@ -205,7 +238,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
             "eventsPerUser": round(float(row.metric_values[2].value), 1),
         })
 
-    # 5. App Versions & Build Comparison (Detecting New Builds)
+    # 6. App Versions & Build Comparison (Detecting New Builds)
     versions_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
@@ -231,7 +264,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
             "crashFreeUsersRate": f"{round(float(row.metric_values[3].value) * 100, 2)}%" if float(row.metric_values[3].value) > 0 else "100.0%",
         })
 
-    # 6. Geographic Distribution
+    # 7. Geographic Distribution
     geo_req = RunReportRequest(
         property=property_path,
         date_ranges=yesterday_range,
@@ -256,6 +289,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
         "ga4_property_id": ga4_property_id,
         "stream_id": stream_id,
         "yesterday_overview": overview_data,
+        "multi_horizon_benchmarks": horizon_data,
         "new_vs_returning_cohorts": cohort_data,
         "past_7_days_trend": trend_data,
         "top_events_telemetry": events_data,
@@ -263,7 +297,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
         "geographic_distribution": geo_data,
     }
 
-    # Generate visual PNG charts for this app
+    # Generate visual PNG charts for this app (includes multi-horizon chart)
     chart_paths = generate_all_charts(app_name, app_payload, CHARTS_DIR)
     app_payload["chart_paths"] = chart_paths
 
@@ -289,8 +323,15 @@ Analyze the following multi-app daily Firebase / GA4 analytics dataset covering 
 1. Provide an overarching **Portfolio Executive Summary & Health Dashboard** comparing all apps side-by-side (Total Users, Sessions, Engagement, Crash-Free Rates, and Cross-App Trends).
 2. For **EACH APPLICATION (e.g. Music Separation iOS and Vocal Cleaner)**, provide a dedicated deep-dive section containing:
    - **App Header & Health Score** (X / 10 with rationale)
+   - **📅 Multi-Horizon Growth & Historical Scale Comparison**: Present a clean markdown table comparing:
+     * **Yesterday (Latest 24h)**
+     * **Past 7 Days (Weekly Scale)**
+     * **Past 30 Days (Monthly Scale)**
+     * **Past Year (365 Days)**
+     * **All-Time / Lifetime Total**
+     Include analysis of growth velocity, user acquisition trajectory, and lifetime retention.
    - **Old vs. New User Cohort Deep-Dive** (Table comparing New Users vs Returning Users with duration and engagement).
-   - **7-Day Velocity & Trajectory** (Table & commentary).
+   - **7-Day Velocity & Trajectory** (Table & daily trend commentary).
    - **User Funnel Diagrams** (ASCII/Unicode diagrams for onboarding and core feature execution).
    - **Crash & Stability Health** (Crash-free user rates and exceptions).
    - **🚨 New Build / Staged Rollout Alert Section**: Explicitly detect and compare new builds against the production baseline.

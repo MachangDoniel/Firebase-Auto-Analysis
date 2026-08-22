@@ -22,10 +22,10 @@ def generate_all_charts(app_name, analytics_data, output_dir):
     """
     Generates a suite of visual charts for a single app:
     1. 7-Day Velocity Trend Chart
-    2. Funnel Conversion Bar Chart
-    3. New vs Returning Cohort Comparison
-    4. App Version Distribution & New Build Alert
-    5. Geographic Footprint Chart
+    2. Multi-Horizon Growth Comparison (Yesterday, 7d, 30d, 365d, All-Time)
+    3. Funnel Conversion Bar Chart
+    4. New vs Returning Cohort Comparison
+    5. App Version Distribution & New Build Alert
     Returns dictionary of generated chart image paths.
     """
     output_dir = Path(output_dir)
@@ -60,7 +60,48 @@ def generate_all_charts(app_name, analytics_data, output_dir):
         plt.close(fig)
         chart_paths["trend_chart"] = str(trend_file)
 
-    # 2. Funnel Conversion Horizontal Bar Chart
+    # 2. Multi-Horizon Growth Comparison Chart (Yesterday, 7d, 30d, 365d, All-Time)
+    horizons = analytics_data.get("multi_horizon_benchmarks", [])
+    if horizons:
+        labels = [h["horizon"] for h in horizons]
+        users = [h["activeUsers"] for h in horizons]
+        sessions = [h["sessions"] for h in horizons]
+        
+        fig, ax = plt.subplots(figsize=(7, 3.2), dpi=200)
+        x = np.arange(len(labels))
+        width = 0.35
+        
+        rects1 = ax.bar(x - width/2, users, width, label="Active Users", color="#4f46e5")
+        rects2 = ax.bar(x + width/2, sessions, width, label="Total Sessions", color="#06b6d4")
+        
+        ax.set_title(f"{app_name} — Multi-Horizon Scale & Comparison", fontsize=11, fontweight="bold", pad=10, color="#0f172a")
+        ax.set_xticks(x)
+        ax.set_xticklabels(labels, fontsize=8.5, color="#475569")
+        ax.grid(axis="y", linestyle=":", alpha=0.6, color="#cbd5e1")
+        ax.legend(loc="upper left", frameon=True, fontsize=8.5)
+        ax.tick_params(colors="#475569", labelsize=8.5)
+        for spine in ["top", "right"]:
+            ax.spines[spine].set_visible(False)
+            
+        # Add labels over bars
+        for rect in rects1:
+            h = rect.get_height()
+            if h > 0:
+                ax.annotate(f"{h}", xy=(rect.get_x() + rect.get_width()/2, h),
+                            xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=7.5, fontweight="bold")
+        for rect in rects2:
+            h = rect.get_height()
+            if h > 0:
+                ax.annotate(f"{h}", xy=(rect.get_x() + rect.get_width()/2, h),
+                            xytext=(0, 3), textcoords="offset points", ha="center", va="bottom", fontsize=7.5)
+                            
+        horizon_file = output_dir / f"{clean_app_id}_horizons.png"
+        plt.tight_layout()
+        plt.savefig(horizon_file)
+        plt.close(fig)
+        chart_paths["horizon_chart"] = str(horizon_file)
+
+    # 3. Funnel Conversion Horizontal Bar Chart
     events = {e["eventName"]: e["totalUsers"] for e in analytics_data.get("top_events_telemetry", [])}
     funnel_keys = [
         ("Onboarding", events.get("onboarding_viewed", 0) or events.get("first_open", 0)),
@@ -100,7 +141,7 @@ def generate_all_charts(app_name, analytics_data, output_dir):
         plt.close(fig)
         chart_paths["funnel_chart"] = str(funnel_file)
 
-    # 3. New vs Returning Cohort Comparison Bar Chart
+    # 4. New vs Returning Cohort Comparison Bar Chart
     cohorts = analytics_data.get("new_vs_returning_cohorts", [])
     if len(cohorts) >= 2:
         names = ["New Users", "Returning Users"]
@@ -135,7 +176,7 @@ def generate_all_charts(app_name, analytics_data, output_dir):
         plt.close(fig)
         chart_paths["cohort_chart"] = str(cohort_file)
 
-    # 4. App Version Distribution Donut Chart
+    # 5. App Version Distribution Donut Chart
     versions = analytics_data.get("app_versions", [])
     if versions:
         v_labels = [v["appVersion"] for v in versions[:4]]
