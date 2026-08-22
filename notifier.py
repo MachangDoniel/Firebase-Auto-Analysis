@@ -176,6 +176,11 @@ def generate_documents(markdown_text, target_date=None, chart_images=None):
     {html_content}
     {charts_html}
     <div class="footer-note">
+        <strong>Direct Console Links:</strong><br>
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome" style="color:#4f46e5; text-decoration:none;">🔗 Open Google Analytics 4 Dashboard</a> &bull;
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics" style="color:#4f46e5; text-decoration:none;">🔥 Open Firebase Analytics Console</a> &bull;
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics" style="color:#4f46e5; text-decoration:none;">💥 Open Firebase Crashlytics</a>
+        <br><br>
         Generated automatically by Neural Sound Analytics Pipeline &bull; Gemini AI &bull; {target_date}
     </div>
 </body>
