@@ -105,23 +105,32 @@ python3 main.py
 
 ---
 
-## ⏰ Daily Scheduling Guide
+## ⏰ Daily Scheduling Guide (12:00 AM Run)
 
-### Option A: macOS & Linux (`cron`)
+### Option A: macOS Native Scheduler (`launchd` - Recommended)
+`launchd` is Apple's native scheduler and runs reliably even if your Mac wakes up from sleep:
+
+1. Run the one-command installer:
+   ```bash
+   ./install_scheduler.sh
+   ```
+2. To verify it is loaded:
+   ```bash
+   launchctl list | grep neuralsound
+   ```
+3. To uninstall/disable:
+   ```bash
+   launchctl unload ~/Library/LaunchAgents/com.neuralsound.dailyanalysis.plist
+   ```
+
+---
+
+### Option B: Standard Unix Cron (`cron`)
 1. Open cron configuration:
    ```bash
    crontab -e
    ```
-2. Add the following entry to run every day at 8:00 AM (replace `/absolute/path/to/` with your local path):
+2. Add this line to run every night at 12:00 AM (00:00):
    ```cron
-   0 8 * * * /absolute/path/to/firebase-gemini-analysis/venv/bin/python "/absolute/path/to/firebase-gemini-analysis/main.py" >> "/absolute/path/to/firebase-gemini-analysis/cron_runner.log" 2>&1
+   0 0 * * * "/path/to/firebase-gemini-analysis/run_daily.sh"
    ```
-
-### Option B: Windows Task Scheduler
-1. Open **Task Scheduler** > **Create Basic Task**.
-2. **Name**: `Daily Gemini Firebase Analytics`.
-3. **Trigger**: Daily at desired time (e.g., 08:00 AM).
-4. **Action**: `Start a program`.
-5. **Program/script**: `C:\path\to\project\venv\Scripts\python.exe`
-6. **Add arguments**: `main.py`
-7. **Start in**: `C:\path\to\project`
