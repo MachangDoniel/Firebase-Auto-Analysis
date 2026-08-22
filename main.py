@@ -166,8 +166,11 @@ Analytics Data:
     return response.text
 
 
+from notifier import dispatch_all_notifications
+
+
 def log_results(analysis_result):
-    """Outputs analysis to terminal and saves to log file."""
+    """Outputs analysis to terminal, saves to log file, and dispatches to configured notification channels."""
     timestamp_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     divider = "=" * 60
     log_entry = f"\n{divider}\n[FIREBASE ANALYTICS AI REPORT - {timestamp_str}]\n{divider}\n{analysis_result}\n"
@@ -176,6 +179,9 @@ def log_results(analysis_result):
     with open(LOG_FILE, "a", encoding="utf-8") as f:
         f.write(log_entry)
     print(f"Report saved to: {LOG_FILE}")
+
+    # Dispatch to Telegram, Discord, Gmail, macOS banners, and reports/ directory
+    dispatch_all_notifications(analysis_result)
 
 
 def main():

@@ -82,17 +82,48 @@ In [Google Cloud Console API Library](https://console.cloud.google.com/apis/libr
 
 ---
 
+## 📬 Notification Channels Setup (Telegram, Discord, Email, iPhone & Mac)
+
+The pipeline can automatically broadcast each daily report across multiple channels. Simply fill in the ones you want in [.env](file:///Users/donieltripura/Neural%20Sound/Analysis/Workflow/.env):
+
+### 1. 📱 Telegram Bot (Pings iPhone & Mac instantly)
+- Talk to [@BotFather](https://t.me/botfather) on Telegram to create a bot and get your `TELEGRAM_BOT_TOKEN`.
+- Send a message to your new bot, then open [@userinfobot](https://t.me/userinfobot) to get your numeric `TELEGRAM_CHAT_ID`.
+- Set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in `.env`.
+
+### 2. 💬 Discord Webhook
+- In your Discord server: **Channel Settings** > **Integrations** > **Webhooks** > **New Webhook**.
+- Copy the Webhook URL and paste it into `DISCORD_WEBHOOK_URL` in `.env`.
+
+### 3. 📧 Gmail Reports (Inbox & iPhone Mail)
+- **Sender Email**: Any Gmail account you own (`GMAIL_SENDER_EMAIL`).
+- **Sender Password**: A 16-character [Google App Password](https://myaccount.google.com/apppasswords) (`GMAIL_APP_PASSWORD`).
+- **Recipient Email**: The destination email address (`GMAIL_RECIPIENT_EMAIL`).
+
+### 4. 🔔 macOS Native Notification
+- Automatically triggered on your Mac desktop whenever the pipeline runs!
+
+### 5. 📑 Dated Markdown Files
+- Every run automatically writes a clean, formatted report to:
+  `reports/analysis_YYYY-MM-DD.md`
+
+---
+
 ## 📂 Project Structure
 
 ```
 .
-├── README.md               # Complete project documentation & setup guide
-├── requirements.txt        # Pinned Python package dependencies
-├── .env.example            # Environment variables template
-├── .gitignore              # Protects keys, logs, and virtual environments
-├── main.py                 # Core GA4 data extraction and Gemini analysis script
-├── daily_analysis.log      # Output log file (generated after runs)
-└── serviceAccountKey.json  # Service Account Key (keep private, ignored by git)
+├── README.md                          # Complete project documentation & setup guide
+├── requirements.txt                   # Pinned Python package dependencies
+├── .env.example                       # Environment variables template
+├── .gitignore                         # Protects keys, logs, and virtual environments
+├── main.py                            # Core GA4 extraction & Gemini AI analysis
+├── notifier.py                        # Multi-channel dispatcher (Telegram, Discord, Email, Mac)
+├── install_scheduler.sh               # 1-click 12:00 AM daily scheduler installer
+├── run_daily.sh                       # Daily execution wrapper
+├── reports/                           # Dated markdown reports (analysis_YYYY-MM-DD.md)
+├── daily_analysis.log                 # Cumulative run logs
+└── serviceAccountKey.json             # Service Account Key (keep private)
 ```
 
 ---
