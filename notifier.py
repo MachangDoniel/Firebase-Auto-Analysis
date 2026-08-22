@@ -385,28 +385,35 @@ def send_macos_notification(title, message, pdf_path=None):
         print(f"⚠️ Failed to send macOS notification: {e}", file=sys.stderr)
 
 
-def send_telegram_document(report_text, pdf_path=None, chart_images=None):
-    """Sends executive text summary + PDF Document + Visual Charts to Telegram."""
+def send_telegram_document(report_text, pdf_path=None, md_path=None, chart_images=None):
+    """Sends executive text summary + PDF Document + Markdown File + Visual Charts to Telegram."""
     bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
     chat_id = os.getenv("TELEGRAM_CHAT_ID")
     if not bot_token or not chat_id:
         return
     
-    print("Sending report & charts to Telegram...")
+    print("Sending report, PDF & Markdown to Telegram...")
     try:
         summary = extract_executive_summary(report_text)
-        caption = f"📊 *Mobile Analytics Portfolio — Daily Intelligence Briefing*\n\n{summary}\n\n📄 _Full PDF & Visual Charts attached below._"
+        caption = f"📊 *Mobile Analytics Portfolio — Daily Intelligence Briefing*\n\n{summary}\n\n📄 _Full PDF & Markdown documents attached below._"
+        doc_url = f"https://api.telegram.org/bot{bot_token}/sendDocument"
         
         # 1. Send PDF Document
         if pdf_path and os.path.exists(pdf_path):
-            doc_url = f"https://api.telegram.org/bot{bot_token}/sendDocument"
             with open(pdf_path, "rb") as f:
                 files = {"document": (os.path.basename(pdf_path), f, "application/pdf")}
                 data = {"chat_id": chat_id, "caption": caption[:1024]}
                 resp = requests.post(doc_url, data=data, files=files, timeout=30)
                 resp.raise_for_status()
 
-        # 2. Send Chart Photos
+        # 2. Send Markdown File (.md)
+        if md_path and os.path.exists(md_path):
+            with open(md_path, "rb") as f:
+                files = {"document": (os.path.basename(md_path), f, "text/markdown")}
+                data = {"chat_id": chat_id, "caption": "📑 Raw Markdown Report (.md)"}
+                requests.post(doc_url, data=data, files=files, timeout=20)
+
+        # 3. Send Chart Photos
         if chart_images:
             photo_url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
             for c_path in chart_images[:3]:
@@ -416,21 +423,21 @@ def send_telegram_document(report_text, pdf_path=None, chart_images=None):
                         data = {"chat_id": chat_id}
                         requests.post(photo_url, data=data, files=files, timeout=20)
             
-        print("✅ Telegram notification & PDF delivered successfully.")
+        print("✅ Telegram notification, PDF & Markdown delivered successfully.")
     except Exception as e:
         print(f"⚠️ Telegram delivery failed: {e}", file=sys.stderr)
 
 
-def send_discord_document(report_text, pdf_path=None, chart_images=None):
-    """Sends executive summary + PDF File + Chart Upload to Discord."""
+def send_discord_document(report_text, pdf_path=None, md_path=None, chart_images=None):
+    """Sends executive summary + PDF File + Markdown File + Chart Upload to Discord."""
     webhook_url = os.getenv("DISCORD_WEBHOOK_URL")
     if not webhook_url:
         return
     
-    print("Sending report to Discord...")
+    print("Sending report, PDF & Markdown to Discord...")
     try:
         summary = extract_executive_summary(report_text, max_length=1200)
-        content = f"📊 **Mobile Analytics Portfolio — Daily AI Intelligence Briefing**\n\n{summary}\n\n📎 *See attached PDF & visual charts below.*"
+        content = f"📊 **Mobile Analytics Portfolio — Daily AI Intelligence Briefing**\n\n{summary}\n\n📎 *See attached PDF, Markdown report, and visual charts below.*"
         
         files_payload = {}
         file_handles = []
@@ -438,7 +445,12 @@ def send_discord_document(report_text, pdf_path=None, chart_images=None):
         if pdf_path and os.path.exists(pdf_path):
             f_pdf = open(pdf_path, "rb")
             file_handles.append(f_pdf)
-            files_payload["file"] = (os.path.basename(pdf_path), f_pdf, "application/pdf")
+            files_payload["file_pdf"] = (os.path.basename(pdf_path), f_pdf, "application/pdf")
+
+        if md_path and os.path.exists(md_path):
+            f_md = open(md_path, "rb")
+            file_handles.append(f_md)
+            files_payload["file_md"] = (os.path.basename(md_path), f_md, "text/markdown")
             
         if chart_images:
             for idx, c_path in enumerate(chart_images[:2]):
@@ -454,13 +466,13 @@ def send_discord_document(report_text, pdf_path=None, chart_images=None):
         for fh in file_handles:
             fh.close()
             
-        print("✅ Discord notification & PDF delivered successfully.")
+        print("✅ Discord notification, PDF & Markdown delivered successfully.")
     except Exception as e:
         print(f"⚠️ Discord delivery failed: {e}", file=sys.stderr)
 
 
-def send_gmail_document(report_text, html_path=None, pdf_path=None, chart_images=None):
-    """Sends formatted HTML email with visual charts and PDF attached."""
+def send_gmail_document(report_text, html_path=None, pdf_path=None, md_path=None, chart_images=None):
+    """Sends formatted HTML email with PDF and Markdown (.md) attached."""
     sender_email = os.getenv("GMAIL_SENDER_EMAIL")
     sender_password = os.getenv("GMAIL_APP_PASSWORD")
     recipient_email = os.getenv("GMAIL_RECIPIENT_EMAIL", sender_email)
@@ -468,7 +480,7 @@ def send_gmail_document(report_text, html_path=None, pdf_path=None, chart_images
     if not sender_email or not sender_password or not recipient_email:
         return
     
-    print(f"Sending email report with PDF to {recipient_email}...")
+    print(f"Sending email report with PDF & Markdown to {recipient_email}...")
     try:
         today_str = datetime.now().strftime("%Y-%m-%d")
         subject = f"📊 Daily Mobile Analytics Portfolio Report - {today_str}"
@@ -487,6 +499,7 @@ def send_gmail_document(report_text, html_path=None, pdf_path=None, chart_images
             alt_part.attach(MIMEText(report_text, "plain", "utf-8"))
         msg.attach(alt_part)
         
+        # Attach PDF
         if pdf_path and os.path.exists(pdf_path):
             with open(pdf_path, "rb") as f:
                 pdf_attachment = MIMEApplication(f.read(), _subtype="pdf")
@@ -494,12 +507,21 @@ def send_gmail_document(report_text, html_path=None, pdf_path=None, chart_images
                     "Content-Disposition", "attachment", filename=os.path.basename(pdf_path)
                 )
                 msg.attach(pdf_attachment)
+
+        # Attach Markdown File (.md)
+        if md_path and os.path.exists(md_path):
+            with open(md_path, "rb") as f:
+                md_attachment = MIMEApplication(f.read(), _subtype="octet-stream")
+                md_attachment.add_header(
+                    "Content-Disposition", "attachment", filename=os.path.basename(md_path)
+                )
+                msg.attach(md_attachment)
                 
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(sender_email, sender_password)
             server.sendmail(sender_email, [recipient_email], msg.as_string())
             
-        print("✅ Email report & PDF attachment delivered successfully.")
+        print("✅ Email report, PDF & Markdown attachment delivered successfully.")
     except Exception as e:
         print(f"⚠️ Email delivery failed: {e}", file=sys.stderr)
 
@@ -508,12 +530,17 @@ def dispatch_all_notifications(report_text, date_str=None, chart_images=None):
     """Generates documents with embedded charts and dispatches across all channels."""
     html_path, pdf_path = generate_documents(report_text, date_str, chart_images)
     
+    target_d = date_str or datetime.now().strftime("%Y-%m-%d")
+    md_path = REPORTS_DIR / f"analysis_{target_d}.md"
+    if not os.path.exists(md_path):
+        md_path = None
+    
     send_macos_notification(
-        title="Mobile Analytics PDF Ready",
-        message="Daily PDF report with visual charts has been generated.",
+        title="Mobile Analytics Report Ready",
+        message="Daily Analytics PDF & Markdown report has been generated.",
         pdf_path=pdf_path
     )
     
-    send_telegram_document(report_text, pdf_path, chart_images)
-    send_discord_document(report_text, pdf_path, chart_images)
-    send_gmail_document(report_text, html_path, pdf_path, chart_images)
+    send_telegram_document(report_text, pdf_path, md_path, chart_images)
+    send_discord_document(report_text, pdf_path, md_path, chart_images)
+    send_gmail_document(report_text, html_path, pdf_path, md_path, chart_images)
