@@ -30,7 +30,7 @@ from google import genai
 # ==========================================
 SERVICE_ACCOUNT_KEY = os.getenv("FIREBASE_KEY_PATH", str(BASE_DIR / "serviceAccountKey.json"))
 GA4_PROPERTY_ID = os.getenv("GA4_PROPERTY_ID")
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
 LOG_FILE = BASE_DIR / "daily_analysis.log"
 
 if not os.path.isabs(SERVICE_ACCOUNT_KEY):
