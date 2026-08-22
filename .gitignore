@@ -1,0 +1,25 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Secrets & Credentials
+.env
+serviceAccountKey.json
+*.pem
+*.key
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Logs
+*.log
+cron_runner.log
+daily_analysis.log
+
+# OS metadata
+.DS_Store
+Thumbs.db
