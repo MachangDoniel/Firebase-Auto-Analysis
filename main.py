@@ -379,14 +379,14 @@ Analyze the following multi-app daily Firebase / GA4 analytics dataset covering 
    - **App Header & Health Score** (X / 10 with rationale)
    - **💰 In-App Purchases, Subscriptions & Consumable Minutes Breakdown**:
      * **Product Sales Summary Table**: Item/Product ID, Product Name, Plan Type (Monthly / Weekly / Consumable Minutes), Units Sold (30D), Total Revenue ($ USD), and % Share.
-     * **Transaction Timeline Log Table**: Date/Timestamp, Product Purchased, Units, Revenue ($ USD), and Country of Purchase.
-     * **Monetization Velocity & Conversion Analysis**: Compare Subscriptions vs Consumable Minute packs (e.g. 60 min vs 300 min), Paywall Conversion Rate, and Purchaser LTV.
+     * **Transaction Timeline Log Table**: Date/Timestamp, App Build / Version, Product Purchased, Units, Revenue ($ USD), and Country of Purchase.
+     * **Build Environment & Monetization Analysis**: Identify if transactions or purchase errors occurred in **Production Builds** vs **TestFlight/Staged Builds** (e.g. TestFlight sandbox retry loops). Compare Subscriptions vs Consumable Minute packs (60 min vs 300 min).
    - **📅 Multi-Horizon Growth & Historical Scale Comparison**: Table comparing Yesterday, Past 7d, Past 30d, Past Year (365d), and Lifetime.
    - **Old vs. New User Cohort Deep-Dive** (Table comparing New Users vs Returning Users with duration and engagement).
    - **7-Day Velocity & Trajectory** (Table & daily trend commentary).
    - **User Funnel Diagrams** (ASCII/Unicode diagrams for onboarding, paywall conversion, and core feature execution).
-   - **Crash & Stability Health** (Crash-free user rates and exceptions).
-   - **🚨 New Build / Staged Rollout Alert Section**: Explicitly detect and compare new builds against the production baseline.
+   - **Crash & Stability Health by App Version** (Crash-free user rates and exceptions isolated by version).
+   - **🚨 New Build / TestFlight / Staged Rollout Alert Section**: Explicitly detect and compare new builds against the production baseline.
    - **Top In-App Events & Feature Lookups** (Including slider debouncing or telemetry bugs).
    - **Geographic Distribution**.
    - **Prioritized Strategic Action Matrix** (P0, P1, P2 with Engineering/Product/Growth fixes).
