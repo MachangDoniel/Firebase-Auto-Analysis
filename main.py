@@ -305,14 +305,12 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
 
 
 def analyze_all_apps_with_gemini(all_apps_data):
-    """Sends all apps data to Gemini for comprehensive multi-app executive analysis."""
+    """
+    Sends all apps data to Gemini for analysis.
+    Implements multi-model automatic fallback (gemini-3.6-flash -> gemini-3.5-flash -> gemini-flash-latest).
+    If all models or the API key fails, automatically generates a clean deterministic fallback report.
+    """
     gemini_api_key = os.getenv("GEMINI_API_KEY")
-    if not gemini_api_key:
-        raise ValueError("GEMINI_API_KEY is not set.")
-
-    client = genai.Client(api_key=gemini_api_key)
-    print(f"Sending multi-app dataset to Gemini ({GEMINI_MODEL})...")
-
     data_json = json.dumps(all_apps_data, indent=2)
 
     prompt = f"""
@@ -345,11 +343,51 @@ Multi-App Dataset:
 ```
 """
 
-    response = client.models.generate_content(
-        model=GEMINI_MODEL,
-        contents=prompt,
-    )
-    return response.text
+    candidate_models = [
+        os.getenv("GEMINI_MODEL", "gemini-3.6-flash"),
+        "gemini-3.5-flash",
+        "gemini-flash-latest",
+        "gemini-3.7-flash",
+    ]
+
+    if gemini_api_key:
+        client = genai.Client(api_key=gemini_api_key)
+        for model_name in candidate_models:
+            try:
+                print(f"Attempting Gemini generation using model: '{model_name}'...")
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=prompt,
+                )
+                if response and response.text:
+                    print(f"✅ Successfully generated analysis with '{model_name}'.")
+                    return response.text
+            except Exception as e:
+                print(f"⚠️ Model '{model_name}' failed: {e}. Trying next candidate model...", file=sys.stderr)
+
+    # Deterministic Fallback: Generate structured metrics report directly without AI
+    print("⚠️ All Gemini models / API keys unavailable. Generating deterministic metrics report...", file=sys.stderr)
+    fallback_report = f"# 📊 Daily Mobile Analytics Report (Automated Data Mode)\n\n"
+    fallback_report += f"> ⚠️ *Gemini AI synthesis was temporarily bypassed. Below is your raw verified multi-app telemetry and performance data.*\n\n"
+    
+    for app in all_apps_data:
+        app_name = app.get("app_name", "App")
+        yesterday = app.get("yesterday_overview", {})
+        fallback_report += f"## 📱 {app_name}\n\n"
+        fallback_report += f"| Metric | Value |\n| :--- | :--- |\n"
+        fallback_report += f"| **Active Users (DAU)** | {yesterday.get('activeUsers', 'N/A')} |\n"
+        fallback_report += f"| **New Users** | {yesterday.get('newUsers', 'N/A')} |\n"
+        fallback_report += f"| **Total Sessions** | {yesterday.get('sessions', 'N/A')} |\n"
+        fallback_report += f"| **Engagement Rate** | {round(float(yesterday.get('engagementRate', 0))*100, 1)}% |\n"
+        fallback_report += f"| **Crash-Free User Rate** | {round(float(yesterday.get('crashFreeUsersRate', 1))*100, 2)}% |\n\n"
+        
+        fallback_report += f"### 📅 Multi-Horizon Benchmarks\n\n"
+        fallback_report += f"| Horizon | Active Users | New Users | Sessions | Engagement Rate |\n| :--- | :--- | :--- | :--- | :--- |\n"
+        for h in app.get("multi_horizon_benchmarks", []):
+            fallback_report += f"| **{h['horizon']}** | {h['activeUsers']} | {h['newUsers']} | {h['sessions']} | {h['engagementRate']} |\n"
+        fallback_report += "\n---\n\n"
+
+    return fallback_report
 
 
 def log_results(analysis_result, all_apps_data):
