@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Analytics Intelligence Report - 2026-10-04</title>
+    <style>
+        
+    @page {
+        size: a4 portrait;
+        margin: 1.2cm 1.2cm 1.2cm 1.2cm;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #1e293b;
+        line-height: 1.45;
+        font-size: 9pt;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 10px;
+    }
+    h1 {
+        font-size: 16pt;
+        color: #0f172a;
+        border-bottom: 2px solid #4f46e5;
+        padding-bottom: 5px;
+        margin-top: 0;
+        margin-bottom: 8px;
+    }
+    h2 {
+        font-size: 12pt;
+        color: #1e293b;
+        background-color: #f1f5f9;
+        padding: 6px 10px;
+        border-left: 4px solid #4f46e5;
+        margin-top: 14px;
+        margin-bottom: 8px;
+        border-radius: 2px;
+    }
+    h3 {
+        font-size: 10.5pt;
+        color: #334155;
+        margin-top: 10px;
+        margin-bottom: 4px;
+    }
+    p, li {
+        font-size: 8.5pt;
+        color: #334155;
+    }
+    ul, ol {
+        margin-top: 2px;
+        margin-bottom: 6px;
+        padding-left: 18px;
+    }
+    li {
+        margin-bottom: 2px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        margin-top: 6px;
+        margin-bottom: 12px;
+        font-size: 8pt;
+    }
+    th {
+        background-color: #4f46e5;
+        color: #ffffff;
+        text-align: left;
+        padding: 5px 8px;
+        font-weight: bold;
+        word-wrap: break-word;
+        overflow: hidden;
+    }
+    td {
+        border-bottom: 1px solid #e2e8f0;
+        padding: 5px 8px;
+        word-wrap: break-word;
+        overflow: hidden;
+        vertical-align: top;
+    }
+    tr:nth-child(even) td {
+        background-color: #f8fafc;
+    }
+    pre, code {
+        font-family: "SF Mono", Monaco, Menlo, Consolas, Courier, monospace;
+        font-size: 7.5pt;
+        background-color: #f8fafc;
+    }
+    pre {
+        padding: 8px;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        white-space: pre-wrap;
+    }
+    .header-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        padding: 8px 12px;
+        margin-bottom: 10px;
+        font-size: 8.5pt;
+    }
+    .console-links-box {
+        background-color: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-left: 4px solid #4f46e5;
+        padding: 8px 12px;
+        margin-bottom: 14px;
+        font-size: 8pt;
+    }
+    .console-links-box a {
+        color: #4f46e5;
+        text-decoration: underline;
+        font-weight: bold;
+    }
+    .charts-grid {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 14px;
+    }
+    .chart-card {
+        margin-bottom: 12px;
+        text-align: center;
+    }
+    .chart-img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+    }
+    .footer-note {
+        margin-top: 18px;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 8px;
+        font-size: 7.5pt;
+        color: #64748b;
+        text-align: center;
+    }
+    
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-box">
+        <strong>Mobile Product Analytics Portfolio</strong> &bull; Automated Daily Briefing &bull; <em>2026-10-04</em>
+    </div>
+
+    <!-- Direct Cloud Console Quick Access -->
+    <div class="console-links-box">
+        <strong>🔗 Direct Cloud Console Quick Access:</strong><br>
+        &bull; <strong>GA4 Property (533563138):</strong> 
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome" target="_blank">GA4 Main Reports</a> | 
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/dashboard?r=realtime-overview" target="_blank">Realtime Users</a> | 
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/explorer?params=_u..nav%3Ddefault&r=events-overview" target="_blank">Events Explorer</a><br>
+        &bull; <strong>Firebase (neural-sound-ios):</strong> 
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics" target="_blank">Firebase Analytics</a> | 
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics" target="_blank">Crashlytics Stability</a> | 
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/settings/general" target="_blank">Project Settings</a>
+    </div>
+
+    <h1>PORTFOLIO PERFORMANCE &amp; MONETIZATION REPORT</h1>
+<p><strong>To:</strong> Executive Leadership Team, Neural Sound Technologies<br />
+<strong>From:</strong> Principal Mobile Analytics &amp; Monetization Growth Architect<br />
+<strong>Date:</strong> October 4, 2026<br />
+<strong>Data Scope:</strong> Production only — internal testers (Bangladesh) excluded from core production metrics.<br />
+<strong>GA4 Configuration:</strong> Multi-stream single-property architecture (Property ID: <code>533563138</code>).</p>
+<hr />
+<h2>1. Portfolio Executive Summary &amp; Health Dashboard</h2>
+<p>An analysis of Neural Sound’s mobile portfolio reveals two apps at opposite ends of the growth lifecycle. <strong>Music Separation iOS</strong> is a scaling utility experiencing global traction, primarily in East Asia, but is currently suffering from a severe engagement regression following its latest release. <strong>Vocal Cleaner</strong> is virtually stagnant in organic user acquisition but shows a highly concentrated revenue anomaly in Egypt that strongly indicates a sandbox-to-production telemetry leak or a single-user "whale" purchasing pattern.</p>
+<h3>Side-by-Side Portfolio Comparison Table</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Metric</th>
+<th style="text-align: left;">Music Separation iOS (<code>com.neuralsound.mss</code>)</th>
+<th style="text-align: left;">Vocal Cleaner (<code>com.neuralSound.audiocleaner</code>)</th>
+<th style="text-align: left;">Portfolio Total / Average</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>App Status</strong></td>
+<td style="text-align: left;">Scaling / Active Growth</td>
+<td style="text-align: left;">Stagnant / Low Volume</td>
+<td style="text-align: left;">Mixed Portfolio</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Yesterday Active Users (DAU)</strong></td>
+<td style="text-align: left;">94</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><strong>95</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Past 30D Active Users (MAU)</strong></td>
+<td style="text-align: left;">4,322</td>
+<td style="text-align: left;">21</td>
+<td style="text-align: left;"><strong>4,343</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DAU / MAU Ratio (Stickiness)</strong></td>
+<td style="text-align: left;">2.17% (Low/Highly Transactional)</td>
+<td style="text-align: left;">4.76% (Extremely Low)</td>
+<td style="text-align: left;"><strong>2.19%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Yesterday Revenue</strong></td>
+<td style="text-align: left;">$6.99</td>
+<td style="text-align: left;">$0.00</td>
+<td style="text-align: left;"><strong>$6.99</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Past 30D Revenue</strong></td>
+<td style="text-align: left;">$81.87 (Core)</td>
+<td style="text-align: left;">$127.85 (Anomalous)</td>
+<td style="text-align: left;"><strong>$209.72</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Lifetime Revenue (All-Time)</strong></td>
+<td style="text-align: left;">$149.59</td>
+<td style="text-align: left;">$136.84</td>
+<td style="text-align: left;"><strong>$286.43</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Primary Monetization Model</strong></td>
+<td style="text-align: left;">Weekly / Monthly Subscriptions</td>
+<td style="text-align: left;">Consumable Minutes (60m / 300m)</td>
+<td style="text-align: left;">Hybrid</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Top-Selling Product (30D)</strong></td>
+<td style="text-align: left;">Weekly Sub (<code>mss_weekly_sub</code>)</td>
+<td style="text-align: left;">300 Min Pack (<code>minutes.300</code>)</td>
+<td style="text-align: left;">Mixed</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Average Session Duration (30D)</strong></td>
+<td style="text-align: left;">439.42 seconds (7.32 min)</td>
+<td style="text-align: left;">613.17 seconds (10.22 min)</td>
+<td style="text-align: left;"><strong>526.30 seconds</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Crash-Free User Rate (Yesterday)</strong></td>
+<td style="text-align: left;">100.00%</td>
+<td style="text-align: left;">100.00%</td>
+<td style="text-align: left;"><strong>100.00%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GA4 Stream ID</strong></td>
+<td style="text-align: left;"><code>14402502632</code></td>
+<td style="text-align: left;"><code>15407667671</code></td>
+<td style="text-align: left;">Shared GA4 Property</td>
+</tr>
+</tbody>
+</table>
+<pre><code>PORTFOLIO 30-DAY REVENUE DISTRIBUTION ($209.72 Total)
+======================================================
+[██████████████████████████████] Music Separation iOS (39.0%) - $81.87
+[██████████████████████████████████████████████████] Vocal Cleaner (61.0%) - $127.85 *Anomalous
+</code></pre>
+<h3>High-Level Strategic Takeaways</h3>
+<ol>
+<li><strong>The Shared GA4 Property Architecture Risk:</strong> Both applications stream data into GA4 Property ID <code>533563138</code> using distinct stream IDs. While Google Analytics 4 supports multi-stream consolidation, any shared custom dimensions, user properties, or event names without clear namespaces run a high risk of cross-contamination. </li>
+<li><strong>Weekly Subscription Churn vs. One-Time Consumables:</strong> <strong>Music Separation</strong> relies on rapid, high-churn weekly subscription cycles ($2.88–$3.29/week). <strong>Vocal Cleaner</strong>’s revenue is entirely dominated by one-off consumable minutes packs (300 minutes for ~$19.44). </li>
+<li><strong>Severe Telemetry Bloat (Music Separation):</strong> Music Separation has a critical UX tracking bug. Sliders for Pitch and Tempo are sending events continuously during drags instead of debouncing on drag-release, artificially inflating event counts to over 208 events per user session.</li>
+</ol>
+<hr />
+<h2>2. Music Separation iOS Deep-Dive</h2>
+<h3>App Header &amp; Health Score</h3>
+<ul>
+<li><strong>App Name:</strong> Music Separation iOS</li>
+<li><strong>Bundle ID:</strong> <code>com.neuralsound.mss</code></li>
+<li><strong>Stream ID:</strong> <code>14402502632</code></li>
+<li><strong>Health Score:</strong> <code>6.8 / 10</code></li>
+<li><strong>Rationale:</strong> The app exhibits strong localized product-market fit in Japan and South Korea, driving steady recurring subscription revenue. Crash stability is a perfect 100.0%. However, the score is significantly weighed down by a <strong>54.5% drop in Active Users</strong> over the last 7 days, a <strong>severe engagement drop</strong> on October 3rd (falling from ~72% to 32.8%), and poor slider event debouncing that floods GA4 pipelines.</li>
+</ul>
+<hr />
+<h3>💰 In-App Purchases, Subscriptions &amp; Consumable Minutes Breakdown</h3>
+<h4>Product Sales Summary Table (Past 30 Days)</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Item / Product ID</th>
+<th style="text-align: left;">Product Name</th>
+<th style="text-align: left;">Plan Type</th>
+<th style="text-align: center;">Units Sold (30D)</th>
+<th style="text-align: center;">Total Revenue ($ USD)</th>
+<th style="text-align: center;">% Revenue Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">月次 (Monthly JP)</td>
+<td style="text-align: left;">Monthly Subscription</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">$21.04</td>
+<td style="text-align: center;">37.51%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">주간 (Weekly KR)</td>
+<td style="text-align: left;">Weekly Subscription</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">$16.21</td>
+<td style="text-align: center;">28.90%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">週次 (Weekly JP)</td>
+<td style="text-align: left;">Weekly Subscription</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">$15.96</td>
+<td style="text-align: center;">28.45%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">Weekly (Global EN)</td>
+<td style="text-align: left;">Weekly Subscription</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$2.88</td>
+<td style="text-align: center;">5.13%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TOTAL</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><strong>14</strong></td>
+<td style="text-align: center;"><strong>$56.09</strong></td>
+<td style="text-align: center;"><strong>100.00%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>Note: The product sales 30D summary reflects completed, localized SKUs. Minor variances with multi-horizon GA4 purchase revenue are due to real-time currency conversion sweeps.</em></p>
+<h4>Transaction Timeline Log</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Date</th>
+<th style="text-align: center;">App Version</th>
+<th style="text-align: left;">Product ID</th>
+<th style="text-align: left;">Localized Name</th>
+<th style="text-align: left;">Country</th>
+<th style="text-align: center;">Qty</th>
+<th style="text-align: center;">Revenue ($ USD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>2026-10-01</strong></td>
+<td style="text-align: center;">1.3.10</td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">週次</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$3.18</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-30</strong></td>
+<td style="text-align: center;">1.3.10</td>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">月次</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$6.99</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-27</strong></td>
+<td style="text-align: center;">1.3.10</td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">주간</td>
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$3.25</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-25</strong></td>
+<td style="text-align: center;">1.3.10</td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">주간</td>
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$3.22</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-23</strong></td>
+<td style="text-align: center;">1.3.10</td>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">月次</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$6.99</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-23</strong></td>
+<td style="text-align: center;">1.3.10</td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">週次</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$3.18</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-20</strong></td>
+<td style="text-align: center;">1.3.10</td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">Weekly</td>
+<td style="text-align: left;">Egypt</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$2.88</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-19</strong></td>
+<td style="text-align: center;">1.3.10</td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">週次</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$3.21</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-17</strong></td>
+<td style="text-align: center;">1.3.10</td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">주간</td>
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">$6.46</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-11</strong></td>
+<td style="text-align: center;">1.3.09</td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">주간</td>
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$3.29</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-07</strong></td>
+<td style="text-align: center;">1.3.09</td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">週次</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$3.20</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-06</strong></td>
+<td style="text-align: center;">1.3.09</td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">週次</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$3.20</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-05</strong></td>
+<td style="text-align: center;">1.3.09</td>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">月次</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$7.05</td>
+</tr>
+</tbody>
+</table>
+<h4>Build Environment &amp; Monetization Analysis</h4>
+<ul>
+<li><strong>Production Stability:</strong> All transactions listed above occurred in production builds (<code>1.3.09</code> and <code>1.3.10</code>). No purchase transaction errors are recorded in the active production log.</li>
+<li><strong>Internal Tester Separation:</strong> A clean separation has been maintained. 15 internal testers in Bangladesh executed 19 test sessions generating <strong>$24.93</strong> in sandbox purchase revenue. These testing transactions were successfully filtered out of the production dataset.</li>
+<li><strong>Subscription Architecture Vulnerability:</strong> Weekly subscriptions (<code>mss_weekly_sub</code>) make up <strong>12 out of 14 units sold (85.7%)</strong> over the last 30 days. This indicates high transactional utilization: users download the app, pay for a single week to process specific stems, and immediately cancel. This creates a high-churn treadmill. The monthly subscription tier (<code>mss_monthly_sub</code>) brings in more revenue per user ($6.99–$7.05) and has only 3 buyers.</li>
+</ul>
+<hr />
+<h3>📅 Multi-Horizon Growth &amp; Historical Scale Comparison</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Horizon</th>
+<th style="text-align: center;">Active Users</th>
+<th style="text-align: center;">New Users</th>
+<th style="text-align: center;">Sessions</th>
+<th style="text-align: center;">Avg. Engagement Rate</th>
+<th style="text-align: center;">Purchase Revenue ($ USD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Yesterday (Oct 3)</strong></td>
+<td style="text-align: center;">94</td>
+<td style="text-align: center;">13</td>
+<td style="text-align: center;">116</td>
+<td style="text-align: center;">32.80%</td>
+<td style="text-align: center;">$6.99</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Past 7 Days</strong></td>
+<td style="text-align: center;">658</td>
+<td style="text-align: center;">266</td>
+<td style="text-align: center;">1,068</td>
+<td style="text-align: center;">72.30%</td>
+<td style="text-align: center;">$29.73</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Past 30 Days</strong></td>
+<td style="text-align: center;">4,322</td>
+<td style="text-align: center;">3,474</td>
+<td style="text-align: center;">8,507</td>
+<td style="text-align: center;">80.90%</td>
+<td style="text-align: center;">$81.87</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Past Year (365d)</strong></td>
+<td style="text-align: center;">5,919</td>
+<td style="text-align: center;">5,144</td>
+<td style="text-align: center;">11,996</td>
+<td style="text-align: center;">82.90%</td>
+<td style="text-align: center;">$149.59</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Lifetime</strong></td>
+<td style="text-align: center;">5,919</td>
+<td style="text-align: center;">5,144</td>
+<td style="text-align: center;">11,996</td>
+<td style="text-align: center;">82.90%</td>
+<td style="text-align: center;">$149.59</td>
+</tr>
+</tbody>
+</table>
+<p><em>Architectural Insight:</em> The identical metrics between "Past Year" and "Lifetime" confirm the app was either launched or had its GA4 instrumentation initialized exactly within the current calendar year.</p>
+<hr />
+<h3>Old vs. New User Cohort Deep-Dive</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">User Cohort</th>
+<th style="text-align: center;">Active Users</th>
+<th style="text-align: center;">Sessions</th>
+<th style="text-align: center;">Avg. Session Duration</th>
+<th style="text-align: center;">Engagement Rate</th>
+<th style="text-align: center;">Screen Page Views</th>
+<th style="text-align: center;">Views / Session</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>New Users</strong></td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">35</td>
+<td style="text-align: center;">570.9 seconds</td>
+<td style="text-align: center;">34.30%</td>
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">0.88</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Returning Users</strong></td>
+<td style="text-align: center;">66</td>
+<td style="text-align: center;">81</td>
+<td style="text-align: center;">382.6 seconds</td>
+<td style="text-align: center;">32.10%</td>
+<td style="text-align: center;">43</td>
+<td style="text-align: center;">0.53</td>
+</tr>
+</tbody>
+</table>
+<h4>Cohort Analysis &amp; Diagnostic Observations</h4>
+<ul>
+<li><strong>Friction in Onboarding:</strong> New Users show an unusually long average session duration (<strong>570.9 seconds / 9.5 minutes</strong>) paired with a low engagement rate (<strong>34.3%</strong>). This is a warning sign. New users are spending almost 10 minutes in the app but are failing to trigger GA4's engagement criteria (which requires continuous interaction or multiple screen views). They are likely stuck on a heavy processing screen or in a complex login/onboarding loop.</li>
+<li><strong>Sub-1.0 Screen Views per Session:</strong> Both cohorts display extremely low screen views per session (0.88 for New, 0.53 for Returning). This points to a single-page app framework (e.g., SwiftUI or Flutter) where transitions between tabs or view controller updates are not being explicitly tracked as <code>screen_view</code> events in GA4.</li>
+</ul>
+<hr />
+<h3>7-Day Velocity &amp; Trajectory</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Date</th>
+<th style="text-align: center;">Active Users (DAU)</th>
+<th style="text-align: center;">New Users</th>
+<th style="text-align: center;">Sessions</th>
+<th style="text-align: center;">Engagement Rate</th>
+<th style="text-align: center;">Daily Revenue ($ USD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>2026-09-27</strong></td>
+<td style="text-align: center;">198</td>
+<td style="text-align: center;">95</td>
+<td style="text-align: center;">242</td>
+<td style="text-align: center;">81.00%</td>
+<td style="text-align: center;">$3.25</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-28</strong></td>
+<td style="text-align: center;">131</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">149</td>
+<td style="text-align: center;">77.20%</td>
+<td style="text-align: center;">$0.00</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-29</strong></td>
+<td style="text-align: center;">130</td>
+<td style="text-align: center;">44</td>
+<td style="text-align: center;">166</td>
+<td style="text-align: center;">81.90%</td>
+<td style="text-align: center;">$0.00</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-30</strong></td>
+<td style="text-align: center;">117</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">150</td>
+<td style="text-align: center;">75.30%</td>
+<td style="text-align: center;">$6.99</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-10-01</strong></td>
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">140</td>
+<td style="text-align: center;">68.60%</td>
+<td style="text-align: center;">$3.18</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-10-02</strong></td>
+<td style="text-align: center;">81</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">108</td>
+<td style="text-align: center;">72.20%</td>
+<td style="text-align: center;">$0.00</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-10-03</strong></td>
+<td style="text-align: center;">94</td>
+<td style="text-align: center;">13</td>
+<td style="text-align: center;">116</td>
+<td style="text-align: center;">32.80%</td>
+<td style="text-align: center;">$0.00</td>
+</tr>
+</tbody>
+</table>
+<pre><code>7-DAY DAU TRAJECTORY (Sep 27 - Oct 3)
+=====================================
+Sep 27: (198 DAU)  ████████████████████████████████████████
+Sep 28: (131 DAU)  ██████████████████████████
+Sep 29: (130 DAU)  ██████████████████████████
+Sep 30: (117 DAU)  ████████████████████████
+Oct 01: (112 DAU)  ███████████████████████
+Oct 02: (81 DAU)   ████████████████
+Oct 03: (94 DAU)   ███████████████████
+</code></pre>
+<h4>Trajectory Commentary</h4>
+<p>The 7-day trajectory shows a <strong>downward trend</strong>. Daily active users collapsed from <strong>198 DAU on Sept 27</strong> to <strong>94 DAU on Oct 3</strong> (a <strong>52.5% decline</strong>). Even more concerning is the sudden drop in the Daily Engagement Rate on October 3, falling to <strong>32.8%</strong> from a steady baseline of <strong>~75%</strong>. This drop aligns with the transition of users to build <code>1.3.10</code>. It points directly to a broken client-side interaction or a major UI blocking issue in the latest release.</p>
+<hr />
+<h3>User Funnel Diagrams</h3>
+<pre><code>[1] ONBOARDING &amp; PAYWALL FUNNEL
+==========================================================================
+Step 1: Onboarding Viewed       | [████████████████████] 100.0% (24 Users)
+Step 2: Steps Completed (6+)    | [████████████████████] 100.0% (24 Users)
+Step 3: Next Tapped (CTA)       | [███████████░░░░░░░░░]  54.2% (13 Users)
+Step 4: Paywall Viewed          | [██████░░░░░░░░░░░░░░]  33.3% (8 Users)
+Step 5: Purchase Completed      | [░░░░░░░░░░░░░░░░░░░░]   4.2% (1 User)
+==========================================================================
+
+[2] CORE FEATURE EXECUTION (SEPARATION FLOW)
+==========================================================================
+Step 1: Plus Button Tapped      | [████████████████████] 100.0% (33 Users)
+Step 2: Sep Mode Selected       | [██████████████████░░]  93.9% (31 Users)
+Step 3: Media Source Selected   | [██████████████░░░░░░]  72.7% (24 Users)
+Step 4: File Upload Initiated   | [██████████░░░░░░░░░░]  48.5% (16 Users)
+Step 5: Player Opened           | [████████████████████]  ~124% *Anomaly
+==========================================================================
+*Anomaly Detail: &quot;Player Opened&quot; is triggered 99 times across 41 users, which exceeds the
+initial upload counts. This indicates that users frequently return to listen to previously 
+processed separations stored in the local cache.
+</code></pre>
+<hr />
+<h3>Crash &amp; Stability Health by App Version</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">App Version</th>
+<th style="text-align: center;">Active Users (DAU)</th>
+<th style="text-align: center;">Sessions</th>
+<th style="text-align: center;">Engagement Rate</th>
+<th style="text-align: center;">Crash-Free User Rate (CFR)</th>
+<th style="text-align: left;">Action Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1.3.10</strong></td>
+<td style="text-align: center;">91</td>
+<td style="text-align: center;">112</td>
+<td style="text-align: center;">33.00%</td>
+<td style="text-align: center;">100.00%</td>
+<td style="text-align: left;"><strong>Investigate Engagement</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.3.09</strong></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">25.00%</td>
+<td style="text-align: center;">100.00%</td>
+<td style="text-align: left;">Phase-out Legacy</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.3.07</strong></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.00%</td>
+<td style="text-align: center;">100.00%</td>
+<td style="text-align: left;">Deprecated</td>
+</tr>
+</tbody>
+</table>
+<p><em>Stability Analysis:</em> Perfect 100% crash-free rates indicate that the app is highly stable from a native process perspective. There are no crash dumps or memory leaks causing app terminations. However, the low engagement rate of <strong>33.0% on version 1.3.10</strong> (compared to historical engagement rates above 80%) points to a functional or usability bug, rather than a crash.</p>
+<hr />
+<h3>🚨 New Build / TestFlight / Staged Rollout Alert</h3>
+<ul>
+<li><strong>Rollout Identification:</strong> Version <code>1.3.10</code> is currently at a <strong>~96.8% adoption rate</strong> among yesterday's active users (91 out of 94 DAU).</li>
+<li><strong>The Engagement Regression Warning:</strong> The production baseline for version <code>1.3.09</code> and historical 30-day cohorts showed an engagement rate of <strong>80.9%</strong>. Version <code>1.3.10</code> has caused this to fall to <strong>33.0%</strong>. </li>
+<li><strong>The "Silent Failure" Hypothesis:</strong> Because the Crash-Free Rate remains at <strong>100.0%</strong>, the regression is silent. The app is not crashing. Instead, users are likely experiencing an unresolved state during audio processing (e.g., an infinite loading spinner or a broken CoreML separation worker thread) that causes them to background or kill the app manually.</li>
+</ul>
+<hr />
+<h3>Top In-App Events &amp; Feature Lookups</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Event Name</th>
+<th style="text-align: center;">Event Count</th>
+<th style="text-align: center;">Total Users</th>
+<th style="text-align: center;">Events / User</th>
+<th style="text-align: left;">Strategic Finding / Telemetry Error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>player_tempo_changed</code></td>
+<td style="text-align: center;">1,337</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;"><strong>133.7</strong></td>
+<td style="text-align: left;">🚨 <strong>Severe Telemetry Bug:</strong> Drag slider firing continuously.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>player_pitch_changed</code></td>
+<td style="text-align: center;">1,249</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;"><strong>208.2</strong></td>
+<td style="text-align: left;">🚨 <strong>Severe Telemetry Bug:</strong> Firing on value change, not touch-up.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>audio_sessions</code></td>
+<td style="text-align: center;">919</td>
+<td style="text-align: center;">43</td>
+<td style="text-align: center;">22.4</td>
+<td style="text-align: left;">High core engagement.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>separation_play_started</code></td>
+<td style="text-align: center;">616</td>
+<td style="text-align: center;">38</td>
+<td style="text-align: center;">16.2</td>
+<td style="text-align: left;">Strong feature validation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>player_stem_balance_changed</code></td>
+<td style="text-align: center;">362</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;"><strong>181.0</strong></td>
+<td style="text-align: left;">Slider telemetry bug present on pan balance UI.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>user_engagement</code></td>
+<td style="text-align: center;">324</td>
+<td style="text-align: center;">93</td>
+<td style="text-align: center;">3.5</td>
+<td style="text-align: left;">GA4 default validation event.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>separation_page_viewed</code></td>
+<td style="text-align: center;">248</td>
+<td style="text-align: center;">124</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: left;">Core view tracking is stable.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>paywall_viewed</code></td>
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">3.9</td>
+<td style="text-align: left;">Low conversion flow (8 users saw it 31 times).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>separation_upload_started</code></td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">1.6</td>
+<td style="text-align: left;">64% of upload attempts are from unique users.</td>
+</tr>
+</tbody>
+</table>
+<h4>Analysis of Slider Telemetry Bug</h4>
+<p>The events <code>player_pitch_changed</code> (208.2 events/user) and <code>player_tempo_changed</code> (133.7 events/user) are flooding the network payload. <br />
+*   <strong>The Cause:</strong> The UI events are wired directly to slider progress updates (<code>UISlider.valueChanged</code> or SwiftUI's <code>onChange(of: sliderValue)</code>). Every single pixel of slider movement fires a GA4 hit.<br />
+*   <strong>The Solution:</strong> This telemetry bug bloats GA4 quotas, drives up data egress fees, and violates rate limits. The event must be refactored to trigger exclusively on touch release (<code>UIControl.Event.editingDidEnd</code> or equivalent gesture state <code>.ended</code>).</p>
+<hr />
+<h3>Geographic Distribution</h3>
+<pre><code>GEOGRAPHIC USER CONCENTRATION (Yesterday)
+=========================================
+Japan          [██████████████████████████████] 53.2% (50 AU)
+South Korea    [████████] 14.9% (14 AU)
+Cuba           [█████] 9.6% (9 AU)
+Iraq           [██] 4.3% (4 AU)
+Others (RU/GE) [███] 18.0% (17 AU)
+</code></pre>
+<p>Japan and South Korea combine to represent <strong>68.1% of all active users</strong> and <strong>94.8% of all monetization</strong>. Localization and pricing optimization must prioritize JPY and KRW tiers.</p>
+<hr />
+<h3>Prioritized Strategic Action Matrix (Music Separation)</h3>
+<ul>
+<li><strong>P0: Fix Slider Drag Telemetry (Engineering)</strong><br />
+    Debounce slider events. Update <code>player_pitch_changed</code>, <code>player_tempo_changed</code>, and <code>player_stem_balance_changed</code> to only fire when dragging stops. This will instantly reduce network payloads and clean up the GA4 dataset.</li>
+<li><strong>P0: Investigate Version 1.3.10 Onboarding/Execution (Product/QA)</strong><br />
+    Diagnose why the engagement rate dropped from 80.9% to 33.0%. Run hardware-level tests on low-end iOS devices using version 1.3.10 to check for frozen background threads or blocked UI during audio file processing.</li>
+<li><strong>P1: Localize Paywall and Pricing (Growth/Localization)</strong><br />
+    Japan and South Korea are driving almost all revenue. Replace generic USD paywalls with fully localized Yen and Won symbols, and run price-elasticity testing (e.g., comparing a $2.99/week tier against a $3.49/week tier).</li>
+<li><strong>P2: Introduce Monthly-to-Weekly Migration Incentives (Monetization)</strong><br />
+    Weekly subscriptions have high churn. Implement an in-app "Upgrade to Monthly/Annual" promo to transition active weekly users to more stable monthly or annual billing cycles.</li>
+</ul>
+<hr />
+<h2>3. Vocal Cleaner Deep-Dive</h2>
+<h3>App Header &amp; Health Score</h3>
+<ul>
+<li><strong>App Name:</strong> Vocal Cleaner</li>
+<li><strong>Bundle ID:</strong> <code>com.neuralSound.audiocleaner</code></li>
+<li><strong>Stream ID:</strong> <code>15407667671</code></li>
+<li><strong>Health Score:</strong> <code>3.5 / 10</code></li>
+<li><strong>Rationale:</strong> The application is functionally stagnant, recording only 1 active user yesterday and 21 in the last 30 days. However, the data reveals a high-volume revenue anomaly ($127.85 in 30 days) coming entirely from a single region (Egypt) on older build versions. This pattern strongly suggests either a sandbox-to-production telemetry leak or a single power user.</li>
+</ul>
+<hr />
+<h3>💰 In-App Purchases, Subscriptions &amp; Consumable Minutes Breakdown</h3>
+<h4>Product Sales Summary Table (Past 30 Days)</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Item / Product ID</th>
+<th style="text-align: left;">Product Name</th>
+<th style="text-align: left;">Plan Type</th>
+<th style="text-align: center;">Units Sold (30D)</th>
+<th style="text-align: center;">Total Revenue ($ USD)</th>
+<th style="text-align: center;">% Revenue Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>neuralsound.cleaner.minutes.300</code></td>
+<td style="text-align: left;">300 minutes</td>
+<td style="text-align: left;">Consumable Pack</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">$96.17</td>
+<td style="text-align: center;">84.06%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>neuralsound.cleaner.minutes.60</code></td>
+<td style="text-align: left;">60 minutes</td>
+<td style="text-align: left;">Consumable Pack</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">$15.35</td>
+<td style="text-align: center;">13.42%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>cleaner_weekly_sub</code></td>
+<td style="text-align: left;">Weekly</td>
+<td style="text-align: left;">Weekly Subscription</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$2.88</td>
+<td style="text-align: center;">2.52%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TOTAL</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: center;"><strong>8</strong></td>
+<td style="text-align: center;"><strong>$114.40</strong></td>
+<td style="text-align: center;"><strong>100.00%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>Note: Differences between the $114.40 product total and the $127.85 multi-horizon revenue benchmark are due to exchange rate conversions of Egyptian Pound (EGP) transactions.</em></p>
+<h4>Transaction Timeline Log</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Date</th>
+<th style="text-align: center;">App Version</th>
+<th style="text-align: left;">Product ID</th>
+<th style="text-align: left;">Localized Name</th>
+<th style="text-align: left;">Country</th>
+<th style="text-align: center;">Qty</th>
+<th style="text-align: center;">Revenue ($ USD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>2026-09-25</strong></td>
+<td style="text-align: center;">1.0.02</td>
+<td style="text-align: left;"><code>neuralsound.cleaner.minutes.300</code></td>
+<td style="text-align: left;">300 minutes</td>
+<td style="text-align: left;">Egypt</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$19.44</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-20</strong></td>
+<td style="text-align: center;">1.0.01</td>
+<td style="text-align: left;"><code>neuralsound.cleaner.minutes.300</code></td>
+<td style="text-align: left;">300 minutes</td>
+<td style="text-align: left;">Egypt</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">$76.73</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-20</strong></td>
+<td style="text-align: center;">1.0.01</td>
+<td style="text-align: left;"><code>neuralsound.cleaner.minutes.60</code></td>
+<td style="text-align: left;">60 minutes</td>
+<td style="text-align: left;">Egypt</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">$15.35</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-20</strong></td>
+<td style="text-align: center;">1.0.01</td>
+<td style="text-align: left;"><code>cleaner_weekly_sub</code></td>
+<td style="text-align: left;">Weekly</td>
+<td style="text-align: left;">Egypt</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$2.88</td>
+</tr>
+</tbody>
+</table>
+<h4>Build Environment &amp; Monetization Analysis</h4>
+<ul>
+<li><strong>The Egyptian Sandbox Leak (High Probability Bug):</strong> Every single transaction recorded over the last 30 days occurred on <strong>September 20 and September 25</strong> from <strong>Egypt</strong>, using early builds <code>1.0.01</code> and <code>1.0.02</code>. Given that the app only has 32 lifetime users, this dense burst of 7 purchases in a single day is highly anomalous. This suggests either:<ol>
+<li>An external beta tester/developer in Egypt using a live-staged sandbox environment that was mistakenly configured to report transactions as production revenue in GA4.</li>
+<li>A single "whale" user who purchased 1,380 minutes of processing time in 5 days.</li>
+</ol>
+</li>
+<li><strong>Consumable vs. Subscription Split:</strong> Under production assumptions, consumables represent <strong>97.48% of total revenue</strong>. This shows clear user preference for one-time utility purchases over weekly subscriptions.</li>
+</ul>
+<hr />
+<h3>📅 Multi-Horizon Growth &amp; Historical Scale Comparison</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Horizon</th>
+<th style="text-align: center;">Active Users</th>
+<th style="text-align: center;">New Users</th>
+<th style="text-align: center;">Sessions</th>
+<th style="text-align: center;">Avg. Engagement Rate</th>
+<th style="text-align: center;">Purchase Revenue ($ USD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Yesterday (Oct 3)</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.00%</td>
+<td style="text-align: center;">$0.00</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Past 7 Days</strong></td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">81.50%</td>
+<td style="text-align: center;">$2.90</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Past 30 Days</strong></td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">97</td>
+<td style="text-align: center;">83.50%</td>
+<td style="text-align: center;">$127.85</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Past Year (365d)</strong></td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">108</td>
+<td style="text-align: center;">78.70%</td>
+<td style="text-align: center;">$136.84</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Lifetime</strong></td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">108</td>
+<td style="text-align: center;">78.70%</td>
+<td style="text-align: center;">$136.84</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>Old vs. New User Cohort Deep-Dive</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">User Cohort</th>
+<th style="text-align: center;">Active Users</th>
+<th style="text-align: center;">Sessions</th>
+<th style="text-align: center;">Avg. Session Duration</th>
+<th style="text-align: center;">Engagement Rate</th>
+<th style="text-align: center;">Screen Page Views</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>New Users</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">613.2 seconds</td>
+<td style="text-align: center;">0.00%</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Returning Users</strong></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">N/A</td>
+</tr>
+</tbody>
+</table>
+<h4>Diagnostic Observations</h4>
+<p>Yesterday, only <strong>one single new user</strong> was active in the app. This user spent <strong>10.2 minutes (613.2 seconds)</strong> in the app, viewed only 2 screens, and generated an engagement rate of <strong>0.0%</strong>. This indicates the user opened the app, likely ran into an unresolved background task or a slow upload, waited for 10 minutes without making progress, and then closed the app.</p>
+<hr />
+<h3>7-Day Velocity &amp; Trajectory</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Date</th>
+<th style="text-align: center;">Active Users (DAU)</th>
+<th style="text-align: center;">New Users</th>
+<th style="text-align: center;">Sessions</th>
+<th style="text-align: center;">Engagement Rate</th>
+<th style="text-align: center;">Daily Revenue ($ USD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>2026-09-27</strong></td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">73.90%</td>
+<td style="text-align: center;">$0.00</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-28</strong></td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">88.90%</td>
+<td style="text-align: center;">$0.00</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-29</strong></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">94.40%</td>
+<td style="text-align: center;">$0.00</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-30</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.00%</td>
+<td style="text-align: center;">$0.00</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-10-01</strong></td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">N/A</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-10-02</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">100.00%</td>
+<td style="text-align: center;">$0.00</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-10-03</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.00%</td>
+<td style="text-align: center;">$0.00</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note: On October 1, the app recorded absolute zero traffic, resulting in missing logs.</em></p>
+<h4>Trajectory Commentary</h4>
+<p>The trend is <strong>collapsing</strong>. Traffic fell from 8 active users on Sept 27 to just 1 on Oct 3. The high engagement rates on Sept 28 and 29 (88.9% and 94.4%) were driven by a very small number of users. This drop in volume suggests that organic acquisition channels are inactive.</p>
+<hr />
+<h3>User Funnel Diagrams</h3>
+<pre><code>[1] VOICE CLEANER RECORDING &amp; DENOISING FUNNEL
+==========================================================================
+Step 1: Record View Opened      | [████████████████████] 100.0% (2 Users)
+Step 2: Mic Perm Granted        | [████████████████████] 100.0% (2 Users)
+Step 3: Recording Started       | [████████████████████] 100.0% (2 Users)
+Step 4: Recording Completed     | [████████████████████] 100.0% (2 Users)
+Step 5: Denoise Tap (Action)    | [██████████░░░░░░░░░░]  50.0% (1 User)
+Step 6: Recording Discarded     | [████████████████████] 100.0% (2 Users)
+==========================================================================
+Core Flow Insight: 100% of users who finished a recording ended up discarding 
+it (2 out of 2 users triggered vc_record_discard). This points to poor denoising 
+quality or a confusing UX where users are unable to export or save their processed files.
+</code></pre>
+<hr />
+<h3>Crash &amp; Stability Health by App Version</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">App Version</th>
+<th style="text-align: center;">Active Users (DAU)</th>
+<th style="text-align: center;">Sessions</th>
+<th style="text-align: center;">Engagement Rate</th>
+<th style="text-align: center;">Crash-Free User Rate (CFR)</th>
+<th style="text-align: left;">Action Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1.0.03</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.00%</td>
+<td style="text-align: center;">100.00%</td>
+<td style="text-align: left;">Emergency UX Audit</td>
+</tr>
+</tbody>
+</table>
+<p><em>Stability Analysis:</em> Version <code>1.0.03</code> is currently live with perfect crash stability, but it fails to drive engagement. All monetization history belongs to deprecated builds <code>1.0.01</code> and <code>1.0.02</code>.</p>
+<hr />
+<h3>🚨 New Build / TestFlight / Staged Rollout Alert</h3>
+<ul>
+<li><strong>Rollout Identification:</strong> Build <code>1.0.03</code> is live but has only reached 1 user.</li>
+<li><strong>The Disconnect:</strong> No transactions have occurred on build <code>1.0.03</code>. The historic monetization was concentrated entirely on <code>1.0.01</code> and <code>1.0.02</code>. Pushing build <code>1.0.03</code> has not helped user retention or growth. In fact, it has coincided with a drop in daily active traffic to near-zero levels.</li>
+</ul>
+<hr />
+<h3>Top In-App Events &amp; Feature Lookups</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Event Name</th>
+<th style="text-align: center;">Event Count</th>
+<th style="text-align: center;">Total Users</th>
+<th style="text-align: center;">Events / User</th>
+<th style="text-align: left;">Strategic Finding / Functional Friction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>user_engagement</code></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4.0</td>
+<td style="text-align: left;">GA4 baseline validator.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vc_record_start</code></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">3.0</td>
+<td style="text-align: left;">Core feature interaction is active.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>screen_view</code></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: left;">Standard view validation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vc_record_discard</code></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: left;"><strong>Product Warning:</strong> User discarded their output twice.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vc_record_done</code></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: left;">Successful technical export.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vc_record_open</code></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: left;">Standard initialization.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vc_record_pause</code></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: left;">Basic usability check.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vc_record_permission_result</code></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: left;">Audio permissions are working fine.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>vc_record_denoise_tap</code></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1.0</td>
+<td style="text-align: left;">Only <strong>50% conversion</strong> from record-done to denoise tap.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>Geographic Distribution</h3>
+<p>Historically, all revenue came from Egypt, but active usage has completely shifted away. Yesterday, the app had only <strong>one active user in Germany</strong> (generating 0% engagement).</p>
+<hr />
+<h3>Prioritized Strategic Action Matrix (Vocal Cleaner)</h3>
+<ul>
+<li><strong>P0: Run Financial Audit on Egyptian Transactions (Monetization)</strong><br />
+    Cross-reference GA4's Egyptian transaction records ($127.85) against Apple App Store Connect's real financial reports. Confirm if this was a sandbox-to-production leak or genuine revenue from a local power user.</li>
+<li><strong>P0: Implement GA4 Namespace Separation (Engineering)</strong><br />
+    Vocal Cleaner and Music Separation are sharing GA4 property <code>533563138</code>. Prefix all custom parameters (e.g., prefixing with <code>vc_</code> or <code>mss_</code>) to prevent cross-app user profiles from overwriting each other.</li>
+<li><strong>P1: Fix "100% Discard" Flow Friction (Product/QA)</strong><br />
+    Identify why both recorded sessions ended in <code>vc_record_discard</code>. Investigate if the local storage export is failing, if processing is taking too long, or if the denoised audio quality is poor.</li>
+<li><strong>P2: Introduce One-Off Trial Options (Growth)</strong><br />
+    To kickstart adoption, replace the current weekly subscription with an initial free trial pack (e.g., 5 minutes of free processing) to help users evaluate the app's performance before asking for payment.</li>
+</ul>
+    <h2>📊 Visual Graphs & Performance Charts</h2><div class='charts-grid'><div class='chart-card'><h3>Music Separation Ios Trend</h3><img class='chart-img' src='charts/music_separation_ios_trend.png' alt='Music Separation Ios Trend' /></div><div class='chart-card'><h3>Music Separation Ios Revenue</h3><img class='chart-img' src='charts/music_separation_ios_revenue.png' alt='Music Separation Ios Revenue' /></div><div class='chart-card'><h3>Music Separation Ios Horizons</h3><img class='chart-img' src='charts/music_separation_ios_horizons.png' alt='Music Separation Ios Horizons' /></div><div class='chart-card'><h3>Music Separation Ios Funnel</h3><img class='chart-img' src='charts/music_separation_ios_funnel.png' alt='Music Separation Ios Funnel' /></div><div class='chart-card'><h3>Music Separation Ios Cohort</h3><img class='chart-img' src='charts/music_separation_ios_cohort.png' alt='Music Separation Ios Cohort' /></div><div class='chart-card'><h3>Music Separation Ios Version</h3><img class='chart-img' src='charts/music_separation_ios_version.png' alt='Music Separation Ios Version' /></div><div class='chart-card'><h3>Vocal Cleaner Trend</h3><img class='chart-img' src='charts/vocal_cleaner_trend.png' alt='Vocal Cleaner Trend' /></div><div class='chart-card'><h3>Vocal Cleaner Revenue</h3><img class='chart-img' src='charts/vocal_cleaner_revenue.png' alt='Vocal Cleaner Revenue' /></div><div class='chart-card'><h3>Vocal Cleaner Horizons</h3><img class='chart-img' src='charts/vocal_cleaner_horizons.png' alt='Vocal Cleaner Horizons' /></div><div class='chart-card'><h3>Vocal Cleaner Version</h3><img class='chart-img' src='charts/vocal_cleaner_version.png' alt='Vocal Cleaner Version' /></div></div>
+
+    <div class="footer-note">
+        <strong>Direct Console Links:</strong><br>
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome" target="_blank">🔗 Open Google Analytics 4 Dashboard</a> &bull;
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics" target="_blank">🔥 Open Firebase Analytics Console</a> &bull;
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics" target="_blank">💥 Open Firebase Crashlytics</a>
+        <br><br>
+        Generated automatically by Neural Sound Analytics Pipeline &bull; Gemini AI &bull; 2026-10-04
+    </div>
+</div>
+</body>
+</html>

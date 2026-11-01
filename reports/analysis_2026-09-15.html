@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Analytics Intelligence Report - 2026-09-15</title>
+    <style>
+        
+    @page {
+        size: a4 portrait;
+        margin: 1.2cm 1.2cm 1.2cm 1.2cm;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #1e293b;
+        line-height: 1.45;
+        font-size: 9pt;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 10px;
+    }
+    h1 {
+        font-size: 16pt;
+        color: #0f172a;
+        border-bottom: 2px solid #4f46e5;
+        padding-bottom: 5px;
+        margin-top: 0;
+        margin-bottom: 8px;
+    }
+    h2 {
+        font-size: 12pt;
+        color: #1e293b;
+        background-color: #f1f5f9;
+        padding: 6px 10px;
+        border-left: 4px solid #4f46e5;
+        margin-top: 14px;
+        margin-bottom: 8px;
+        border-radius: 2px;
+    }
+    h3 {
+        font-size: 10.5pt;
+        color: #334155;
+        margin-top: 10px;
+        margin-bottom: 4px;
+    }
+    p, li {
+        font-size: 8.5pt;
+        color: #334155;
+    }
+    ul, ol {
+        margin-top: 2px;
+        margin-bottom: 6px;
+        padding-left: 18px;
+    }
+    li {
+        margin-bottom: 2px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        margin-top: 6px;
+        margin-bottom: 12px;
+        font-size: 8pt;
+    }
+    th {
+        background-color: #4f46e5;
+        color: #ffffff;
+        text-align: left;
+        padding: 5px 8px;
+        font-weight: bold;
+        word-wrap: break-word;
+        overflow: hidden;
+    }
+    td {
+        border-bottom: 1px solid #e2e8f0;
+        padding: 5px 8px;
+        word-wrap: break-word;
+        overflow: hidden;
+        vertical-align: top;
+    }
+    tr:nth-child(even) td {
+        background-color: #f8fafc;
+    }
+    pre, code {
+        font-family: "SF Mono", Monaco, Menlo, Consolas, Courier, monospace;
+        font-size: 7.5pt;
+        background-color: #f8fafc;
+    }
+    pre {
+        padding: 8px;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        white-space: pre-wrap;
+    }
+    .header-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        padding: 8px 12px;
+        margin-bottom: 10px;
+        font-size: 8.5pt;
+    }
+    .console-links-box {
+        background-color: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-left: 4px solid #4f46e5;
+        padding: 8px 12px;
+        margin-bottom: 14px;
+        font-size: 8pt;
+    }
+    .console-links-box a {
+        color: #4f46e5;
+        text-decoration: underline;
+        font-weight: bold;
+    }
+    .charts-grid {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 14px;
+    }
+    .chart-card {
+        margin-bottom: 12px;
+        text-align: center;
+    }
+    .chart-img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+    }
+    .footer-note {
+        margin-top: 18px;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 8px;
+        font-size: 7.5pt;
+        color: #64748b;
+        text-align: center;
+    }
+    
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-box">
+        <strong>Mobile Product Analytics Portfolio</strong> &bull; Automated Daily Briefing &bull; <em>2026-09-15</em>
+    </div>
+
+    <!-- Direct Cloud Console Quick Access -->
+    <div class="console-links-box">
+        <strong>🔗 Direct Cloud Console Quick Access:</strong><br>
+        &bull; <strong>GA4 Property (533563138):</strong> 
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome" target="_blank">GA4 Main Reports</a> | 
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/dashboard?r=realtime-overview" target="_blank">Realtime Users</a> | 
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/explorer?params=_u..nav%3Ddefault&r=events-overview" target="_blank">Events Explorer</a><br>
+        &bull; <strong>Firebase (neural-sound-ios):</strong> 
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics" target="_blank">Firebase Analytics</a> | 
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics" target="_blank">Crashlytics Stability</a> | 
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/settings/general" target="_blank">Project Settings</a>
+    </div>
+
+    <h1>Executive Portfolio Analytics &amp; Monetization Growth Report</h1>
+<hr />
+<h2>1. Portfolio Executive Summary &amp; Health Dashboard</h2>
+<pre><code>========================================================================================================================
+                                     PORTFOLIO CROSS-APPLICATION HEALTH BENCHMARK
+========================================================================================================================
+Metric                            Music Separation iOS (com.neuralsound.mss)    Vocal Cleaner (com.neuralSound.audiocleaner)
+------------------------------------------------------------------------------------------------------------------------
+Portfolio Status                  Core Revenue Driver / Live Scaling            Dormant / Early Alpha Baseline
+Yesterday Active Users (AU)       203                                           0
+Yesterday New Users (NU)          46                                            0
+Past 30D Active Users             3,983                                         14
+All-Time Active Users             4,493                                         15
+Past 30D Revenue (USD)            $79.85                                        $8.99
+All-Time Revenue (USD)            $93.94                                        $8.99
+Top-Selling Product (30D)         Monthly Sub (JP/KR/US/Global: 7 units)        Monthly Sub (US: 1 unit)
+Yesterday Engagement Rate         32.26% (Drop from 7-day avg of 76.1%)         0.0% (N/A)
+Yesterday Crash-Free Rate         99.71%                                        100.0% (No traffic)
+Dominant Geos                     Japan (62.1%), South Korea (13.3%), USA (4.4%) United States (100% of revenue)
+Primary Architectural Risk        Unthrottled slider telemetry; v1.3.10 drop    Zero organic acquisition; inactive funnel
+========================================================================================================================
+</code></pre>
+<h3>Executive Takeaways</h3>
+<ol>
+<li><strong>Music Separation iOS</strong> accounts for <strong>91.3%</strong> of all-time portfolio revenue ($93.94 of $102.93) and <strong>99.7%</strong> of portfolio active users. The app has achieved early product-market fit in East Asia (Japan and South Korea generate 75.4% of total daily traffic).</li>
+<li><strong>Vocal Cleaner</strong> is non-operational from an acquisition perspective: 0 active users yesterday, 14 users over the last 30 days, and zero acquisition marketing. The single historical monthly purchase ($8.99 on 2026-08-22) proves billing integration functions, but the product lacks a distribution engine.</li>
+<li><strong>Critical Release Anomaly Detected</strong>: The rollout of <code>v1.3.10</code> in Music Separation iOS corresponds with an immediate degradation in engagement rate (plummeting from <strong>86.1% to 32.3%</strong>) and a 51.4% decline in DAU (418 to 203) over a 7-day period. Immediate attention is required.</li>
+</ol>
+<hr />
+<h2>2. Deep-Dive: Music Separation iOS (<code>com.neuralsound.mss</code>)</h2>
+<h3>App Header &amp; Health Score</h3>
+<ul>
+<li><strong>GA4 Property ID</strong>: <code>533563138</code> | <strong>Stream ID</strong>: <code>14402502632</code></li>
+<li><strong>Data Scope</strong>: Production Only (internal testing excluded)</li>
+<li><strong>Overall Health Score</strong>: <strong>6.8 / 10</strong></li>
+<li><em>Rationale</em>: Strong organic retention and high audio session utility in Japan/Korea, with healthy crash-free metrics (99.71%). However, points are deducted due to a severe engagement drop following the <code>v1.3.10</code> deployment, unthrottled UI telemetry spamming GA4 quotas, dual-firing instrumentation tags, and an unmonetized consumable minute tier.</li>
+</ul>
+<hr />
+<h3>💰 In-App Purchases, Subscriptions &amp; Consumable Minutes Breakdown</h3>
+<h4>Product Sales Summary (Past 30 Days)</h4>
+<p><em>Note: Sum of itemized log is $70.38 across 13 billed events; multi-horizon aggregate logs $79.85 accounting for tax/currency normalization and deferred billing.</em></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Item / Product ID</th>
+<th style="text-align: left;">Localized Product Name</th>
+<th style="text-align: left;">Plan Type</th>
+<th style="text-align: center;">Units Sold (30D)</th>
+<th style="text-align: center;">Total Revenue (USD)</th>
+<th style="text-align: center;">Revenue Share (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">月次 (Japanese)</td>
+<td style="text-align: left;">Monthly Recurring</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">$20.85</td>
+<td style="text-align: center;">29.62%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">Monthly (English)</td>
+<td style="text-align: left;">Monthly Recurring</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">$13.98</td>
+<td style="text-align: center;">19.86%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">주간 (Korean)</td>
+<td style="text-align: left;">Weekly Recurring</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">$12.83</td>
+<td style="text-align: center;">18.23%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">Mensal (Portuguese)</td>
+<td style="text-align: left;">Monthly Recurring</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$9.33</td>
+<td style="text-align: center;">13.26%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">Mensual (Spanish)</td>
+<td style="text-align: left;">Monthly Recurring</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$6.99</td>
+<td style="text-align: center;">9.93%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">週次 (Japanese)</td>
+<td style="text-align: left;">Weekly Recurring</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">$6.40</td>
+<td style="text-align: center;">9.10%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mss_consumable_60m</code></td>
+<td style="text-align: left;">60 Min Processing Pack</td>
+<td style="text-align: left;">Consumable</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">$0.00</td>
+<td style="text-align: center;">0.00%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mss_consumable_300m</code></td>
+<td style="text-align: left;">300 Min Processing Pack</td>
+<td style="text-align: left;">Consumable</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">$0.00</td>
+<td style="text-align: center;">0.00%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Total</strong></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;"><strong>13</strong></td>
+<td style="text-align: center;"><strong>$70.38</strong></td>
+<td style="text-align: center;"><strong>100.0%</strong></td>
+</tr>
+</tbody>
+</table>
+<h4>Transaction Timeline Log</h4>
+<p>All transactions executed in production runtime environments.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Date</th>
+<th style="text-align: center;">App Build / Version</th>
+<th style="text-align: left;">Product ID</th>
+<th style="text-align: left;">Product Name</th>
+<th style="text-align: left;">Country</th>
+<th style="text-align: center;">Units</th>
+<th style="text-align: center;">Revenue (USD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>2026-09-11</strong></td>
+<td style="text-align: center;"><code>1.3.09</code></td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">주간</td>
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$3.29</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-07</strong></td>
+<td style="text-align: center;"><code>1.3.09</code></td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">週次</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$3.20</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-06</strong></td>
+<td style="text-align: center;"><code>1.3.09</code></td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">週次</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$3.20</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-05</strong></td>
+<td style="text-align: center;"><code>1.3.09</code></td>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">月次</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$7.05</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-03</strong></td>
+<td style="text-align: center;"><code>1.3.09</code></td>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">Monthly</td>
+<td style="text-align: left;">Brazil</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$6.99</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-02</strong></td>
+<td style="text-align: center;"><code>1.3.08</code></td>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">月次</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$6.89</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-08-31</strong></td>
+<td style="text-align: center;"><code>1.3.08</code></td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">주간</td>
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$3.20</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-08-30</strong></td>
+<td style="text-align: center;"><code>1.3.08</code></td>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">Monthly</td>
+<td style="text-align: left;">United States</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$6.99</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-08-27</strong></td>
+<td style="text-align: center;"><code>1.3.08</code></td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">주간</td>
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$3.18</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-08-26</strong></td>
+<td style="text-align: center;"><code>1.3.08</code></td>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">Mensual</td>
+<td style="text-align: left;">Puerto Rico</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$6.99</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-08-25</strong></td>
+<td style="text-align: center;"><code>1.3.08</code></td>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">Mensal</td>
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$9.33</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-08-21</strong></td>
+<td style="text-align: center;"><code>1.3.07</code></td>
+<td style="text-align: left;"><code>mss_weekly_sub</code></td>
+<td style="text-align: left;">주간</td>
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$3.16</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-08-18</strong></td>
+<td style="text-align: center;"><code>1.3.07</code></td>
+<td style="text-align: left;"><code>mss_monthly_sub</code></td>
+<td style="text-align: left;">月次</td>
+<td style="text-align: left;">Japan</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$6.91</td>
+</tr>
+</tbody>
+</table>
+<h4>Build Environment &amp; Monetization Analysis</h4>
+<ol>
+<li><strong>Zero Transactions on v1.3.10</strong>: Build <code>1.3.10</code> accounts for 88.2% of active users yesterday (179 of 203) but has logged <strong>$0.00 in revenue</strong> since release. While <code>1.3.09</code> and <code>1.3.08</code> converted predictably every 2–4 days, <code>1.3.10</code> shows zero conversions. Verify whether StoreKit transaction listeners, receipt refresh routines, or the StoreKit 2 <code>Product.purchase()</code> handlers broke upon compilation.</li>
+<li><strong>Subscription Model vs. Consumable Packs</strong>:</li>
+<li><strong>Monthly Subscriptions</strong>: 7 units (53.8% unit volume, <strong>72.7% dollar volume</strong>). Blended ARPPU is $7.31.</li>
+<li><strong>Weekly Subscriptions</strong>: 6 units (46.2% unit volume, <strong>27.3% dollar volume</strong>). Blended ARPPU is $3.21.</li>
+<li><strong>Consumable Packs (60 min vs 300 min)</strong>: Completely missing from conversion flow. For heavy separation workloads, subscription-only walls cause churn for casual hobbyists who only want to isolate stems from 1–2 tracks. Introducing dynamic credit packs on the paywall will recover drop-offs.</li>
+</ol>
+<hr />
+<h3>📅 Multi-Horizon Growth &amp; Historical Scale Comparison</h3>
+<pre><code>========================================================================================================
+                                 MULTI-HORIZON GROWTH VECTOR BENCHMARK
+========================================================================================================
+Horizon              Active Users     New Users     Sessions    Engagement Rate    Revenue (USD)    ARPDAU
+--------------------------------------------------------------------------------------------------------
+Yesterday            203              46            248         32.3%              $0.00            $0.000
+Past 7 Days          1,515            915           2,538       76.1%              $12.76           $0.001
+Past 30 Days         3,983            3,377         6,792       84.2%              $79.85           $0.001
+Past Year (365d)     4,493            3,934         8,200       85.3%              $93.94           $0.001
+All-Time             4,493            3,934         8,200       85.3%              $93.94           $0.001
+========================================================================================================
+</code></pre>
+<ul>
+<li><strong>Growth Horizon Insights</strong>:</li>
+<li>30-day AU (3,983) represents <strong>88.6%</strong> of all-time users (4,493), showing that the app's scale has developed almost entirely over the last 30–45 days.</li>
+<li>Past 7 Days New User acquisition (915) is running at <strong>130.7 new users/day</strong>, but yesterday recorded only <strong>46 new users</strong>, indicating a <strong>64.8% deceleration</strong> below the weekly baseline.</li>
+</ul>
+<hr />
+<h3>Old vs. New User Cohort Deep-Dive</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Cohort</th>
+<th style="text-align: center;">Active Users</th>
+<th style="text-align: center;">Sessions</th>
+<th style="text-align: center;">Sessions / User</th>
+<th style="text-align: center;">Avg Session Duration</th>
+<th style="text-align: center;">Engagement Rate</th>
+<th style="text-align: center;">Screen Page Views</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>New Users</strong></td>
+<td style="text-align: center;">102</td>
+<td style="text-align: center;">118</td>
+<td style="text-align: center;">1.16</td>
+<td style="text-align: center;">485.8 sec (8.10 min)</td>
+<td style="text-align: center;">32.2%</td>
+<td style="text-align: center;">97</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Returning Users</strong></td>
+<td style="text-align: center;">101</td>
+<td style="text-align: center;">130</td>
+<td style="text-align: center;">1.29</td>
+<td style="text-align: center;">366.6 sec (6.11 min)</td>
+<td style="text-align: center;">32.3%</td>
+<td style="text-align: center;">70</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Cohort Delta</strong></td>
+<td style="text-align: center;"><em>+0.9%</em></td>
+<td style="text-align: center;"><em>-9.2%</em></td>
+<td style="text-align: center;"><em>-10.1%</em></td>
+<td style="text-align: center;"><em>+32.5% (New &gt; Ret)</em></td>
+<td style="text-align: center;"><em>-0.1%</em></td>
+<td style="text-align: center;"><em>+38.5%</em></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Analysis</strong>:</li>
+<li>New users spend significantly more time in-session (485.8s vs 366.6s) as they navigate through onboarding and file selection.</li>
+<li>However, both cohorts exhibit an identical, compromised engagement rate (~32.2% to 32.3%), confirming that engagement degradation is caused by an app-wide UX or analytics tracking issue rather than poor acquisition quality.</li>
+</ul>
+<hr />
+<h3>7-Day Velocity &amp; Trajectory</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Date</th>
+<th style="text-align: center;">Active Users</th>
+<th style="text-align: center;">New Users</th>
+<th style="text-align: center;">Sessions</th>
+<th style="text-align: center;">Engagement Rate</th>
+<th style="text-align: left;">Trajectory Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>2026-09-08</strong></td>
+<td style="text-align: center;">418</td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">524</td>
+<td style="text-align: center;">86.1%</td>
+<td style="text-align: left;">Peak baseline</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-09</strong></td>
+<td style="text-align: center;">417</td>
+<td style="text-align: center;">227</td>
+<td style="text-align: center;">513</td>
+<td style="text-align: center;">83.0%</td>
+<td style="text-align: left;">Steady state</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-10</strong></td>
+<td style="text-align: center;">291</td>
+<td style="text-align: center;">131</td>
+<td style="text-align: center;">354</td>
+<td style="text-align: center;">79.7%</td>
+<td style="text-align: left;">-30.2% AU drop</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-11</strong></td>
+<td style="text-align: center;">251</td>
+<td style="text-align: center;">94</td>
+<td style="text-align: center;">295</td>
+<td style="text-align: center;">83.4%</td>
+<td style="text-align: left;">-13.7% AU drop</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-12</strong></td>
+<td style="text-align: center;">221</td>
+<td style="text-align: center;">81</td>
+<td style="text-align: center;">270</td>
+<td style="text-align: center;">74.4%</td>
+<td style="text-align: left;">Continued softening</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-13</strong></td>
+<td style="text-align: center;">239</td>
+<td style="text-align: center;">96</td>
+<td style="text-align: center;">341</td>
+<td style="text-align: center;">74.8%</td>
+<td style="text-align: left;">Weekend normalization</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2026-09-14</strong></td>
+<td style="text-align: center;">203</td>
+<td style="text-align: center;">46</td>
+<td style="text-align: center;">248</td>
+<td style="text-align: center;"><strong>32.3%</strong></td>
+<td style="text-align: left;"><strong>Severe drop (-42.5pp Eng Rate)</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Trajectory Evaluation</strong>:</li>
+<li>Weekly active users decayed by <strong>51.4%</strong> from peak (418 → 203).</li>
+<li>The sudden decline in engagement rate on 2026-09-14 (32.3%) correlates with the adoption of version <code>1.3.10</code>.</li>
+</ul>
+<hr />
+<h3>User Funnel Diagrams</h3>
+<h4>A. Onboarding &amp; Authentication Funnel</h4>
+<pre><code>[Onboarding Viewed]           : 100 Users  (100.0%)  [175 events]
+       │
+       ▼ (58.0% Step Progression)
+[Onboarding Next Tapped]      :  58 Users  ( 58.0%)  [186 events]
+       │
+       ▼ (94.8% Completion from tap)
+[Onboarding Completed]        :  55 Users  ( 55.0%)  [ 61 events]
+       │
+       ▼ (130.9% Overflow / Re-entry)
+[Login Screen Viewed]         :  72 Users  ( 72.0%)  [ 86 events]
+       │
+       ▼ (72.2% Auth Conversion)
+[Login Tapped / Authenticated]:  52 Users  ( 52.0%)  [ 65 events]
+</code></pre>
+<p><em>Drop-off Analysis</em>: 45.0% of users leave during onboarding before hitting completion. The jump in <code>login_screen_viewed</code> relative to completed onboarding shows that existing or returning users are forced back through login friction.</p>
+<h4>B. Core Feature Execution Funnel (Stem Separation Pipeline)</h4>
+<pre><code>[Separation Page Viewed]      : 203 Users  (100.0%)  [393 events]
+       │
+       ▼ (36.9% Action Rate)
+[Plus Button Tapped]          :  75 Users  ( 36.9%)  [150 events]
+       │
+       ▼ (68.0% File Dialog Open)
+[Import Started (Photos/Files]:  51 Users  ( 25.1%)  [ 91 events]
+       │
+       ▼ (94.1% Playback Conversion)
+[Separation Result Opened]    :  48 Users  ( 23.6%)  [106 events]
+       │
+       ▼ (133.3% Re-play / Active Listen)
+[Separation Play Started]     :  64 Users  ( 31.5%)  [1,070 events]
+</code></pre>
+<p><em>Bottleneck</em>: The single largest drop-off occurs between viewing the Separation Page (203 users) and tapping the <code>+</code> action button (75 users), an immediate <strong>63.1% abandonment rate</strong> on the landing screen.</p>
+<hr />
+<h3>Crash &amp; Stability Health by App Version</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">App Version</th>
+<th style="text-align: center;">Active Users</th>
+<th style="text-align: center;">Sessions</th>
+<th style="text-align: center;">Engagement Rate</th>
+<th style="text-align: center;">Crash-Free Users Rate</th>
+<th style="text-align: left;">Deployment Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1.3.10</strong></td>
+<td style="text-align: center;">179</td>
+<td style="text-align: center;">212</td>
+<td style="text-align: center;">33.0%</td>
+<td style="text-align: center;"><strong>99.68%</strong></td>
+<td style="text-align: left;">Active Production (~88% of fleet)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.3.09</strong></td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">36</td>
+<td style="text-align: center;">27.8%</td>
+<td style="text-align: center;"><strong>100.0%</strong></td>
+<td style="text-align: left;">Deprecated Staged Rollout</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.3.08</strong></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0%</td>
+<td style="text-align: center;">100.0%</td>
+<td style="text-align: left;">Retired</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.3.07</strong></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0%</td>
+<td style="text-align: center;">100.0%</td>
+<td style="text-align: left;">Retired</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1.3.06</strong></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.0%</td>
+<td style="text-align: center;">100.0%</td>
+<td style="text-align: left;">Retired</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Stability Assessment</strong>: The crash-free rate on <code>1.3.10</code> is <strong>99.68%</strong> (0.32% crash incident rate across 179 users, representing ~1 hard crash). While meeting the baseline 99.5% store threshold, the engagement drop to 33.0% indicates a silent functional regression (e.g., audio engine stall, frozen view controller, or failing network task) rather than an unhandled exception.</li>
+</ul>
+<hr />
+<h3>🚨 New Build / TestFlight / Staged Rollout Alert Section</h3>
+<ul>
+<li><strong>Alert Triggered: Version Discrepancy &amp; Revenue Stoppage</strong>:</li>
+<li>Version <code>1.3.10</code> rapidly absorbed 88.2% of DAU (179 AU) within 24–48 hours via automatic app updates (<code>app_update</code> logged 66 times across 63 users).</li>
+<li><strong>Critical Defect</strong>: Zero purchases have originated from <code>1.3.10</code>. The last transaction occurred on 2026-09-11 on <code>1.3.09</code>.</li>
+<li><strong>Action Required</strong>: Audit the StoreKit 2 receipt validation and transaction observer setup in <code>1.3.10</code> immediately.</li>
+</ul>
+<hr />
+<h3>Top In-App Events &amp; Feature Lookups (Telemetry Audit)</h3>
+<h4>Telemetry Anomalies &amp; Slider Event Flooding</h4>
+<ol>
+<li><strong>Unthrottled UI Sliders</strong>:</li>
+<li><code>player_pitch_changed</code>: <strong>5,508 events</strong> generated by just <strong>19 users</strong> (<strong>289.9 events/user</strong>).</li>
+<li><code>player_tempo_changed</code>: <strong>1,478 events</strong> generated by <strong>16 users</strong> (<strong>92.4 events/user</strong>).</li>
+<li><code>player_stem_balance_changed</code>: <strong>191 events</strong> generated by <strong>2 users</strong> (<strong>95.5 events/user</strong>).</li>
+<li>
+<p><em>Diagnostic</em>: The iOS sliders (<code>UISlider</code> / SwiftUI <code>Slider</code>) are logging GA4 analytics events on every continuous <code>valueChanged</code> tick rather than debouncing or logging once on <code>touchUpInside</code> / <code>touchUpOutside</code>. This risks exhausting GA4 daily event caps and degrades audio render thread performance.</p>
+</li>
+<li>
+<p><strong>Duplicate Telemetry Event Instrumentations</strong>:</p>
+</li>
+<li>Photos Import: <code>separation_import_photos_tapped</code> (84 events, 49 users) vs <code>import_photos_tap</code> (88 events, 50 users).</li>
+<li>Files Import: <code>separation_import_files_tapped</code> (78 events, 45 users) vs <code>import_files_app_tap</code> (81 events, 46 users).</li>
+<li>Plus Button: <code>plus_button_tap</code> (150 events, 75 users) vs <code>plus_separation_tapped</code> (138 events, 74 users).</li>
+<li><em>Diagnostic</em>: Dual event logging is deployed across the same UI interactions, inflating event volume by 2x.</li>
+</ol>
+<hr />
+<h3>Geographic Distribution</h3>
+<pre><code>========================================================================================
+                          GEOGRAPHIC DISTRIBUTION (PRODUCTION)
+========================================================================================
+Country             Active Users    Sessions    Session Intensity    Revenue Share (30D)
+----------------------------------------------------------------------------------------
+Japan               126             144         1.14 sess/user       42.2% ($29.74)
+South Korea         27              31          1.15 sess/user       18.2% ($12.83)
+United States       9               9           1.00 sess/user       9.9%  ($6.99)
+Cuba                7               21          3.00 sess/user       0.0%  ($0.00)
+Germany             4               4           1.00 sess/user       0.0%  ($0.00)
+United Kingdom      4               5           1.25 sess/user       0.0%  ($0.00)
+Argentina           3               4           1.33 sess/user       0.0%  ($0.00)
+Mongolia            3               3           1.00 sess/user       0.0%  ($0.00)
+China               2               2           1.00 sess/user       0.0%  ($0.00)
+France              2               2           1.00 sess/user       0.0%  ($0.00)
+Other / Long-Tail   16              23          1.43 sess/user       29.7% ($20.82)
+========================================================================================
+</code></pre>
+<ul>
+<li><strong>Regional Takeaways</strong>:</li>
+<li><strong>Japan and South Korea</strong> make up <strong>75.4%</strong> of production active users and account for the core subscription revenue.</li>
+<li><strong>Cuba</strong> shows notable session intensity (3.00 sessions/user across 21 sessions), likely from offline audio stem separation.</li>
+</ul>
+<hr />
+<h3>Prioritized Strategic Action Matrix</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Priority</th>
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Action Item</th>
+<th style="text-align: left;">Target Metric / Expected Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>P0</strong></td>
+<td style="text-align: left;"><strong>Engineering</strong></td>
+<td style="text-align: left;"><strong>Audit StoreKit Purchase Observer on <code>v1.3.10</code></strong>: Verify IAP initialization, paywall presentation, and receipt verification pipelines.</td>
+<td style="text-align: left;">Restore weekly transaction run-rate ($20–$30/week).</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>P0</strong></td>
+<td style="text-align: left;"><strong>Engineering</strong></td>
+<td style="text-align: left;"><strong>Debounce Continuous UI Slider Telemetry</strong>: Add a 500ms debounce operator or restrict telemetry emission to <code>touchUp</code> for <code>player_pitch_changed</code>, <code>player_tempo_changed</code>, and <code>player_stem_balance_changed</code>.</td>
+<td style="text-align: left;">Reduce junk event volume by &gt;85% and free up audio thread resources.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>P1</strong></td>
+<td style="text-align: left;"><strong>Analytics</strong></td>
+<td style="text-align: left;"><strong>Consolidate Duplicate Event Tags</strong>: Deprecate duplicated events (<code>import_photos_tap</code> vs <code>separation_import_photos_tapped</code>; <code>plus_button_tap</code> vs <code>plus_separation_tapped</code>).</td>
+<td style="text-align: left;">Clean up GA4 schema and prevent duplicate event billing.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>P1</strong></td>
+<td style="text-align: left;"><strong>Product / CRO</strong></td>
+<td style="text-align: left;"><strong>Address First-Screen Separation Drop-off</strong>: Redesign the empty landing state on the Separation Page where 63.1% of users fail to tap the <code>+</code> button.</td>
+<td style="text-align: left;">Lift core separation conversion from 25.1% to &gt;40%.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>P2</strong></td>
+<td style="text-align: left;"><strong>Monetization</strong></td>
+<td style="text-align: left;"><strong>Introduce Consumable Minutes Packs</strong>: Add 60-min ($2.99) and 300-min ($9.99) one-time processing packs alongside subscriptions.</td>
+<td style="text-align: left;">Monetize users who reject recurring subscriptions.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3. Deep-Dive: Vocal Cleaner (<code>com.neuralSound.audiocleaner</code>)</h2>
+<h3>App Header &amp; Health Score</h3>
+<ul>
+<li><strong>GA4 Property ID</strong>: <code>533563138</code> | <strong>Stream ID</strong>: <code>15407667671</code></li>
+<li><strong>Data Scope</strong>: Production Only</li>
+<li><strong>Overall Health Score</strong>: <strong>2.1 / 10</strong></li>
+<li><em>Rationale</em>: The app is currently non-viable from a growth perspective. It logged <strong>zero users yesterday</strong>, has zero cohort activity, and registered only 14 lifetime sessions. However, the production IAP pipeline is functional, having processed a single $8.99 monthly subscription.</li>
+</ul>
+<hr />
+<h3>💰 In-App Purchases, Subscriptions &amp; Consumable Minutes Breakdown</h3>
+<h4>Product Sales Summary (Past 30 Days)</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Item / Product ID</th>
+<th style="text-align: left;">Localized Product Name</th>
+<th style="text-align: left;">Plan Type</th>
+<th style="text-align: center;">Units Sold (30D)</th>
+<th style="text-align: center;">Total Revenue (USD)</th>
+<th style="text-align: center;">Revenue Share (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>cleaner_monthly_sub</code></td>
+<td style="text-align: left;">Monthly</td>
+<td style="text-align: left;">Monthly Recurring</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$8.99</td>
+<td style="text-align: center;">100.0%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Total</strong></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;"><strong>$8.99</strong></td>
+<td style="text-align: center;"><strong>100.0%</strong></td>
+</tr>
+</tbody>
+</table>
+<h4>Transaction Timeline Log</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Date</th>
+<th style="text-align: center;">App Build / Version</th>
+<th style="text-align: left;">Product ID</th>
+<th style="text-align: left;">Product Name</th>
+<th style="text-align: left;">Country</th>
+<th style="text-align: center;">Units</th>
+<th style="text-align: center;">Revenue (USD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>2026-08-22</strong></td>
+<td style="text-align: center;"><code>1.0.01</code></td>
+<td style="text-align: left;"><code>cleaner_monthly_sub</code></td>
+<td style="text-align: left;">Monthly</td>
+<td style="text-align: left;">United States</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$8.99</td>
+</tr>
+</tbody>
+</table>
+<h4>Build Environment &amp; Monetization Analysis</h4>
+<ul>
+<li><strong>Monetization Architecture</strong>: The single transaction demonstrates that App Store Connect configuration, sandbox certificates, and production payment handlers are intact.</li>
+<li><strong>Pricing Viability</strong>: The initial purchase was at an <strong>$8.99/month</strong> price point in the US, confirming customer willingness to pay for vocal isolation/denoising utilities.</li>
+</ul>
+<hr />
+<h3>📅 Multi-Horizon Growth &amp; Historical Scale Comparison</h3>
+<pre><code>========================================================================================================
+                                 MULTI-HORIZON GROWTH VECTOR BENCHMARK
+========================================================================================================
+Horizon              Active Users     New Users     Sessions    Engagement Rate    Revenue (USD)    ARPDAU
+--------------------------------------------------------------------------------------------------------
+Yesterday            0                0             0           0.0%               $0.00            $0.000
+Past 7 Days          2                2             2           0.0%               $0.00            $0.000
+Past 30 Days         14               14            14          35.7%              $8.99            $0.021
+Past Year (365d)     15               14            15          33.3%              $8.99            $0.020
+All-Time             15               14            15          33.3%              $8.99            $0.020
+========================================================================================================
+</code></pre>
+<hr />
+<h3>Old vs. New User Cohort &amp; 7-Day Velocity</h3>
+<ul>
+<li><strong>Cohorts</strong>: Zero active returning users. Lifetime traffic consists entirely of new user arrivals who abandon the application immediately after one session (15 sessions across 14 new users all-time).</li>
+<li><strong>7-Day Velocity</strong>: On 2026-09-13, 2 new users installed the application and logged 2 sessions with an engagement rate of <strong>0.0%</strong> (both sessions bounced under 10 seconds).</li>
+</ul>
+<hr />
+<h3>User Funnel, Stability &amp; Telemetry Audits</h3>
+<ul>
+<li><strong>Funnel &amp; Telemetry</strong>: Event telemetry is currently empty in GA4 production streams. The app lacks granular event tracking for core processing steps (e.g., file selected, noise suppression started, output exported).</li>
+<li><strong>Stability</strong>: App version <code>1.0.01</code> maintains a 100.0% crash-free rate, though across a statistically insignificant sample size (15 sessions).</li>
+</ul>
+<hr />
+<h3>Prioritized Strategic Action Matrix</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Priority</th>
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Action Item</th>
+<th style="text-align: left;">Target Metric / Expected Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>P0</strong></td>
+<td style="text-align: left;"><strong>Product / Growth</strong></td>
+<td style="text-align: left;"><strong>Cross-Promote via Music Separation iOS</strong>: Insert an in-app banner or utility menu in Music Separation offering "Clean &amp; Isolate Vocals via Vocal Cleaner."</td>
+<td style="text-align: left;">Leverage the 4,000+ user base of Music Separation to drive free organic installs.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>P0</strong></td>
+<td style="text-align: left;"><strong>Engineering</strong></td>
+<td style="text-align: left;"><strong>Instrument Standard Audio Telemetry</strong>: Implement basic analytics for onboarding, file import, denoising execution, and paywall impressions.</td>
+<td style="text-align: left;">Establish baseline product funnel visibility.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>P1</strong></td>
+<td style="text-align: left;"><strong>ASO / UA</strong></td>
+<td style="text-align: left;"><strong>Keyword &amp; Metadata Overhaul</strong>: Update App Store listing targeting long-tail keywords ("vocal cleaner", "remove background noise from audio", "voice isolation").</td>
+<td style="text-align: left;">Generate an initial baseline of 15–30 organic daily installs.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>P2</strong></td>
+<td style="text-align: left;"><strong>Monetization</strong></td>
+<td style="text-align: left;"><strong>Deploy Free Tier with Watermarking / Length Limits</strong>: Offer 30-second free clean previews before prompting for the $8.99 monthly plan or single-track passes.</td>
+<td style="text-align: left;">Improve conversion from the current 0.0% engagement baseline.</td>
+</tr>
+</tbody>
+</table>
+    <h2>📊 Visual Graphs & Performance Charts</h2><div class='charts-grid'><div class='chart-card'><h3>Music Separation Ios Trend</h3><img class='chart-img' src='charts/music_separation_ios_trend.png' alt='Music Separation Ios Trend' /></div><div class='chart-card'><h3>Music Separation Ios Revenue</h3><img class='chart-img' src='charts/music_separation_ios_revenue.png' alt='Music Separation Ios Revenue' /></div><div class='chart-card'><h3>Music Separation Ios Horizons</h3><img class='chart-img' src='charts/music_separation_ios_horizons.png' alt='Music Separation Ios Horizons' /></div><div class='chart-card'><h3>Music Separation Ios Funnel</h3><img class='chart-img' src='charts/music_separation_ios_funnel.png' alt='Music Separation Ios Funnel' /></div><div class='chart-card'><h3>Music Separation Ios Cohort</h3><img class='chart-img' src='charts/music_separation_ios_cohort.png' alt='Music Separation Ios Cohort' /></div><div class='chart-card'><h3>Music Separation Ios Version</h3><img class='chart-img' src='charts/music_separation_ios_version.png' alt='Music Separation Ios Version' /></div><div class='chart-card'><h3>Vocal Cleaner Revenue</h3><img class='chart-img' src='charts/vocal_cleaner_revenue.png' alt='Vocal Cleaner Revenue' /></div><div class='chart-card'><h3>Vocal Cleaner Horizons</h3><img class='chart-img' src='charts/vocal_cleaner_horizons.png' alt='Vocal Cleaner Horizons' /></div></div>
+
+    <div class="footer-note">
+        <strong>Direct Console Links:</strong><br>
+        <a href="https://analytics.google.com/analytics/web/#/a371473317p533563138/reports/intelligenthome" target="_blank">🔗 Open Google Analytics 4 Dashboard</a> &bull;
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/analytics" target="_blank">🔥 Open Firebase Analytics Console</a> &bull;
+        <a href="https://console.firebase.google.com/u/0/project/neural-sound-ios/crashlytics" target="_blank">💥 Open Firebase Crashlytics</a>
+        <br><br>
+        Generated automatically by Neural Sound Analytics Pipeline &bull; Gemini AI &bull; 2026-09-15
+    </div>
+</div>
+</body>
+</html>
