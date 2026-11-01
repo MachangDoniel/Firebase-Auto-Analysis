@@ -24,6 +24,7 @@ from google.analytics.data_v1beta.types import (
     OrderBy,
     RunReportRequest,
     FilterExpression,
+    FilterExpressionList,
     Filter,
 )
 from google.oauth2 import service_account
@@ -80,26 +81,132 @@ def get_analytics_client(key_path):
     return BetaAnalyticsDataClient(credentials=credentials)
 
 
-def build_stream_filter(stream_id):
-    """Returns a GA4 FilterExpression for a specific stream ID if provided."""
+def build_production_filter(stream_id, exclude_tester_countries=None):
+    """
+    Returns a GA4 FilterExpression scoped to a specific stream AND excluding
+    known internal-tester countries (e.g. Bangladesh) so only real App Store
+    (production) traffic is returned.
+
+    Args:
+        stream_id: GA4 stream ID to scope the query.
+        exclude_tester_countries: list of country names to exclude (testers).
+                                  Defaults to ["Bangladesh"].
+    """
+    if exclude_tester_countries is None:
+        exclude_tester_countries = ["Bangladesh"]
+
+    expressions = []
+
+    # Filter 1: Scope to specific stream
     if stream_id and str(stream_id).strip():
-        return FilterExpression(
+        expressions.append(FilterExpression(
             filter=Filter(
                 field_name="streamId",
                 string_filter=Filter.StringFilter(value=str(stream_id).strip())
             )
-        )
+        ))
+
+    # Filter 2: Exclude internal-tester countries (TestFlight testers)
+    for country in exclude_tester_countries:
+        expressions.append(FilterExpression(
+            not_expression=FilterExpression(
+                filter=Filter(
+                    field_name="country",
+                    string_filter=Filter.StringFilter(
+                        match_type=Filter.StringFilter.MatchType.EXACT,
+                        value=country,
+                        case_sensitive=False,
+                    )
+                )
+            )
+        ))
+
+    if len(expressions) > 1:
+        return FilterExpression(and_group=FilterExpressionList(expressions=expressions))
+    elif expressions:
+        return expressions[0]
     return None
 
 
-def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id=None, bundle_id=""):
+def build_testflight_filter(stream_id, tester_countries=None):
+    """
+    Returns a GA4 FilterExpression that captures ONLY the internal-tester
+    (TestFlight) traffic — the inverse of build_production_filter.
+
+    Args:
+        stream_id: GA4 stream ID to scope the query.
+        tester_countries: list of country names that represent testers.
+                          Defaults to ["Bangladesh"].
+    """
+    if tester_countries is None:
+        tester_countries = ["Bangladesh"]
+
+    expressions = []
+
+    if stream_id and str(stream_id).strip():
+        expressions.append(FilterExpression(
+            filter=Filter(
+                field_name="streamId",
+                string_filter=Filter.StringFilter(value=str(stream_id).strip())
+            )
+        ))
+
+    # At least one tester country must match (OR logic across countries)
+    if len(tester_countries) == 1:
+        expressions.append(FilterExpression(
+            filter=Filter(
+                field_name="country",
+                string_filter=Filter.StringFilter(
+                    match_type=Filter.StringFilter.MatchType.EXACT,
+                    value=tester_countries[0],
+                    case_sensitive=False,
+                )
+            )
+        ))
+    elif tester_countries:
+        country_exprs = [
+            FilterExpression(
+                filter=Filter(
+                    field_name="country",
+                    string_filter=Filter.StringFilter(
+                        match_type=Filter.StringFilter.MatchType.EXACT,
+                        value=c,
+                        case_sensitive=False,
+                    )
+                )
+            )
+            for c in tester_countries
+        ]
+        expressions.append(FilterExpression(or_group=FilterExpressionList(expressions=country_exprs)))
+
+    if len(expressions) > 1:
+        return FilterExpression(and_group=FilterExpressionList(expressions=expressions))
+    elif expressions:
+        return expressions[0]
+    return None
+
+
+
+def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id=None, bundle_id="", tester_countries=None):
     """
     Queries GA4 for complete analytics, in-app purchases & product sales, crash metrics,
     new vs returning cohorts, multi-horizon growth, top events, and app versions.
+
+    Uses build_production_filter() to exclude internal-tester countries (e.g. Bangladesh)
+    from all queries so only real App Store (production) traffic is reported.
+    A small TestFlight/internal-tester summary is appended separately.
     """
+    if tester_countries is None:
+        tester_countries = ["Bangladesh"]
+
     property_path = f"properties/{ga4_property_id.strip()}"
-    dim_filter = build_stream_filter(stream_id)
-    print(f"[{datetime.now().isoformat()}] Querying [{app_name}] (Stream: {stream_id or 'All'} | Bundle: {bundle_id})...")
+    # Production filter: stream-scoped + tester countries excluded
+    dim_filter = build_production_filter(stream_id, exclude_tester_countries=tester_countries)
+    # Tester filter: stream-scoped + tester countries only (for internal summary)
+    tf_filter = build_testflight_filter(stream_id, tester_countries=tester_countries)
+
+    print(f"[{datetime.now().isoformat()}] Querying [{app_name}] | Production only (excluding: {tester_countries}) | Stream: {stream_id or 'All'} | Bundle: {bundle_id}")
+
 
     yesterday_range = [DateRange(start_date="yesterday", end_date="yesterday")]
     seven_day_range = [DateRange(start_date="7daysAgo", end_date="yesterday")]
@@ -337,11 +444,32 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
             "sessions": int(row.metric_values[1].value),
         })
 
+    # 10. Internal Tester (TestFlight) Summary — separate query, NOT mixed into production metrics
+    print(f"  → Fetching internal-tester (TestFlight) summary for [{app_name}]...")
+    tf_overview_req = RunReportRequest(
+        property=property_path,
+        date_ranges=yesterday_range,
+        dimension_filter=tf_filter,
+        metrics=[
+            Metric(name="activeUsers"),
+            Metric(name="newUsers"),
+            Metric(name="sessions"),
+            Metric(name="purchaseRevenue"),
+        ],
+    )
+    tf_overview_res = client.run_report(tf_overview_req)
+    tf_summary = {"note": f"Internal testers only ({', '.join(tester_countries)}). NOT included in production metrics above."}
+    if tf_overview_res.rows:
+        tf_row = tf_overview_res.rows[0]
+        for header, val in zip(tf_overview_res.metric_headers, tf_row.metric_values):
+            tf_summary[header.name] = val.value
+
     app_payload = {
         "app_name": app_name,
         "bundle_id": bundle_id,
         "ga4_property_id": ga4_property_id,
         "stream_id": stream_id,
+        "data_scope": f"Production only — internal testers ({', '.join(tester_countries)}) excluded from all metrics",
         "yesterday_overview": overview_data,
         "product_sales_30d": products_data,
         "recent_transactions": transactions_data,
@@ -351,13 +479,15 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
         "top_events_telemetry": events_data,
         "app_versions": versions_data,
         "geographic_distribution": geo_data,
+        "internal_tester_summary": tf_summary,
     }
 
-    # Generate visual PNG charts for this app (includes Revenue Chart)
+    # Generate visual PNG charts for this app (includes Revenue Chart) — production data only
     chart_paths = generate_all_charts(app_name, app_payload, CHARTS_DIR)
     app_payload["chart_paths"] = chart_paths
 
     return app_payload
+
 
 
 def analyze_all_apps_with_gemini(all_apps_data):
@@ -475,12 +605,15 @@ def main():
         all_apps_data = []
         for app in apps:
             client = get_analytics_client(app.get("service_account_key", DEFAULT_SERVICE_KEY))
+            # Per-app tester country list; falls back to global default ["Bangladesh"]
+            tester_countries = app.get("tester_countries", ["Bangladesh"])
             app_data = fetch_app_analytics_and_crashes(
                 client=client,
                 ga4_property_id=app["ga4_property_id"],
                 app_name=app["app_name"],
                 stream_id=app.get("stream_id"),
                 bundle_id=app.get("bundle_id", ""),
+                tester_countries=tester_countries,
             )
             all_apps_data.append(app_data)
 

@@ -89,6 +89,7 @@ def get_css_styling():
     table {
         width: 100%;
         border-collapse: collapse;
+        table-layout: fixed;
         margin-top: 6px;
         margin-bottom: 12px;
         font-size: 8pt;
@@ -99,10 +100,15 @@ def get_css_styling():
         text-align: left;
         padding: 5px 8px;
         font-weight: bold;
+        word-wrap: break-word;
+        overflow: hidden;
     }
     td {
         border-bottom: 1px solid #e2e8f0;
         padding: 5px 8px;
+        word-wrap: break-word;
+        overflow: hidden;
+        vertical-align: top;
     }
     tr:nth-child(even) td {
         background-color: #f8fafc;

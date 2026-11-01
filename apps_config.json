@@ -6,7 +6,8 @@
     "ga4_property_id": "533563138",
     "stream_id": "14402502632",
     "platform": "iOS",
-    "service_account_key": "serviceAccountKey.json"
+    "service_account_key": "serviceAccountKey.json",
+    "tester_countries": ["Bangladesh"]
   },
   {
     "app_id": "vocal-cleaner-ios",
@@ -15,7 +16,8 @@
     "ga4_property_id": "533563138",
     "stream_id": "15407667671",
     "platform": "iOS",
-    "service_account_key": "serviceAccountKey.json"
+    "service_account_key": "serviceAccountKey.json",
+    "tester_countries": ["Bangladesh"]
   },
   {
     "app_id": "future-app-three",
