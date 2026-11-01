@@ -294,8 +294,10 @@ def income_panel(label, period, context_daily):
 
 def income_section(income):
     status = income.get("status")
+    if status == "not_configured":
+        return ""
     if status != "ok":
-        reason = "App Store Connect is not connected yet." if status == "not_configured" else "App Store Connect data could not be loaded for this report."
+        reason = "App Store Connect data could not be loaded for this report."
         return f"""<section id="income"><h2>Income</h2>
         <div class="notice"><strong>{esc(reason)}</strong> <span class="note">{esc(income.get("message", ""))}</span><br>
         <span class="note">The per-app revenue figures further down come from GA4 purchase events, not from Apple.</span></div></section>"""
@@ -420,7 +422,9 @@ def portfolio_section(all_apps_data):
 
 def render_dashboard(all_apps_data, income, ai_markdown, target_date, output_path):
     """Writes the dashboard to output_path and returns that path."""
-    nav_links = ['<a href="#income">Income</a>', '<a href="#portfolio">Portfolio</a>']
+    nav_links = ['<a href="#portfolio">Portfolio</a>']
+    if income.get("status") != "not_configured":
+        nav_links.insert(0, '<a href="#income">Income</a>')
     nav_links += [f'<a href="#app-{i}">{esc(a.get("app_name", "App"))}</a>' for i, a in enumerate(all_apps_data)]
     nav_links.append('<a href="#analysis">AI analysis</a>')
     apps_html = "".join(app_section(app, i) for i, app in enumerate(all_apps_data))

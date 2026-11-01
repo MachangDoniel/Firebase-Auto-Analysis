@@ -381,6 +381,8 @@ def fetch_income(today=None):
 
 def income_to_markdown(income):
     """Verified income section for the PDF and Markdown reports, independent of the AI text."""
+    if income.get("status") == "not_configured":
+        return ""
     if income.get("status") != "ok":
         return f"## 💵 App Store Income\n\n> ⚠️ Income data unavailable: {income.get('message', 'unknown error')}\n\n"
 

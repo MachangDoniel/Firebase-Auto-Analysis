@@ -500,7 +500,17 @@ def analyze_all_apps_with_gemini(all_apps_data, income=None):
     """
     gemini_api_key = os.getenv("GEMINI_API_KEY")
     data_json = json.dumps(all_apps_data, indent=2)
-    income_json = json.dumps(income or {"status": "not_configured"}, indent=2)
+    income = income or {"status": "not_configured"}
+    income_prompt = ""
+    if income.get("status") != "not_configured":
+        income_prompt = f"""
+3. Add an **Income Analysis** section using the App Store Connect dataset: explain changes in Proceeds, Sales, Units and In-App Purchases across periods, and which products and territories drove them. App Store Connect is the source of truth for income; GA4 revenue is event tracking, so call out large gaps between the two. If its status is not "ok", say income data was unavailable and do not estimate it.
+
+App Store Connect Income Dataset:
+```json
+{json.dumps(income, indent=2)}
+```
+"""
 
     prompt = f"""
 You are a Principal Mobile Analytics & Monetization Growth Architect.
@@ -524,18 +534,11 @@ Analyze the following multi-app daily Firebase / GA4 analytics dataset covering 
    - **Geographic Distribution**.
    - **Prioritized Strategic Action Matrix** (P0, P1, P2 with Engineering/Product/Growth fixes).
 
-3. Add an **Income Analysis** section using the App Store Connect dataset: explain changes in Proceeds, Sales, Units and In-App Purchases across periods, and which products and territories drove them. App Store Connect is the source of truth for income; GA4 revenue is event tracking, so call out large gaps between the two. If its status is not "ok", say income data was unavailable and do not estimate it.
-
 Multi-App Dataset:
 ```json
 {data_json}
 ```
-
-App Store Connect Income Dataset:
-```json
-{income_json}
-```
-"""
+{income_prompt}"""
 
     candidate_models = [
         os.getenv("GEMINI_MODEL", "gemini-3.6-flash"),

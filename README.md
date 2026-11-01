@@ -93,7 +93,7 @@ Income metrics (Units, Proceeds, Sales, Updates, In-App Purchases, App Bundles, 
    ./venv/bin/python appstore_income.py --date 2026-10-29
    ```
 
-Without these settings the reports still go out, with a notice in place of the income section. USD values use daily ECB exchange rates, so they can differ slightly from Apple's figures.
+Without these settings the reports still go out, without an income section. USD values use daily ECB exchange rates, so they can differ slightly from Apple's figures.
 
 Each run writes a visual dashboard to `reports/dashboard_YYYY-MM-DD.html` and sends it with the PDF on Telegram, Discord and email.
 
