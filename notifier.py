@@ -391,7 +391,7 @@ def send_macos_notification(title, message, pdf_path=None):
         print(f"⚠️ Failed to send macOS notification: {e}", file=sys.stderr)
 
 
-def send_telegram_document(report_text, pdf_path=None, md_path=None, chart_images=None):
+def send_telegram_document(report_text, pdf_path=None, md_path=None, chart_images=None, dashboard_path=None):
     """Sends executive text summary + PDF Document + Markdown File + Visual Charts to Telegram."""
     bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
     chat_id = os.getenv("TELEGRAM_CHAT_ID")
@@ -419,7 +419,14 @@ def send_telegram_document(report_text, pdf_path=None, md_path=None, chart_image
                 data = {"chat_id": chat_id, "caption": "📑 Raw Markdown Report (.md)"}
                 requests.post(doc_url, data=data, files=files, timeout=20)
 
-        # 3. Send Chart Photos
+        # 3. Send Visual HTML Dashboard
+        if dashboard_path and os.path.exists(dashboard_path):
+            with open(dashboard_path, "rb") as f:
+                files = {"document": (os.path.basename(dashboard_path), f, "text/html")}
+                data = {"chat_id": chat_id, "caption": "📈 Visual HTML Dashboard"}
+                requests.post(doc_url, data=data, files=files, timeout=30)
+
+        # 4. Send Chart Photos
         if chart_images:
             photo_url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
             for c_path in chart_images[:3]:
@@ -434,7 +441,7 @@ def send_telegram_document(report_text, pdf_path=None, md_path=None, chart_image
         print(f"⚠️ Telegram delivery failed: {e}", file=sys.stderr)
 
 
-def send_discord_document(report_text, pdf_path=None, md_path=None, chart_images=None):
+def send_discord_document(report_text, pdf_path=None, md_path=None, chart_images=None, dashboard_path=None):
     """Sends executive summary + PDF File + Markdown File + Chart Upload to Discord."""
     webhook_url = os.getenv("DISCORD_WEBHOOK_URL")
     if not webhook_url:
@@ -457,7 +464,12 @@ def send_discord_document(report_text, pdf_path=None, md_path=None, chart_images
             f_md = open(md_path, "rb")
             file_handles.append(f_md)
             files_payload["file_md"] = (os.path.basename(md_path), f_md, "text/markdown")
-            
+
+        if dashboard_path and os.path.exists(dashboard_path):
+            f_dash = open(dashboard_path, "rb")
+            file_handles.append(f_dash)
+            files_payload["file_dashboard"] = (os.path.basename(dashboard_path), f_dash, "text/html")
+
         if chart_images:
             for idx, c_path in enumerate(chart_images[:2]):
                 if os.path.exists(c_path):
@@ -477,7 +489,7 @@ def send_discord_document(report_text, pdf_path=None, md_path=None, chart_images
         print(f"⚠️ Discord delivery failed: {e}", file=sys.stderr)
 
 
-def send_gmail_document(report_text, html_path=None, pdf_path=None, md_path=None, chart_images=None):
+def send_gmail_document(report_text, html_path=None, pdf_path=None, md_path=None, chart_images=None, dashboard_path=None):
     """Sends formatted HTML email with PDF and Markdown (.md) attached."""
     sender_email = os.getenv("GMAIL_SENDER_EMAIL")
     sender_password = os.getenv("GMAIL_APP_PASSWORD")
@@ -522,7 +534,16 @@ def send_gmail_document(report_text, html_path=None, pdf_path=None, md_path=None
                     "Content-Disposition", "attachment", filename=os.path.basename(md_path)
                 )
                 msg.attach(md_attachment)
-                
+
+        # Attach Visual HTML Dashboard
+        if dashboard_path and os.path.exists(dashboard_path):
+            with open(dashboard_path, "rb") as f:
+                dashboard_attachment = MIMEApplication(f.read(), _subtype="html")
+                dashboard_attachment.add_header(
+                    "Content-Disposition", "attachment", filename=os.path.basename(dashboard_path)
+                )
+                msg.attach(dashboard_attachment)
+
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(sender_email, sender_password)
             server.sendmail(sender_email, [recipient_email], msg.as_string())
@@ -532,7 +553,7 @@ def send_gmail_document(report_text, html_path=None, pdf_path=None, md_path=None
         print(f"⚠️ Email delivery failed: {e}", file=sys.stderr)
 
 
-def dispatch_all_notifications(report_text, date_str=None, chart_images=None):
+def dispatch_all_notifications(report_text, date_str=None, chart_images=None, dashboard_path=None):
     """Generates documents with embedded charts and dispatches across all channels."""
     html_path, pdf_path = generate_documents(report_text, date_str, chart_images)
     
@@ -547,6 +568,6 @@ def dispatch_all_notifications(report_text, date_str=None, chart_images=None):
         pdf_path=pdf_path
     )
     
-    send_telegram_document(report_text, pdf_path, md_path, chart_images)
-    send_discord_document(report_text, pdf_path, md_path, chart_images)
-    send_gmail_document(report_text, html_path, pdf_path, md_path, chart_images)
+    send_telegram_document(report_text, pdf_path, md_path, chart_images, dashboard_path)
+    send_discord_document(report_text, pdf_path, md_path, chart_images, dashboard_path)
+    send_gmail_document(report_text, html_path, pdf_path, md_path, chart_images, dashboard_path)

@@ -82,6 +82,23 @@ In [Google Cloud Console API Library](https://console.cloud.google.com/apis/libr
 
 ---
 
+### 5. App Store Connect Income Setup
+Income metrics (Units, Proceeds, Sales, Updates, In-App Purchases, App Bundles, Pre-Orders, products and territories) come from the App Store Connect Sales & Trends API.
+
+1. In [App Store Connect](https://appstoreconnect.apple.com/access/integrations/api), open **Users and Access** > **Integrations** > **Team Keys** and create a key with the **Finance** role.
+2. Download the `AuthKey_XXXXXXXXXX.p8` file into this directory. Apple only lets you download it once. `*.p8` is git-ignored.
+3. Fill in `ASC_ISSUER_ID`, `ASC_KEY_ID`, `ASC_PRIVATE_KEY_PATH` and `ASC_VENDOR_NUMBER` (from **Payments and Financial Reports**) in `.env`.
+4. Compare one day with the Trends screen:
+   ```bash
+   ./venv/bin/python appstore_income.py --date 2026-10-29
+   ```
+
+Without these settings the reports still go out, with a notice in place of the income section. USD values use daily ECB exchange rates, so they can differ slightly from Apple's figures.
+
+Each run writes a visual dashboard to `reports/dashboard_YYYY-MM-DD.html` and sends it with the PDF on Telegram, Discord and email.
+
+---
+
 ## 📬 Notification Channels Setup (Telegram, Discord, Email, iPhone & Mac)
 
 The pipeline can automatically broadcast each daily report across multiple channels. Simply fill in the ones you want in [.env](file:///Users/donieltripura/Neural%20Sound/Analysis/Workflow/.env):

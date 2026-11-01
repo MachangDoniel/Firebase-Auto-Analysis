@@ -18,6 +18,81 @@ plt.rcParams["axes.edgecolor"] = "#cbd5e1"
 plt.rcParams["axes.linewidth"] = 0.8
 
 
+def funnel_stages(top_events):
+    """Returns (stage, users) pairs for the core conversion funnel, skipping empty stages."""
+    events = {e["eventName"]: e["totalUsers"] for e in top_events}
+    stages = [
+        ("Onboarding", events.get("onboarding_viewed", 0) or events.get("first_open", 0)),
+        ("Auth Complete", events.get("login_succeeded", 0)),
+        ("Journey Done", events.get("first_journey_login_completed", 0)),
+        ("Plus Button", events.get("plus_button_tap", 0)),
+        ("Import Action", events.get("import_started", 0) or (events.get("import_files_app_tap", 0) + events.get("import_photos_tap", 0)) // 2),
+        ("Player Opened", events.get("separation_player_opened", 0)),
+        ("Play Started", events.get("separation_play_started", 0)),
+    ]
+    return [s for s in stages if s[1] > 0]
+
+
+def generate_income_charts(income, output_dir):
+    """
+    Generates App Store income charts for the PDF report:
+    1. Proceeds & Sales per day (5 weeks)
+    2. Proceeds by product and by territory (5 weeks)
+    Returns dictionary of generated chart image paths.
+    """
+    if income.get("status") != "ok":
+        return {}
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    period = income["periods"]["5W"]
+    chart_paths = {}
+
+    daily = period["daily"]
+    dates = [d["date"][5:] for d in daily]
+    fig, ax = plt.subplots(figsize=(7, 3.2), dpi=200)
+    ax.plot(dates, [d["sales"] for d in daily], color="#06b6d4", linewidth=2, linestyle="--", label="Sales")
+    ax.plot(dates, [d["proceeds"] for d in daily], color="#4f46e5", linewidth=2.5, label="Proceeds")
+    ax.set_title("App Store Income — Proceeds & Sales per Day (5 Weeks, USD)", fontsize=11, fontweight="bold", pad=10, color="#0f172a")
+    ax.set_xticks(range(0, len(dates), 7))
+    ax.grid(True, linestyle=":", alpha=0.6, color="#cbd5e1")
+    ax.legend(loc="upper left", frameon=True, fontsize=8.5)
+    ax.tick_params(colors="#475569", labelsize=8.5)
+    for spine in ["top", "right"]:
+        ax.spines[spine].set_visible(False)
+    trend_file = output_dir / "app_store_income_trend.png"
+    plt.tight_layout()
+    plt.savefig(trend_file)
+    plt.close(fig)
+    chart_paths["income_trend_chart"] = str(trend_file)
+
+    breakdowns = [
+        ("products", "Proceeds by Product", "title", "app_store_income_products.png", "income_products_chart"),
+        ("territories", "Proceeds by Territory", "name", "app_store_income_territories.png", "income_territories_chart"),
+    ]
+    for key, title, label_key, file_name, chart_key in breakdowns:
+        items = [i for i in period[key] if i["proceeds"] > 0][:8][::-1]
+        if not items:
+            continue
+        values = [i["proceeds"] for i in items]
+        fig, ax = plt.subplots(figsize=(7, 3.2), dpi=200)
+        ax.barh([i[label_key] for i in items], values, color="#4f46e5", height=0.55)
+        for index, value in enumerate(values):
+            ax.text(value + max(values) * 0.02, index, f"${value:,.2f}", va="center", ha="left", fontsize=8, color="#0f172a", fontweight="bold")
+        ax.set_title(f"App Store Income — {title} (5 Weeks, USD)", fontsize=11, fontweight="bold", pad=10, color="#0f172a")
+        ax.set_xlim(0, max(values) * 1.25)
+        ax.grid(axis="x", linestyle=":", alpha=0.6, color="#cbd5e1")
+        ax.tick_params(colors="#475569", labelsize=8)
+        for spine in ["top", "right"]:
+            ax.spines[spine].set_visible(False)
+        chart_file = output_dir / file_name
+        plt.tight_layout()
+        plt.savefig(chart_file)
+        plt.close(fig)
+        chart_paths[chart_key] = str(chart_file)
+
+    return chart_paths
+
+
 def generate_all_charts(app_name, analytics_data, output_dir):
     """
     Generates a suite of visual charts for a single app:
@@ -130,18 +205,8 @@ def generate_all_charts(app_name, analytics_data, output_dir):
         chart_paths["horizon_chart"] = str(horizon_file)
 
     # 4. Funnel Conversion Horizontal Bar Chart
-    events = {e["eventName"]: e["totalUsers"] for e in analytics_data.get("top_events_telemetry", [])}
-    funnel_keys = [
-        ("Onboarding", events.get("onboarding_viewed", 0) or events.get("first_open", 0)),
-        ("Auth Complete", events.get("login_succeeded", 0)),
-        ("Journey Done", events.get("first_journey_login_completed", 0)),
-        ("Plus Button", events.get("plus_button_tap", 0)),
-        ("Import Action", events.get("import_started", 0) or (events.get("import_files_app_tap", 0) + events.get("import_photos_tap", 0)) // 2),
-        ("Player Opened", events.get("separation_player_opened", 0)),
-        ("Play Started", events.get("separation_play_started", 0)),
-    ]
-    funnel_keys = [f for f in funnel_keys if f[1] > 0]
-    
+    funnel_keys = funnel_stages(analytics_data.get("top_events_telemetry", []))
+
     if len(funnel_keys) >= 3:
         stages = [k[0] for k in funnel_keys][::-1]
         counts = [k[1] for k in funnel_keys][::-1]

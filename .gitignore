@@ -8,6 +8,10 @@ env/
 serviceAccountKey.json
 *.pem
 *.key
+*.p8
+
+# Cached App Store Connect sales reports
+.income_cache/
 
 # Python cache & artifacts
 __pycache__/

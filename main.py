@@ -30,7 +30,9 @@ from google.analytics.data_v1beta.types import (
 from google.oauth2 import service_account
 from google import genai
 from notifier import dispatch_all_notifications
-from charts import generate_all_charts
+from charts import generate_all_charts, generate_income_charts
+from appstore_income import fetch_income, income_to_markdown
+from dashboard import render_dashboard
 
 # ==========================================
 # Configuration
@@ -490,7 +492,7 @@ def fetch_app_analytics_and_crashes(client, ga4_property_id, app_name, stream_id
 
 
 
-def analyze_all_apps_with_gemini(all_apps_data):
+def analyze_all_apps_with_gemini(all_apps_data, income=None):
     """
     Sends all apps data to Gemini for analysis.
     Implements multi-model automatic fallback (gemini-3.6-flash -> gemini-3.5-flash -> gemini-flash-latest).
@@ -498,6 +500,7 @@ def analyze_all_apps_with_gemini(all_apps_data):
     """
     gemini_api_key = os.getenv("GEMINI_API_KEY")
     data_json = json.dumps(all_apps_data, indent=2)
+    income_json = json.dumps(income or {"status": "not_configured"}, indent=2)
 
     prompt = f"""
 You are a Principal Mobile Analytics & Monetization Growth Architect.
@@ -521,9 +524,16 @@ Analyze the following multi-app daily Firebase / GA4 analytics dataset covering 
    - **Geographic Distribution**.
    - **Prioritized Strategic Action Matrix** (P0, P1, P2 with Engineering/Product/Growth fixes).
 
+3. Add an **Income Analysis** section using the App Store Connect dataset: explain changes in Proceeds, Sales, Units and In-App Purchases across periods, and which products and territories drove them. App Store Connect is the source of truth for income; GA4 revenue is event tracking, so call out large gaps between the two. If its status is not "ok", say income data was unavailable and do not estimate it.
+
 Multi-App Dataset:
 ```json
 {data_json}
+```
+
+App Store Connect Income Dataset:
+```json
+{income_json}
 ```
 """
 
@@ -574,8 +584,9 @@ Multi-App Dataset:
     return fallback_report
 
 
-def log_results(analysis_result, all_apps_data):
+def log_results(analysis_result, all_apps_data, income=None):
     """Outputs analysis, saves logs, and dispatches across all channels with charts."""
+    income = income or {"status": "not_configured", "message": "Income was not fetched."}
     timestamp_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     divider = "=" * 60
     log_entry = f"\n{divider}\n[MULTI-APP FIREBASE ANALYTICS & MONETIZATION AI REPORT - {timestamp_str}]\n{divider}\n{analysis_result}\n"
@@ -586,14 +597,24 @@ def log_results(analysis_result, all_apps_data):
     print(f"Report saved to: {LOG_FILE}")
 
     # Gather all generated chart images across all apps
-    all_charts = []
+    all_charts = list(generate_income_charts(income, CHARTS_DIR).values())
     for app in all_apps_data:
         for chart_path in app.get("chart_paths", {}).values():
             if os.path.exists(chart_path):
                 all_charts.append(chart_path)
 
+    target_date = datetime.now().strftime("%Y-%m-%d")
+    dashboard_path = render_dashboard(
+        all_apps_data, income, analysis_result, target_date,
+        BASE_DIR / "reports" / f"dashboard_{target_date}.html",
+    )
+
     # Dispatch to Telegram, Discord, Gmail, macOS banners, and reports/ directory
-    dispatch_all_notifications(analysis_result, chart_images=all_charts)
+    dispatch_all_notifications(
+        income_to_markdown(income) + analysis_result,
+        chart_images=all_charts,
+        dashboard_path=dashboard_path,
+    )
 
 
 def main():
@@ -617,8 +638,11 @@ def main():
             )
             all_apps_data.append(app_data)
 
-        ai_analysis = analyze_all_apps_with_gemini(all_apps_data)
-        log_results(ai_analysis, all_apps_data)
+        income = fetch_income()
+        print(f"App Store Connect income status: {income['status']}")
+
+        ai_analysis = analyze_all_apps_with_gemini(all_apps_data, income)
+        log_results(ai_analysis, all_apps_data, income)
         print("=== Multi-App Pipeline Execution Finished Successfully ===")
     except Exception as err:
         print(f"Error during multi-app pipeline execution: {err}", file=sys.stderr)
